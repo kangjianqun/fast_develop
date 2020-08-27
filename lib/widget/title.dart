@@ -13,8 +13,14 @@ typedef IconThemeGenerate = IconThemeData Function(
 typedef TextThemeGenerate = TextTheme Function(
     {Brightness brightness, Color color});
 
-IconThemeGenerate iconThemeGenerate;
-TextThemeGenerate textThemeGenerate;
+IconThemeGenerate _iconThemeGenerate;
+TextThemeGenerate _textThemeGenerate;
+
+initFastDevelopOfTitle(
+    IconThemeGenerate iconThemeGenerate, TextThemeGenerate textThemeGenerate) {
+  _iconThemeGenerate = iconThemeGenerate;
+  _textThemeGenerate = textThemeGenerate;
+}
 
 class TitleAction extends StatelessWidget {
   const TitleAction({
@@ -173,9 +179,9 @@ class TitleWidget extends StatelessWidget implements PreferredSizeWidget {
         .setTitle(title, notify: false, allowNull: tWidget != null);
 
     var iconTheme =
-        brightness == null ? null : iconThemeGenerate(brightness: brightness);
+        brightness == null ? null : _iconThemeGenerate(brightness: brightness);
     var textTheme =
-        brightness == null ? null : textThemeGenerate(brightness: brightness);
+        brightness == null ? null : _textThemeGenerate(brightness: brightness);
 
     return Consumer<TitleVM>(
       builder: (_, titleVm, __) {

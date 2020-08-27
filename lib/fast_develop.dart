@@ -58,9 +58,8 @@ class FastDevelopConfig {
     TextThemeGenerate textTheme,
   }) {
     context = context;
-    switchThemeBrightness = switchTB;
-    showToast = toast;
-    iconThemeGenerate = iconTheme;
-    textThemeGenerate = textTheme;
+    initFastDevelopOfData(toast);
+    initFastDevelopOfRootLayout(switchTB);
+    initFastDevelopOfTitle(iconTheme, textTheme);
   }
 }

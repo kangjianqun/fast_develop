@@ -1,3 +1,6 @@
+## [1.0.2]
+修改兼容性与配置项
+
 ## [1.0.1]
 showDialogCustom 新增offset和cushion
 

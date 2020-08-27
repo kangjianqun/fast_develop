@@ -1,11 +1,9 @@
 import 'package:flutter/widgets.dart';
 
+import '../../fast_develop.dart';
+
 /// 子类生成器
 typedef ItemBuild<T> = T Function(dynamic data);
-typedef ToastShow = Function(String hint);
-
-///  toast
-ToastShow showToast;
 
 class ListKV<T> {
   List<KeyValue<T>> list;
@@ -181,7 +179,7 @@ extension StringUtil on String {
         value.isEmpty ||
         value == "" ||
         value.toLowerCase() == "null";
-    if (result && isNotEmpty(toast) && showToast != null) showToast(toast);
+    if (result && isNotEmpty(toast)) showToast(toast);
     return result;
   }
 

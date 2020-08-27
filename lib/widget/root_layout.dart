@@ -9,7 +9,11 @@ typedef ChildBuild<T> = T Function(BuildContext context);
 typedef SwitchThemeBrightness = ThemeData Function(
     Brightness brightness, ThemeData themeData);
 
-SwitchThemeBrightness switchThemeBrightness;
+SwitchThemeBrightness _switchThemeBrightness;
+
+initFastDevelopOfRootLayout(SwitchThemeBrightness switchThemeBrightness) {
+  _switchThemeBrightness = switchThemeBrightness;
+}
 
 class SafePadding {
   bool left, top, right, bottom;
@@ -278,7 +282,7 @@ class MyScaffold extends StatelessWidget {
     var _themeData = themeData;
     if (_themeData == null && brightness != null) {
       _themeData = Theme.of(context);
-      _themeData = switchThemeBrightness(brightness, _themeData);
+      _themeData = _switchThemeBrightness(brightness, _themeData);
     }
 
     if (_themeData != null) {
