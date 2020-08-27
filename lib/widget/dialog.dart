@@ -419,11 +419,11 @@ class DialogCustom extends StatelessWidget {
 }
 
 Widget _buildMaterialDialogTransitions(
-  BuildContext context,
-  Animation<double> animation,
-  Animation<double> secondaryAnimation,
-  Widget child,
-) {
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+    ) {
   return FadeTransition(
     opacity: CurvedAnimation(
       parent: animation,
@@ -448,12 +448,15 @@ Offset fromTop(Animation animation) => Offset(0, animation.value - 1);
 Offset fromBottom(Animation animation) => Offset(0, 1 - animation.value);
 Offset fromTopLeft(Animation anim) => fromLeft(anim) + fromTop(anim);
 
+/// [cushion] 垫层  [offset]偏移值
 Future<T> showDialogCustom<T>({
   @required BuildContext context,
   @required WidgetBuilder builder,
   Duration duration,
   Color barrierColor = Colors.black54,
   bool barrierDismissible = true,
+  bool cushion = true,
+  double offset = 0,
   Location location = Location.center,
   OffsetHandle offsetHandle,
   TextStyle style,
@@ -472,10 +475,10 @@ Future<T> showDialogCustom<T>({
     transitionDuration: duration ?? const Duration(milliseconds: 200),
     transitionBuilder: transition ?? _buildMaterialDialogTransitions,
     pageBuilder: (
-      BuildContext buildContext,
-      Animation<double> animation,
-      Animation<double> secondaryAnimation,
-    ) {
+        BuildContext buildContext,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        ) {
       final Widget pageChild = Builder(
         builder: (context) => DefaultTextStyle(
           style: style ?? StyleText.normal(),
@@ -507,7 +510,7 @@ Future<T> showDialogCustom<T>({
           }
 
           RenderBox renderBox = _targetContext.findRenderObject();
-          Offset offset = renderBox.localToGlobal(Offset.zero);
+          Offset _offset = renderBox.localToGlobal(Offset.zero);
           double left = 0;
           double top = 0;
           switch (location) {
@@ -517,16 +520,16 @@ Future<T> showDialogCustom<T>({
                 child: pageChild,
               );
             case Location.left:
-              left = offset.dx;
+              left = _offset.dx + offset;
               break;
             case Location.right:
-              left = offset.dx + renderBox.size.width;
+              left = _offset.dx + renderBox.size.width + offset;
               break;
             case Location.top:
-              top = offset.dy;
+              top = _offset.dy + offset;
               break;
             case Location.bottom:
-              top = offset.dy + renderBox.size.height;
+              top = _offset.dy + renderBox.size.height + offset;
               break;
           }
 
@@ -537,9 +540,12 @@ Future<T> showDialogCustom<T>({
             } else {
               return Stack(
                 children: <Widget>[
-                  TouchWidget(
-                    onTap: (_) => Router.popBack(),
-                    child: Container(color: Colors.black54),
+                  Spacing.vView(
+                    isShow: cushion,
+                    child: () => TouchWidget(
+                      onTap: (_) => Router.popBack(),
+                      child: Container(color: Colors.black54),
+                    ),
                   ),
                   pageChild,
                 ],
