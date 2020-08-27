@@ -1,6 +1,6 @@
 name: fast_develop
 description: A new fast develop package.
-version: 1.0.2
+version: 1.1.0
 author: kang_1994@outlook.com
 homepage: https://github.com/StrangerKjq/fast_develop
 
@@ -48,6 +48,7 @@ dependencies:
   dio_cookie_manager: ^1.0.0
   dio_http2_adapter: ^1.0.0
 
+  convert: ^2.1.1
   crypto: ^2.1.5
   # State https://pub.flutter-io.cn/packages/provider
   provider: ^4.3.1

@@ -23,6 +23,7 @@ export 'widget/level_linkage.dart';
 export 'widget/refresh.dart';
 export 'widget/primary_scroll_container.dart';
 export 'widget/text.dart';
+export 'widget/unread_hint.dart';
 
 export 'picker/flutter_datetime_picker.dart';
 export 'scrollable_positioned/scrollable_positioned_list.dart';
@@ -42,6 +43,7 @@ export 'src/oss_util.dart';
 export 'src/dispose_util.dart';
 export 'src/thread_utils.dart';
 export 'src/common_utils.dart';
+export 'src/launch_util.dart';
 
 export 'src/decoration.dart';
 export 'src/globalValue.dart';
