@@ -40,7 +40,6 @@ export 'src/net/http.dart';
 export 'src/log.dart';
 export 'src/oss_util.dart';
 export 'src/dispose_util.dart';
-export 'src/data_encryption.dart';
 export 'src/thread_utils.dart';
 export 'src/common_utils.dart';
 

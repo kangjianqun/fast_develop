@@ -12,46 +12,50 @@ dependencies:
   flutter:
     sdk: flutter
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
-
   # https://pub.flutter-io.cn/packages/fast_mvvm
-  fast_mvvm: 1.2.0+2
+  fast_mvvm: ^1.2.0+2
 
-  fast_router: 1.0.0
+  fast_router: ^1.0.0
 
   # Flutter 轮播图 https://pub.flutter-io.cn/packages/flutter_swiper
   flutter_swiper: ^1.1.6
   #  一个适用于iOS和Android的Flutter插件，用于从图像库中拾取图像，并使用相机拍摄新照片。
   #  https://pub.flutter-io.cn/packages/image_picker
-  image_picker: 0.6.7+4
+  image_picker: ^0.6.7+4
   # 图片缓存 https://pub.flutter-io.cn/packages/cached_network_image
-  cached_network_image: 2.3.0-rc
+  cached_network_image: ^2.3.1
   # https://pub.flutter-io.cn/packages/cropƒ
-  crop: 0.4.0
+  crop: ^0.4.0
 
   # https://pub.flutter-io.cn/packages/url_launcher
-  url_launcher: 5.5.0
+  url_launcher: ^5.5.0
 
   # 本地json对象存储 https://pub.flutter-io.cn/packages/localstorage
-  localstorage: 3.0.2+5
+  localstorage: ^3.0.2+5
   #  https://pub.flutter-io.cn/packages/flutter_screenutil
-  flutter_screenutil: 2.3.1
+  flutter_screenutil: ^2.3.1
 
   #  https://pub.flutter-io.cn/packages/flutter_easyrefresh
-  flutter_easyrefresh: 2.1.5
+  flutter_easyrefresh: ^2.1.5
   # https://pub.flutter-io.cn/packages/universal_io
   universal_io: ^1.0.1
   # https://pub.flutter-io.cn/packages/device_info
-  device_info: 0.4.2+4
+  device_info: ^0.4.2+4
   # https://pub.flutter-io.cn/packages/package_info
-  package_info: 0.4.1
+  package_info: ^0.4.1
   # https://pub.flutter-io.cn/packages/dio
-  dio: 3.0.9
+  dio: ^3.0.9
   dio_cookie_manager: ^1.0.0
   dio_http2_adapter: ^1.0.0
+
+  crypto: ^2.1.5
+  # State https://pub.flutter-io.cn/packages/provider
+  provider: ^4.3.1
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
 flutter:
 
   # To add assets to your package, add an assets section, like this:
