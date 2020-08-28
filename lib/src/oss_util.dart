@@ -3,10 +3,8 @@ import 'package:crypto/crypto.dart';
 import 'dart:math';
 
 class OssUtil {
-  static String accessKeyId =
-      'LTAI4Fmtrf6ziNij8wAn75xs'; //临时用户的AccessKeyId，通过后台接口动态获取
-  static String accessKeySecret =
-      'qmtlepFlkKQbwSMwgN9MgABTU6KdDB'; //临时用户的accessKeySecret，通过后台接口动态获取
+  static String accessKeyId = ''; //临时用户的AccessKeyId，通过后台接口动态获取
+  static String accessKeySecret = ''; //临时用户的accessKeySecret，通过后台接口动态获取
   static String stsToken = ""; //临时用户鉴权Token,临时用户认证时必传，通过后台接口动态获取
 
   //验证文本域
