@@ -40,7 +40,7 @@ class DialogSimple {
 
     if (_dict.length == 0 && _loadStatue) {
       _loadStatue = false;
-      tryCatch(() => Router.popBackDialog(FastDevelopConfig.context));
+      tryCatch(() => FastRouter.popBackDialog(FastDevelopConfig.context));
     }
   }
 }
@@ -75,7 +75,7 @@ class DialogListSelect extends StatelessWidget {
           paddingInside: Spacing.all(size: 0),
           paddingChild: 56,
           onTap: (_) {
-            Router.popBack();
+            FastRouter.popBack();
             if (item.function != null) item.function();
           },
           child: Center(child: Text(item.name)),
@@ -206,7 +206,7 @@ class DialogView extends Dialog {
         Expanded(
           child: TouchWidget(
             onTap: (_) {
-              Router.popBack();
+              FastRouter.popBack();
               if (onOk != null) onOk(context);
             },
             child: Container(
@@ -219,7 +219,7 @@ class DialogView extends Dialog {
         Expanded(
           child: TouchWidget(
             onTap: (_) {
-              Router.popBack();
+              FastRouter.popBack();
               if (onNo != null) onNo(context);
             },
             child: Container(
@@ -370,7 +370,7 @@ class DialogCustom extends StatelessWidget {
           Positioned(
             right: 0,
             child: Button.img(
-              onTap: (_) => Router.popBack(),
+              onTap: (_) => FastRouter.popBack(),
               icon: Icons.close,
             ),
           ),
@@ -538,7 +538,7 @@ Future<T> showDialogCustom<T>({
                     isShow: cushion,
                     child: () => TouchWidget(
                       pressedOpacity: 0,
-                      onTap: (_) => Router.popBack(),
+                      onTap: (_) => FastRouter.popBack(),
                       child: Container(color: Colors.black54),
                     ),
                   ),

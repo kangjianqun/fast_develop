@@ -263,7 +263,7 @@ class ImageBrowse extends StatelessWidget {
             size: 120,
             paddingChild: 32,
             onTap: (ctx) => dialogImageModify(ctx, photo, next: () {
-              Router.popBackDialog(ctx);
+              FastRouter.popBackDialog(ctx);
               delete();
             }),
           ),
@@ -273,7 +273,7 @@ class ImageBrowse extends StatelessWidget {
       return [
         Spacing.spacePadding(size: 100),
         TouchWidget(
-          onTap: (ctx) => Router.popBackDialog(ctx),
+          onTap: (ctx) => FastRouter.popBackDialog(ctx),
           child: ClipRRect(
             borderRadius: SBorderRadius.circle(),
             child: Container(

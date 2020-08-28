@@ -13,7 +13,7 @@ class CropVM extends BaseViewModel {
   crop() async {
     var img = await controller.crop();
     var byteData = await img.toByteData(format: ImageByteFormat.png);
-    Router.popBack(result: byteData);
+    FastRouter.popBack(result: byteData);
   }
 }
 
