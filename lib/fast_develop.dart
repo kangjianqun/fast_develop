@@ -44,6 +44,7 @@ export 'src/dispose_util.dart';
 export 'src/thread_utils.dart';
 export 'src/common_utils.dart';
 export 'src/launch_util.dart';
+export 'src/data_encryption.dart';
 
 export 'src/decoration.dart';
 export 'src/globalValue.dart';
