@@ -8,12 +8,6 @@ Set<String> _dict = Set();
 bool _loadStatue = false;
 
 class DialogSimple {
-  static BuildContext context;
-
-  static init(BuildContext context) {
-    DialogSimple.context = context;
-  }
-
   static String _s = "临时弹窗";
 
   static showS() => show(_s);
@@ -27,7 +21,7 @@ class DialogSimple {
     }
     _loadStatue = true;
     showDialogCustom(
-      context: context,
+      context: FastDevelopConfig.context,
       barrierDismissible: false,
       builder: (_) => WillPopScope(
         onWillPop: () async => false,
@@ -46,7 +40,7 @@ class DialogSimple {
 
     if (_dict.length == 0 && _loadStatue) {
       _loadStatue = false;
-      tryCatch(() => Router.popBackDialog(context));
+      tryCatch(() => Router.popBackDialog(FastDevelopConfig.context));
     }
   }
 }
@@ -419,11 +413,11 @@ class DialogCustom extends StatelessWidget {
 }
 
 Widget _buildMaterialDialogTransitions(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
-    ) {
+  BuildContext context,
+  Animation<double> animation,
+  Animation<double> secondaryAnimation,
+  Widget child,
+) {
   return FadeTransition(
     opacity: CurvedAnimation(
       parent: animation,
@@ -475,10 +469,10 @@ Future<T> showDialogCustom<T>({
     transitionDuration: duration ?? const Duration(milliseconds: 200),
     transitionBuilder: transition ?? _buildMaterialDialogTransitions,
     pageBuilder: (
-        BuildContext buildContext,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-        ) {
+      BuildContext buildContext,
+      Animation<double> animation,
+      Animation<double> secondaryAnimation,
+    ) {
       final Widget pageChild = Builder(
         builder: (context) => DefaultTextStyle(
           style: style ?? StyleText.normal(),
@@ -543,6 +537,7 @@ Future<T> showDialogCustom<T>({
                   Spacing.vView(
                     isShow: cushion,
                     child: () => TouchWidget(
+                      pressedOpacity: 0,
                       onTap: (_) => Router.popBack(),
                       child: Container(color: Colors.black54),
                     ),

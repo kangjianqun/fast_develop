@@ -5,7 +5,7 @@ import '../fast_develop.dart';
 class LaunchUtil {
   static void launchTel(String phone) async {
     showDialogCustom(
-      context: DialogSimple.context,
+      context: FastDevelopConfig.context,
       builder: (_) => DialogView.confirm(
         content: "立即拨号：$phone",
         onOk: (_) => LaunchUtil.launchUrl("tel:$phone"),

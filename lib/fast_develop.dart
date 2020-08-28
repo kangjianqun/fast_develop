@@ -50,19 +50,19 @@ export 'src/decoration.dart';
 export 'src/globalValue.dart';
 export 'src/types.dart';
 
+void initFastDevelopConfig({
+  BuildContext context,
+  ToastShow toast,
+  SwitchThemeBrightness switchTB,
+  IconThemeGenerate iconTheme,
+  TextThemeGenerate textTheme,
+}) {
+  FastDevelopConfig.context = context;
+  initFastDevelopOfData(toast);
+  initFastDevelopOfRootLayout(switchTB);
+  initFastDevelopOfTitle(iconTheme, textTheme);
+}
+
 class FastDevelopConfig {
   static BuildContext context;
-
-  void initFastDevelopConfig({
-    BuildContext context,
-    ToastShow toast,
-    SwitchThemeBrightness switchTB,
-    IconThemeGenerate iconTheme,
-    TextThemeGenerate textTheme,
-  }) {
-    context = context;
-    initFastDevelopOfData(toast);
-    initFastDevelopOfRootLayout(switchTB);
-    initFastDevelopOfTitle(iconTheme, textTheme);
-  }
 }
