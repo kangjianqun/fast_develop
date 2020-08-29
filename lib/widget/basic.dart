@@ -69,9 +69,9 @@ class IconText extends StatelessWidget {
     @required this.text,
     this.isV = true,
     this.iconIsLeftOrTop = true,
-    this.spacing = 4,
+    this.spacing,
     this.adaptChildrenSize = false,
-    this.iconBottom = 8,
+    this.iconBottom,
     this.isExpanded = false,
     this.crossAxisAlignment,
   })  : this.data = null,
@@ -90,7 +90,7 @@ class IconText extends StatelessWidget {
     this.textSize,
     this.isV = true,
     this.iconIsLeftOrTop = true,
-    this.spacing = 4,
+    this.spacing,
     this.adaptChildrenSize = false,
     this.iconBottom = 4,
     this.isExpanded = false,
@@ -104,7 +104,7 @@ class IconText extends StatelessWidget {
     @required this.icon,
     this.isV = true,
     this.iconIsLeftOrTop = true,
-    this.spacing = 4,
+    this.spacing,
     this.adaptChildrenSize = false,
     this.iconBottom = 0,
     this.isExpanded = false,
@@ -124,7 +124,7 @@ class IconText extends StatelessWidget {
   final Color color;
   final double size;
   final double textSize;
-  final int spacing;
+  final num spacing;
   final double iconBottom;
   final bool isV;
   final bool iconIsLeftOrTop;
@@ -161,9 +161,9 @@ class IconText extends StatelessWidget {
 //    ThemeData themeData = Theme.of(context);
 
     if (isV) {
-      h = spacing;
+      h = spacing ?? FastDevelopConfig.iconTextOfSpacing;
     } else {
-      w = spacing;
+      w = spacing ?? FastDevelopConfig.iconTextOfSpacing;
     }
     List<Widget> childView = [];
     var view;
@@ -743,6 +743,7 @@ class SingleLine<T> extends StatelessWidget {
     this.centerWidget,
     this.onTap,
     this.rightShow = true,
+    this.isPrimary,
     this.rightTxt,
     this.rightTxtStyle,
     this.url,
@@ -773,6 +774,7 @@ class SingleLine<T> extends StatelessWidget {
     this.leftView,
     this.onTap,
     this.rightShow = true,
+    this.isPrimary,
     this.rightTxt,
     this.rightTxtStyle,
     this.url,
@@ -803,6 +805,7 @@ class SingleLine<T> extends StatelessWidget {
     this.iconUrl,
     this.onTap,
     this.rightShow = true,
+    this.isPrimary,
     this.rightTxt,
     this.rightTxtStyle,
     this.url,
@@ -833,6 +836,7 @@ class SingleLine<T> extends StatelessWidget {
     this.iconUrl,
     this.onTap,
     this.rightShow = false,
+    this.isPrimary,
     this.rightTxt,
     this.rightTxtStyle,
     this.url,
@@ -863,6 +867,7 @@ class SingleLine<T> extends StatelessWidget {
     this.iconUrl,
     this.onTap,
     this.rightShow = false,
+    this.isPrimary,
     this.rightTxt,
     this.rightTxtStyle,
     this.url,
@@ -884,6 +889,7 @@ class SingleLine<T> extends StatelessWidget {
   final IconData iconData;
   final TouchTap onTap;
   final Color backgroundColor;
+  final bool isPrimary;
   final bool rightShow;
   final num minHeight;
   final num iconHeight;
@@ -915,7 +921,7 @@ class SingleLine<T> extends StatelessWidget {
         nameLeftPadding ?? FastDevelopConfig.singleLineOfNameLeftPadding;
     var _nameRightPadding =
         nameRightPadding ?? FastDevelopConfig.singleLineOfNameRightPadding;
-
+    var _isPrimary = isPrimary ?? FastDevelopConfig.singleLineOfIsPrimary;
     return TouchWidget(
       onTap: onTap,
       child: ConstrainedBox(
@@ -943,8 +949,10 @@ class SingleLine<T> extends StatelessWidget {
             Spacing.vView(
               isShow: rightShow,
               child: () => Container(
-                child: Icon(Icons.chevron_right, color: theme.primaryColor),
-              ),
+                  child: Icon(
+                Icons.chevron_right,
+                color: _isPrimary ? iconColor : theme.primaryColor,
+              )),
             ),
           ]),
         ),

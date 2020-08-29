@@ -61,6 +61,9 @@ void initFastDevelopConfig({
   num singleLineOfNameLeftPadding = 20,
   num singleLineOfNameRightPadding = 80,
   double touchWidgetOfPressedOpacity = 0.4,
+  bool singleLineOfIsPrimary = false,
+  num iconTextOfSpacing = 4,
+  num iconTextOfIconBottom = 8,
 }) {
   FastDevelopConfig.context = context;
   FastDevelopConfig.singleLineOfMinHeight = singleLineOfMinHeight;
@@ -68,6 +71,9 @@ void initFastDevelopConfig({
   FastDevelopConfig.singleLineOfNameLeftPadding = singleLineOfNameLeftPadding;
   FastDevelopConfig.singleLineOfNameRightPadding = singleLineOfNameRightPadding;
   FastDevelopConfig.touchWidgetOfPressedOpacity = touchWidgetOfPressedOpacity;
+  FastDevelopConfig.singleLineOfIsPrimary = singleLineOfIsPrimary;
+  FastDevelopConfig.iconTextOfSpacing = iconTextOfSpacing;
+  FastDevelopConfig.iconTextOfIconBottom = iconTextOfIconBottom;
   initFastDevelopOfData(toast);
   initFastDevelopOfRootLayout(switchTB);
   initFastDevelopOfTitle(iconTheme, textTheme);
@@ -80,5 +86,9 @@ class FastDevelopConfig {
   static num singleLineOfIconHeight;
   static num singleLineOfNameLeftPadding;
   static num singleLineOfNameRightPadding;
+  static bool singleLineOfIsPrimary;
   static double touchWidgetOfPressedOpacity;
+
+  static num iconTextOfSpacing;
+  static num iconTextOfIconBottom;
 }
