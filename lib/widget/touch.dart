@@ -31,6 +31,7 @@ class TouchWidget extends StatefulWidget {
   ///
   /// This defaults to 0.4. If null, opacity will not change on pressed if using
   /// your own custom effects is desired.
+  /// 0 关闭
   final double pressedOpacity;
 
   @override
@@ -69,7 +70,9 @@ class _TouchWidgetState extends State<TouchWidget>
   }
 
   void _setTween() {
-    _opacityTween.end = widget.pressedOpacity ?? 1.0;
+    _opacityTween.end = widget.pressedOpacity ??
+        FastDevelopConfig.touchWidgetOfPressedOpacity ??
+        1.0;
   }
 
   @override
@@ -115,37 +118,37 @@ class _TouchWidgetState extends State<TouchWidget>
 
   @override
   Widget build(BuildContext context) {
-    bool enabled = widget.onTap != null;
+    bool enabled = widget.onTap != null && widget.pressedOpacity > 0;
 
     return Padding(
-        padding: Spacing.all(size: widget.padding),
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTapDown: enabled ? _handleTapDown : null,
-          onTapUp: enabled ? _handleTapUp : null,
-          onTapCancel: enabled ? _handleTapCancel : null,
-          onTap: () {
-            if (widget.onTap == null) return;
+      padding: Spacing.all(size: widget.padding),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTapDown: enabled ? _handleTapDown : null,
+        onTapUp: enabled ? _handleTapUp : null,
+        onTapCancel: enabled ? _handleTapCancel : null,
+        onTap: () {
+          if (widget.onTap == null) return;
 
-            if (widget.touchSpaced <= 0) {
-              widget.onTap(context);
-            } else {
-              _touchSp ??= Duration(seconds: widget.touchSpaced);
-              if (_lastPressed == null ||
-                  DateTime.now().difference(_lastPressed) > _touchSp) {
-                _lastPressed = DateTime.now();
-                widget.onTap(context);
-              }
+          if (widget.touchSpaced <= 0) {
+            widget.onTap(context);
+          } else {
+            _touchSp ??= Duration(seconds: widget.touchSpaced);
+            if (_lastPressed == null ||
+                DateTime.now().difference(_lastPressed) > _touchSp) {
               _lastPressed = DateTime.now();
+              widget.onTap(context);
             }
-          },
-          child: Semantics(
-            button: true,
-            child: FadeTransition(
-              opacity: _opacityAnimation,
-              child: widget.child,
-            ),
-          ),
-        ));
+            _lastPressed = DateTime.now();
+          }
+        },
+        child: Semantics(
+          button: true,
+          child: widget.pressedOpacity == 0
+              ? widget.child
+              : FadeTransition(opacity: _opacityAnimation, child: widget.child),
+        ),
+      ),
+    );
   }
 }

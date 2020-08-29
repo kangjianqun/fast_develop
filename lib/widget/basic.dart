@@ -734,6 +734,7 @@ class SingleLine<T> extends StatelessWidget {
     this.padding,
     this.nameTxtStyle,
     this.nameWidget,
+    this.leftView,
     this.onDropdownChanged,
     this.dropdownItems,
     this.dropdownValue,
@@ -747,6 +748,9 @@ class SingleLine<T> extends StatelessWidget {
     this.url,
     this.decoration,
     this.minHeight = 144,
+    this.iconHeight = 90,
+    this.nameLeftPadding = 10,
+    this.nameRightPadding = 88,
     this.backgroundColor,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
@@ -766,6 +770,7 @@ class SingleLine<T> extends StatelessWidget {
     this.name,
     this.nameTxtStyle,
     this.nameWidget,
+    this.leftView,
     this.onTap,
     this.rightShow = true,
     this.rightTxt,
@@ -773,6 +778,9 @@ class SingleLine<T> extends StatelessWidget {
     this.url,
     this.decoration,
     this.minHeight = 144,
+    this.iconHeight = 90,
+    this.nameLeftPadding = 10,
+    this.nameRightPadding = 88,
     this.backgroundColor,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
@@ -784,6 +792,7 @@ class SingleLine<T> extends StatelessWidget {
     @required this.name,
     this.nameTxtStyle,
     this.nameWidget,
+    this.leftView,
     this.onDropdownChanged,
     this.dropdownItems,
     this.dropdownValue,
@@ -799,6 +808,9 @@ class SingleLine<T> extends StatelessWidget {
     this.url,
     this.decoration,
     this.minHeight = 144,
+    this.iconHeight = 90,
+    this.nameLeftPadding = 10,
+    this.nameRightPadding = 88,
     this.backgroundColor,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
@@ -808,6 +820,7 @@ class SingleLine<T> extends StatelessWidget {
     Key key,
     this.padding,
     @required this.name,
+    this.leftView,
     this.nameWidget,
     this.onDropdownChanged,
     this.dropdownItems,
@@ -825,6 +838,9 @@ class SingleLine<T> extends StatelessWidget {
     this.url,
     this.decoration,
     this.minHeight = 144,
+    this.iconHeight = 90,
+    this.nameLeftPadding = 10,
+    this.nameRightPadding = 88,
     this.backgroundColor,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
@@ -842,6 +858,7 @@ class SingleLine<T> extends StatelessWidget {
     this.centerTxtStyle,
     this.centerWidget,
     this.nameWidget,
+    this.leftView,
     this.iconData,
     this.iconUrl,
     this.onTap,
@@ -851,6 +868,9 @@ class SingleLine<T> extends StatelessWidget {
     this.url,
     this.decoration,
     this.minHeight = 144,
+    this.iconHeight = 90,
+    this.nameLeftPadding = 10,
+    this.nameRightPadding = 88,
     this.backgroundColor,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
@@ -859,12 +879,16 @@ class SingleLine<T> extends StatelessWidget {
   final String name;
   final TextStyle nameTxtStyle;
   final Widget nameWidget;
+  final Widget leftView;
   final String iconUrl;
   final IconData iconData;
   final TouchTap onTap;
   final Color backgroundColor;
   final bool rightShow;
   final num minHeight;
+  final num iconHeight;
+  final num nameLeftPadding;
+  final num nameRightPadding;
   final String centerTxt;
   final TextStyle centerTxtStyle;
   final Widget centerWidget;
@@ -885,16 +909,23 @@ class SingleLine<T> extends StatelessWidget {
         backgroundColor ?? theme.backgroundColor ?? CConfig.cBackgroundColor;
     Color iconColor = iconThemeData.color;
 
+    var _minHeight = minHeight ?? FastDevelopConfig.singleLineOfMinHeight;
+    var _iconHeight = iconHeight ?? FastDevelopConfig.singleLineOfIconHeight;
+    var _nameLeftPadding =
+        nameLeftPadding ?? FastDevelopConfig.singleLineOfNameLeftPadding;
+    var _nameRightPadding =
+        nameRightPadding ?? FastDevelopConfig.singleLineOfNameRightPadding;
+
     return TouchWidget(
       onTap: onTap,
       child: ConstrainedBox(
-        constraints: BoxConstraints(minHeight: minHeight.sh),
+        constraints: BoxConstraints(minHeight: _minHeight.sh),
         child: Container(
           padding: padding ?? Spacing.all(leftR: 32, topB: 16),
           decoration: decoration ?? DecoUtil.normal(color: bg, radius: 15),
           child: Row(children: <Widget>[
-            _icon(iconColor),
-            _name(),
+            _icon(iconColor, _iconHeight, _nameLeftPadding),
+            _name(_nameRightPadding),
             _center(),
             _dropdown(bg),
             Spacing.vView(
@@ -906,15 +937,13 @@ class SingleLine<T> extends StatelessWidget {
             ),
             Spacing.vView(
               isShow: rightTxt.en,
-              child: () => Text(
-                rightTxt,
-                style: rightTxtStyle ?? StyleText.grey(size: 32),
-              ),
+              child: () =>
+                  Text(rightTxt, style: rightTxtStyle ?? StyleText.grey()),
             ),
             Spacing.vView(
               isShow: rightShow,
               child: () => Container(
-                child: Icon(Icons.chevron_right, color: iconColor),
+                child: Icon(Icons.chevron_right, color: theme.primaryColor),
               ),
             ),
           ]),
@@ -923,30 +952,32 @@ class SingleLine<T> extends StatelessWidget {
     );
   }
 
-  Widget _icon(Color iconColor) {
-    Widget view;
+  Widget _icon(Color iconColor, num iconHeight, num nameLeftPadding) {
+    Widget view = leftView;
 
-    if (iconUrl.en) {
-      view = WrapperImage.size(size: 90.s, url: iconUrl, fit: BoxFit.contain);
-    } else {
-      view = Spacing.vView(
-        isShow: iconData != null,
-        child: () => Icon(iconData, size: 90.ssp, color: iconColor),
-      );
+    if (view == null) {
+      if (iconUrl.en) {
+        view = WrapperImage.size(
+            size: iconHeight.s, url: iconUrl, fit: BoxFit.contain);
+      } else {
+        view = Spacing.vView(
+          isShow: iconData != null,
+          child: () => Icon(iconData, size: iconHeight.ssp, color: iconColor),
+        );
+      }
     }
 
     return Container(
-      width: iconUrl.en || iconData != null ? 72.s : null,
-      margin: Spacing.leftOrRight(size: SConfig.padding, isLeft: false),
+      margin: Spacing.leftOrRight(size: nameLeftPadding, isLeft: false),
       child: view,
     );
   }
 
-  Widget _name() {
+  Widget _name(num nameRightPadding) {
     var leftChild =
         nameWidget ?? Text(name, style: nameTxtStyle ?? StyleText.normal());
     return Container(
-      margin: Spacing.leftOrRight(size: 88, isLeft: false),
+      margin: Spacing.leftOrRight(size: nameRightPadding, isLeft: false),
       child: leftChild,
     );
   }

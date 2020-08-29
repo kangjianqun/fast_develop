@@ -56,8 +56,18 @@ void initFastDevelopConfig({
   SwitchThemeBrightness switchTB,
   IconThemeGenerate iconTheme,
   TextThemeGenerate textTheme,
+  num singleLineOfMinHeight = 144,
+  num singleLineOfIconHeight = 90,
+  num singleLineOfNameLeftPadding = 20,
+  num singleLineOfNameRightPadding = 80,
+  double touchWidgetOfPressedOpacity = 0.4,
 }) {
   FastDevelopConfig.context = context;
+  FastDevelopConfig.singleLineOfMinHeight = singleLineOfMinHeight;
+  FastDevelopConfig.singleLineOfIconHeight = singleLineOfIconHeight;
+  FastDevelopConfig.singleLineOfNameLeftPadding = singleLineOfNameLeftPadding;
+  FastDevelopConfig.singleLineOfNameRightPadding = singleLineOfNameRightPadding;
+  FastDevelopConfig.touchWidgetOfPressedOpacity = touchWidgetOfPressedOpacity;
   initFastDevelopOfData(toast);
   initFastDevelopOfRootLayout(switchTB);
   initFastDevelopOfTitle(iconTheme, textTheme);
@@ -65,4 +75,10 @@ void initFastDevelopConfig({
 
 class FastDevelopConfig {
   static BuildContext context;
+
+  static num singleLineOfMinHeight;
+  static num singleLineOfIconHeight;
+  static num singleLineOfNameLeftPadding;
+  static num singleLineOfNameRightPadding;
+  static double touchWidgetOfPressedOpacity;
 }
