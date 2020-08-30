@@ -951,7 +951,7 @@ class SingleLine<T> extends StatelessWidget {
               child: () => Container(
                   child: Icon(
                 Icons.chevron_right,
-                color: _isPrimary ? iconColor : theme.primaryColor,
+                color: _isPrimary ? theme.primaryColor : iconColor,
               )),
             ),
           ]),

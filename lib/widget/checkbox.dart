@@ -49,7 +49,10 @@ class Checkbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _size = (size + padding).s;
+    var _spacing = spacing ?? FastDevelopConfig.checkboxOfSpacing;
+    var __size = size ?? FastDevelopConfig.checkboxOfSize;
+    var _padding = padding ?? FastDevelopConfig.checkboxOfPadding;
+    var _size = (__size + _padding).s;
 
     final ThemeData themeData = Theme.of(context);
     var borderColor = value
@@ -66,7 +69,7 @@ class Checkbox extends StatelessWidget {
     Widget _view = Container(
       width: _size,
       height: _size,
-      margin: description != null ? null : Spacing.all(size: padding),
+      margin: description != null ? null : Spacing.all(size: _padding),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(_size / 2)),
         color: bgColor,
@@ -77,7 +80,7 @@ class Checkbox extends StatelessWidget {
 
     if (description != null) {
       _view = Row(
-          children: [_view, Spacing.spacingView(width: spacing), description]);
+          children: [_view, Spacing.spacingView(width: _spacing), description]);
     }
 
     if (onChanged == null)

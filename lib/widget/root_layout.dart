@@ -303,7 +303,7 @@ class MyBody extends StatelessWidget {
     Key key,
     @required this.children,
     this.topWidget,
-    this.padding = 32,
+    this.padding,
     this.left = 0,
     this.top = 0,
     this.right = 0,
@@ -331,7 +331,7 @@ class MyBody extends StatelessWidget {
     @required this.itemCount,
     @required this.itemBuilder,
     this.topWidget,
-    this.padding = 32,
+    this.padding,
     this.left = 0,
     this.top = 0,
     this.right = 0,
@@ -358,7 +358,7 @@ class MyBody extends StatelessWidget {
     Key key,
     @required this.child,
     this.topWidget,
-    this.padding = 32,
+    this.padding,
     this.left = 0,
     this.top = 0,
     this.right = 0,
@@ -412,7 +412,7 @@ class MyBody extends StatelessWidget {
   final Header header;
   final Footer footer;
 
-  Widget _content() {
+  Widget _content(num padding) {
     List<Widget> _children = children ?? [child];
 
     Widget view;
@@ -464,12 +464,13 @@ class MyBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget view = _content();
+    var _padding = padding ?? FastDevelopConfig.myBodyOfPadding;
+    Widget view = _content(_padding);
     if (topWidget != null) {
       Widget _topWidget = topWidget;
       if (topShrink)
         _topWidget = Container(
-          margin: Spacing.all(size: padding),
+          margin: Spacing.all(size: _padding),
           child: topWidget,
         );
 

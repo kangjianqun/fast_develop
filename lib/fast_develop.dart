@@ -50,6 +50,7 @@ export 'src/decoration.dart';
 export 'src/globalValue.dart';
 export 'src/types.dart';
 
+/// 默认 1920*1080
 void initFastDevelopConfig({
   BuildContext context,
   ToastShow toast,
@@ -64,6 +65,11 @@ void initFastDevelopConfig({
   bool singleLineOfIsPrimary = false,
   num iconTextOfSpacing = 4,
   num iconTextOfIconBottom = 8,
+  num touchWidgetOfPadding = 0,
+  num myBodyOfPadding = 32,
+  num checkboxOfSize = 50,
+  num checkboxOfSpacing = 16,
+  num checkboxOfPadding = 8,
 }) {
   FastDevelopConfig.context = context;
   FastDevelopConfig.singleLineOfMinHeight = singleLineOfMinHeight;
@@ -74,6 +80,11 @@ void initFastDevelopConfig({
   FastDevelopConfig.singleLineOfIsPrimary = singleLineOfIsPrimary;
   FastDevelopConfig.iconTextOfSpacing = iconTextOfSpacing;
   FastDevelopConfig.iconTextOfIconBottom = iconTextOfIconBottom;
+  FastDevelopConfig.touchWidgetOfPadding = touchWidgetOfPadding;
+  FastDevelopConfig.myBodyOfPadding = myBodyOfPadding;
+  FastDevelopConfig.checkboxOfSize = checkboxOfSize;
+  FastDevelopConfig.checkboxOfSpacing = checkboxOfSpacing;
+  FastDevelopConfig.checkboxOfPadding = checkboxOfPadding;
   initFastDevelopOfData(toast);
   initFastDevelopOfRootLayout(switchTB);
   initFastDevelopOfTitle(iconTheme, textTheme);
@@ -87,8 +98,16 @@ class FastDevelopConfig {
   static num singleLineOfNameLeftPadding;
   static num singleLineOfNameRightPadding;
   static bool singleLineOfIsPrimary;
+
   static double touchWidgetOfPressedOpacity;
+  static double touchWidgetOfPadding;
 
   static num iconTextOfSpacing;
   static num iconTextOfIconBottom;
+
+  static num myBodyOfPadding;
+
+  static num checkboxOfSize;
+  static num checkboxOfSpacing;
+  static num checkboxOfPadding;
 }

@@ -9,8 +9,8 @@ class TouchWidget extends StatefulWidget {
     Key key,
     @required this.child,
     this.onTap,
-    this.pressedOpacity = 0.4,
-    this.padding = 0,
+    this.pressedOpacity,
+    this.padding,
     int touchSpaced,
   })  : this.onDoubleTap = null,
         this.onLongPressUp = null,
@@ -119,9 +119,9 @@ class _TouchWidgetState extends State<TouchWidget>
   @override
   Widget build(BuildContext context) {
     bool enabled = widget.onTap != null && widget.pressedOpacity > 0;
-
+    var _padding = widget.padding ?? FastDevelopConfig.touchWidgetOfPadding;
     return Padding(
-      padding: Spacing.all(size: widget.padding),
+      padding: Spacing.all(size: _padding),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: enabled ? _handleTapDown : null,
