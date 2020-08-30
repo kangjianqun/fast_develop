@@ -48,10 +48,12 @@ class _TouchWidgetState extends State<TouchWidget>
   Animation<double> _opacityAnimation;
   DateTime _lastPressed;
   Duration _touchSp;
-
+  var _pressedOpacity;
   @override
   void initState() {
     super.initState();
+    _pressedOpacity =
+        widget.pressedOpacity ?? FastDevelopConfig.touchWidgetOfPressedOpacity;
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 200),
       value: 0.0,
@@ -70,9 +72,7 @@ class _TouchWidgetState extends State<TouchWidget>
   }
 
   void _setTween() {
-    _opacityTween.end = widget.pressedOpacity ??
-        FastDevelopConfig.touchWidgetOfPressedOpacity ??
-        1.0;
+    _opacityTween.end = _pressedOpacity ?? 1.0;
   }
 
   @override
@@ -118,7 +118,7 @@ class _TouchWidgetState extends State<TouchWidget>
 
   @override
   Widget build(BuildContext context) {
-    bool enabled = widget.onTap != null && widget.pressedOpacity > 0;
+    bool enabled = widget.onTap != null && _pressedOpacity > 0;
     var _padding = widget.padding ?? FastDevelopConfig.touchWidgetOfPadding;
     return Padding(
       padding: Spacing.all(size: _padding),
@@ -144,7 +144,7 @@ class _TouchWidgetState extends State<TouchWidget>
         },
         child: Semantics(
           button: true,
-          child: widget.pressedOpacity == 0
+          child: _pressedOpacity == 0
               ? widget.child
               : FadeTransition(opacity: _opacityAnimation, child: widget.child),
         ),

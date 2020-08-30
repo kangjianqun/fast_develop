@@ -72,6 +72,8 @@ void initFastDevelopConfig({
   num checkboxOfPadding = 8,
   num cardExOfPaddingSize = 20,
   num cardExOfMarginSize = 0,
+  num titleWidgetOfHeight = 114,
+  num titleWidgetOfActionSpacing = 32,
 }) {
   FastDevelopConfig.context = context;
 
@@ -95,6 +97,9 @@ void initFastDevelopConfig({
 
   FastDevelopConfig.cardExOfPaddingSize = cardExOfPaddingSize;
   FastDevelopConfig.cardExOfMarginSize = cardExOfMarginSize;
+
+  FastDevelopConfig.titleWidgetOfHeight = titleWidgetOfHeight;
+  FastDevelopConfig.titleWidgetOfActionSpacing = titleWidgetOfActionSpacing;
   initFastDevelopOfData(toast);
   initFastDevelopOfRootLayout(switchTB);
   initFastDevelopOfTitle(iconTheme, textTheme);
@@ -123,4 +128,7 @@ class FastDevelopConfig {
 
   static num cardExOfPaddingSize;
   static num cardExOfMarginSize;
+
+  static num titleWidgetOfHeight;
+  static num titleWidgetOfActionSpacing;
 }

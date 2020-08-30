@@ -155,34 +155,35 @@ class TitleWidget extends StatelessWidget implements PreferredSizeWidget {
     this.titleIsCenter = false,
     this.backgroundColor,
     this.actions,
-    this.actionSpacing = 32,
+    this.actionSpacing,
     this.tWidget,
     this.height,
     this.brightness,
   }) : super(key: key);
 
   final num height;
+  final num actionSpacing;
   final String title;
   final Widget tWidget;
   final bool titleIsCenter;
   final Color backgroundColor;
   final List<Widget> actions;
-  final int actionSpacing;
   final Brightness brightness;
 
   @override
-  Size get preferredSize => Size.fromHeight(height?.toDouble() ?? 144.sh);
+  Size get preferredSize =>
+      Size.fromHeight((height ?? FastDevelopConfig.titleWidgetOfHeight).sh);
 
   @override
   Widget build(BuildContext context) {
+    var _actionSpacing =
+        actionSpacing ?? FastDevelopConfig.titleWidgetOfActionSpacing;
     getVM<TitleVM>(context)
         .setTitle(title, notify: false, allowNull: tWidget != null);
-
     var iconTheme =
         brightness == null ? null : _iconThemeGenerate(brightness: brightness);
     var textTheme =
         brightness == null ? null : _textThemeGenerate(brightness: brightness);
-
     return Consumer<TitleVM>(
       builder: (_, titleVm, __) {
 //        LogUtil.printLog("titleTxtNameChanger: ${titleVm.title}");
@@ -190,7 +191,7 @@ class TitleWidget extends StatelessWidget implements PreferredSizeWidget {
         if (actions != null) {
           actionChild = [];
           actionChild.addAll(actions);
-          actionChild.add(Spacing.spacingView(width: actionSpacing));
+          actionChild.add(Spacing.spacingView(width: _actionSpacing));
         }
 
         Widget view = AppBar(
