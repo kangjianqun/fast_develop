@@ -65,26 +65,36 @@ void initFastDevelopConfig({
   bool singleLineOfIsPrimary = false,
   num iconTextOfSpacing = 4,
   num iconTextOfIconBottom = 8,
-  num touchWidgetOfPadding = 0,
+  double touchWidgetOfPadding = 0.0,
   num myBodyOfPadding = 32,
   num checkboxOfSize = 50,
   num checkboxOfSpacing = 16,
   num checkboxOfPadding = 8,
+  num cardExOfPaddingSize = 20,
+  num cardExOfMarginSize = 0,
 }) {
   FastDevelopConfig.context = context;
+
   FastDevelopConfig.singleLineOfMinHeight = singleLineOfMinHeight;
   FastDevelopConfig.singleLineOfIconHeight = singleLineOfIconHeight;
   FastDevelopConfig.singleLineOfNameLeftPadding = singleLineOfNameLeftPadding;
   FastDevelopConfig.singleLineOfNameRightPadding = singleLineOfNameRightPadding;
-  FastDevelopConfig.touchWidgetOfPressedOpacity = touchWidgetOfPressedOpacity;
   FastDevelopConfig.singleLineOfIsPrimary = singleLineOfIsPrimary;
+
   FastDevelopConfig.iconTextOfSpacing = iconTextOfSpacing;
   FastDevelopConfig.iconTextOfIconBottom = iconTextOfIconBottom;
+
+  FastDevelopConfig.touchWidgetOfPressedOpacity = touchWidgetOfPressedOpacity;
   FastDevelopConfig.touchWidgetOfPadding = touchWidgetOfPadding;
+
   FastDevelopConfig.myBodyOfPadding = myBodyOfPadding;
+
   FastDevelopConfig.checkboxOfSize = checkboxOfSize;
   FastDevelopConfig.checkboxOfSpacing = checkboxOfSpacing;
   FastDevelopConfig.checkboxOfPadding = checkboxOfPadding;
+
+  FastDevelopConfig.cardExOfPaddingSize = cardExOfPaddingSize;
+  FastDevelopConfig.cardExOfMarginSize = cardExOfMarginSize;
   initFastDevelopOfData(toast);
   initFastDevelopOfRootLayout(switchTB);
   initFastDevelopOfTitle(iconTheme, textTheme);
@@ -110,4 +120,7 @@ class FastDevelopConfig {
   static num checkboxOfSize;
   static num checkboxOfSpacing;
   static num checkboxOfPadding;
+
+  static num cardExOfPaddingSize;
+  static num cardExOfMarginSize;
 }

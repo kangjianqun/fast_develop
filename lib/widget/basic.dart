@@ -358,6 +358,8 @@ class CardEx extends StatelessWidget {
     this.textColor,
     this.brightness,
     this.gradient,
+    this.paddingSize,
+    this.marginSize,
   }) : super(key: key);
 
   final EdgeInsets margin;
@@ -368,6 +370,8 @@ class CardEx extends StatelessWidget {
   final Widget left;
   final num width;
   final num height;
+  final num paddingSize;
+  final num marginSize;
 
   /// 阴影 默认false
   final bool shadow;
@@ -424,8 +428,11 @@ class CardEx extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _padding = padding ?? Spacing.all(size: 20);
-    var _margin = margin ?? Spacing.all(size: 0);
+    var _paddingSize = paddingSize ?? FastDevelopConfig.cardExOfPaddingSize;
+    var _marginSize = marginSize ?? FastDevelopConfig.cardExOfMarginSize;
+
+    var _padding = padding ?? Spacing.all(size: _paddingSize);
+    var _margin = margin ?? Spacing.all(size: _marginSize);
 
     Color color =
         backgroundColor ?? CConfig.getBackground(brightness: brightness);
