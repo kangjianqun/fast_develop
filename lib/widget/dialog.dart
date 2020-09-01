@@ -21,7 +21,7 @@ class DialogSimple {
     }
     _loadStatue = true;
     showDialogCustom(
-      context: FastDevelopConfig.context,
+      context: FastDevelopConfig.instance.context,
       barrierDismissible: false,
       builder: (_) => WillPopScope(
         onWillPop: () async => false,
@@ -40,7 +40,7 @@ class DialogSimple {
 
     if (_dict.length == 0 && _loadStatue) {
       _loadStatue = false;
-      tryCatch(() => FastRouter.popBackDialog(FastDevelopConfig.context));
+      tryCatch(() => FastRouter.popBackDialog(FastDevelopConfig.instance.context));
     }
   }
 }

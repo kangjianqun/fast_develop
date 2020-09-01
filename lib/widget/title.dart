@@ -172,12 +172,12 @@ class TitleWidget extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize =>
-      Size.fromHeight((height ?? FastDevelopConfig.titleWidgetOfHeight).sh);
+      Size.fromHeight((height ?? FastDevelopConfig.instance.titleWidgetOfHeight).sh);
 
   @override
   Widget build(BuildContext context) {
     var _actionSpacing =
-        actionSpacing ?? FastDevelopConfig.titleWidgetOfActionSpacing;
+        actionSpacing ?? FastDevelopConfig.instance.titleWidgetOfActionSpacing;
     getVM<TitleVM>(context)
         .setTitle(title, notify: false, allowNull: tWidget != null);
     var iconTheme =

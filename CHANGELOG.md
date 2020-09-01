@@ -1,3 +1,6 @@
+## [1.1.2+7]
+配置项 调整 FastDevelopConfig 改为单例
+
 ## [1.1.2+6]
 配置项优化
 
@@ -36,4 +39,4 @@
 showDialogCustom 新增offset和cushion
 
 ## [1.0.0]
-这是一个快速开发库，封装了一些常用的方法，使用前记得调用 initFastDevelopConfig
+这是一个快速开发库，封装了一些常用的方法，使用前记得调用 FastDevelopConfig.init

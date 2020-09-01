@@ -1,12 +1,12 @@
 # fast_develop
 
 这是一个快速开发库，封装了一些常用的方法 与fluro冲突使用fast_router。
-使用前记得调用 initFastDevelopConfig
+使用前记得调用 FastDevelopConfig.init
 
 屏幕适配 记得执行
 ScreenUtil.init();
 
-配置可修改
+配置可单独修改
 IConfig|CConfig|SConfig
 
 博客讲解：https://blog.csdn.net/q948182974/article/details/106613565

@@ -141,7 +141,7 @@ class MyScaffold extends StatelessWidget {
   final Brightness appBarBrightness;
 
   static void setTitle(String title, {BuildContext context}) {
-    context ??= FastDevelopConfig.context;
+    context ??= FastDevelopConfig.instance.context;
     delayed(() => getVM<TitleVM>(context).setTitle(title));
   }
 
@@ -464,7 +464,7 @@ class MyBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _padding = padding ?? FastDevelopConfig.myBodyOfPadding;
+    var _padding = padding ?? FastDevelopConfig.instance.myBodyOfPadding;
     Widget view = _content(_padding);
     if (topWidget != null) {
       Widget _topWidget = topWidget;

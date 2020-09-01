@@ -161,9 +161,9 @@ class IconText extends StatelessWidget {
 //    ThemeData themeData = Theme.of(context);
 
     if (isV) {
-      h = spacing ?? FastDevelopConfig.iconTextOfSpacing;
+      h = spacing ?? FastDevelopConfig.instance.iconTextOfSpacing;
     } else {
-      w = spacing ?? FastDevelopConfig.iconTextOfSpacing;
+      w = spacing ?? FastDevelopConfig.instance.iconTextOfSpacing;
     }
     List<Widget> childView = [];
     var view;
@@ -428,8 +428,10 @@ class CardEx extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _paddingSize = paddingSize ?? FastDevelopConfig.cardExOfPaddingSize;
-    var _marginSize = marginSize ?? FastDevelopConfig.cardExOfMarginSize;
+    var _paddingSize =
+        paddingSize ?? FastDevelopConfig.instance.cardExOfPaddingSize;
+    var _marginSize =
+        marginSize ?? FastDevelopConfig.instance.cardExOfMarginSize;
 
     var _padding = padding ?? Spacing.all(size: _paddingSize);
     var _margin = margin ?? Spacing.all(size: _marginSize);
@@ -922,13 +924,16 @@ class SingleLine<T> extends StatelessWidget {
         backgroundColor ?? theme.backgroundColor ?? CConfig.cBackgroundColor;
     Color iconColor = iconThemeData.color;
 
-    var _minHeight = minHeight ?? FastDevelopConfig.singleLineOfMinHeight;
-    var _iconHeight = iconHeight ?? FastDevelopConfig.singleLineOfIconHeight;
-    var _nameLeftPadding =
-        nameLeftPadding ?? FastDevelopConfig.singleLineOfNameLeftPadding;
-    var _nameRightPadding =
-        nameRightPadding ?? FastDevelopConfig.singleLineOfNameRightPadding;
-    var _isPrimary = isPrimary ?? FastDevelopConfig.singleLineOfIsPrimary;
+    var _minHeight =
+        minHeight ?? FastDevelopConfig.instance.singleLineOfMinHeight;
+    var _iconHeight =
+        iconHeight ?? FastDevelopConfig.instance.singleLineOfIconHeight;
+    var _nameLeftPadding = nameLeftPadding ??
+        FastDevelopConfig.instance.singleLineOfNameLeftPadding;
+    var _nameRightPadding = nameRightPadding ??
+        FastDevelopConfig.instance.singleLineOfNameRightPadding;
+    var _isPrimary =
+        isPrimary ?? FastDevelopConfig.instance.singleLineOfIsPrimary;
     return TouchWidget(
       onTap: onTap,
       child: ConstrainedBox(

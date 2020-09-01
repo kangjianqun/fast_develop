@@ -50,85 +50,71 @@ export 'src/decoration.dart';
 export 'src/globalValue.dart';
 export 'src/types.dart';
 
-/// 默认 1920*1080
-void initFastDevelopConfig({
-  BuildContext context,
-  ToastShow toast,
-  SwitchThemeBrightness switchTB,
-  IconThemeGenerate iconTheme,
-  TextThemeGenerate textTheme,
-  num singleLineOfMinHeight = 144,
-  num singleLineOfIconHeight = 90,
-  num singleLineOfNameLeftPadding = 20,
-  num singleLineOfNameRightPadding = 80,
-  double touchWidgetOfPressedOpacity = 0.4,
-  bool singleLineOfIsPrimary = false,
-  num iconTextOfSpacing = 4,
-  num iconTextOfIconBottom = 8,
-  double touchWidgetOfPadding = 0.0,
-  num myBodyOfPadding = 32,
-  num checkboxOfSize = 50,
-  num checkboxOfSpacing = 16,
-  num checkboxOfPadding = 8,
-  num cardExOfPaddingSize = 20,
-  num cardExOfMarginSize = 0,
-  num titleWidgetOfHeight = 114,
-  num titleWidgetOfActionSpacing = 32,
-}) {
-  FastDevelopConfig.context = context;
-
-  FastDevelopConfig.singleLineOfMinHeight = singleLineOfMinHeight;
-  FastDevelopConfig.singleLineOfIconHeight = singleLineOfIconHeight;
-  FastDevelopConfig.singleLineOfNameLeftPadding = singleLineOfNameLeftPadding;
-  FastDevelopConfig.singleLineOfNameRightPadding = singleLineOfNameRightPadding;
-  FastDevelopConfig.singleLineOfIsPrimary = singleLineOfIsPrimary;
-
-  FastDevelopConfig.iconTextOfSpacing = iconTextOfSpacing;
-  FastDevelopConfig.iconTextOfIconBottom = iconTextOfIconBottom;
-
-  FastDevelopConfig.touchWidgetOfPressedOpacity = touchWidgetOfPressedOpacity;
-  FastDevelopConfig.touchWidgetOfPadding = touchWidgetOfPadding;
-
-  FastDevelopConfig.myBodyOfPadding = myBodyOfPadding;
-
-  FastDevelopConfig.checkboxOfSize = checkboxOfSize;
-  FastDevelopConfig.checkboxOfSpacing = checkboxOfSpacing;
-  FastDevelopConfig.checkboxOfPadding = checkboxOfPadding;
-
-  FastDevelopConfig.cardExOfPaddingSize = cardExOfPaddingSize;
-  FastDevelopConfig.cardExOfMarginSize = cardExOfMarginSize;
-
-  FastDevelopConfig.titleWidgetOfHeight = titleWidgetOfHeight;
-  FastDevelopConfig.titleWidgetOfActionSpacing = titleWidgetOfActionSpacing;
-  initFastDevelopOfData(toast);
-  initFastDevelopOfRootLayout(switchTB);
-  initFastDevelopOfTitle(iconTheme, textTheme);
-}
-
 class FastDevelopConfig {
-  static BuildContext context;
+  factory FastDevelopConfig() => _getInstance();
+  static FastDevelopConfig instance = _getInstance();
+  static FastDevelopConfig _instance;
+  static FastDevelopConfig _getInstance() {
+    if (_instance == null) {
+      _instance = FastDevelopConfig.init();
+    }
+    return _instance;
+  }
 
-  static num singleLineOfMinHeight;
-  static num singleLineOfIconHeight;
-  static num singleLineOfNameLeftPadding;
-  static num singleLineOfNameRightPadding;
-  static bool singleLineOfIsPrimary;
+  BuildContext context;
 
-  static double touchWidgetOfPressedOpacity;
-  static double touchWidgetOfPadding;
+  num singleLineOfMinHeight;
+  num singleLineOfIconHeight;
+  num singleLineOfNameLeftPadding;
+  num singleLineOfNameRightPadding;
+  bool singleLineOfIsPrimary;
 
-  static num iconTextOfSpacing;
-  static num iconTextOfIconBottom;
+  double touchWidgetOfPressedOpacity;
+  double touchWidgetOfPadding;
 
-  static num myBodyOfPadding;
+  num iconTextOfSpacing;
+  num iconTextOfIconBottom;
 
-  static num checkboxOfSize;
-  static num checkboxOfSpacing;
-  static num checkboxOfPadding;
+  num myBodyOfPadding;
 
-  static num cardExOfPaddingSize;
-  static num cardExOfMarginSize;
+  num checkboxOfSize;
+  num checkboxOfSpacing;
+  num checkboxOfPadding;
 
-  static num titleWidgetOfHeight;
-  static num titleWidgetOfActionSpacing;
+  num cardExOfPaddingSize;
+  num cardExOfMarginSize;
+
+  num titleWidgetOfHeight;
+  num titleWidgetOfActionSpacing;
+
+  /// 默认 1920*1080
+  FastDevelopConfig.init({
+    this.context,
+    ToastShow toast,
+    SwitchThemeBrightness switchTB,
+    IconThemeGenerate iconTheme,
+    TextThemeGenerate textTheme,
+    this.titleWidgetOfHeight = 144,
+    this.titleWidgetOfActionSpacing = 32,
+    this.singleLineOfMinHeight = 144,
+    this.singleLineOfIconHeight = 90,
+    this.singleLineOfNameLeftPadding = 20,
+    this.singleLineOfNameRightPadding = 80,
+    this.singleLineOfIsPrimary = false,
+    this.touchWidgetOfPressedOpacity = 0.4,
+    this.touchWidgetOfPadding = 0.0,
+    this.iconTextOfSpacing = 4,
+    this.iconTextOfIconBottom = 8,
+    this.myBodyOfPadding = 32,
+    this.checkboxOfSize = 50,
+    this.checkboxOfSpacing = 16,
+    this.checkboxOfPadding = 8,
+    this.cardExOfPaddingSize = 20,
+    this.cardExOfMarginSize = 0,
+  }) {
+    initFastDevelopOfData(toast);
+    initFastDevelopOfRootLayout(switchTB);
+    initFastDevelopOfTitle(iconTheme, textTheme);
+    _instance = this;
+  }
 }
