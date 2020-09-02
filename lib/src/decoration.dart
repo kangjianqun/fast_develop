@@ -4,7 +4,7 @@ import '../fast_develop.dart';
 
 class DecoUtil {
   static BoxDecoration img({
-    double radius = 20,
+    double radius,
     bool isCircle = false,
     bool isAsset = true,
     @required String url,
@@ -19,7 +19,7 @@ class DecoUtil {
 
   static BoxDecoration normal({
     Color color,
-    double radius = 20,
+    double radius,
     bool isCircle = false,
     ImageProvider image,
     Border border,
@@ -30,7 +30,7 @@ class DecoUtil {
       border: border,
       borderRadius: isCircle
           ? SBorderRadius.leftRight()
-          : SBorderRadius.normal(radius: radius),
+          : SBorderRadius.normal(radius: radius ?? SConfig.radius),
       image: image == null ? null : DecorationImage(image: image),
       gradient: gradient,
     );
@@ -59,33 +59,29 @@ class DecoUtil {
   }
 
   static BoxDecoration grey(
-      {Color color, double radius = 20, bool isCircle = false}) {
+      {Color color, double radius, bool isCircle = false}) {
     return normal(
         color: color ?? CConfig.grey, radius: radius, isCircle: isCircle);
   }
 
   static BoxDecoration white(
-      {Color color, double radius = 20, bool isCircle = false}) {
+      {Color color, double radius, bool isCircle = false}) {
     return normal(
         color: color ?? CConfig.white, radius: radius, isCircle: isCircle);
   }
 
   static BoxDecoration red(
-      {Color color, double radius = 20, bool isCircle = false}) {
-    return BoxDecoration(
-        color: color ?? CConfig.redBright,
-        borderRadius: isCircle
-            ? SBorderRadius.leftRight()
-            : SBorderRadius.normal(radius: radius));
+      {Color color, double radius, bool isCircle = false}) {
+    return normal(
+        color: color ?? CConfig.redBright, radius: radius, isCircle: isCircle);
   }
 
   static BoxDecoration primary(
-      {Color color, double radius = 20, bool isCircle = false}) {
-    return BoxDecoration(
+      {Color color, double radius, bool isCircle = false}) {
+    return normal(
         color: color ?? CConfig.primaryColor,
-        borderRadius: isCircle
-            ? SBorderRadius.leftRight()
-            : SBorderRadius.normal(radius: radius));
+        radius: radius,
+        isCircle: isCircle);
   }
 
   static BoxDecoration radius(
@@ -96,9 +92,9 @@ class DecoUtil {
 
   /// 0 - 3 leftOrTopOrRightOrBottom
   static BoxDecoration unilateral(int leftOrTopOrRightOrBottom,
-      {Color color, double radius = 20, bool isCircle = false}) {
+      {Color color, double radius, bool isCircle = false}) {
     var borderRadius;
-    var _radius = isCircle ? 200 : radius;
+    var _radius = isCircle ? 200 : (radius ?? SConfig.radius);
     switch (leftOrTopOrRightOrBottom) {
       case 0:
         borderRadius = SBorderRadius.leftOrRight(radius: _radius);
@@ -123,23 +119,24 @@ class DecoUtil {
 
   /// 0 - 3 [topLeft]-[rightTop]-[rightBottom]-[leftBottom] 单
   static BoxDecoration only(int leftOrTopOrRightOrBottom,
-      {Color color = Colors.white, double radius = 20, BoxBorder border}) {
+      {Color color = Colors.white, double radius, BoxBorder border}) {
+    var _radius = radius ?? SConfig.radius;
     var topLeft = Radius.zero;
     var topRight = Radius.zero;
     var bottomRight = Radius.zero;
     var bottomLeft = Radius.zero;
     switch (leftOrTopOrRightOrBottom) {
       case 0:
-        topLeft = Radius.circular(radius.s);
+        topLeft = Radius.circular(_radius.s);
         break;
       case 1:
-        topRight = Radius.circular(radius.s);
+        topRight = Radius.circular(_radius.s);
         break;
       case 2:
-        bottomRight = Radius.circular(radius.s);
+        bottomRight = Radius.circular(_radius.s);
         break;
       case 3:
-        bottomLeft = Radius.circular(radius.s);
+        bottomLeft = Radius.circular(_radius.s);
         break;
     }
 
@@ -158,21 +155,19 @@ class DecoUtil {
   static BoxDecoration border(
       {Color color,
       Color borderColor = Colors.black,
-      double radius = 20,
+      double radius,
       bool isCircle = false}) {
-    return BoxDecoration(
-        color: CConfig.getBackground(color: color),
+    return normal(
+        color: color ?? CConfig.cBackgroundColor,
         border: Border.all(color: CConfig.getMatching(color: borderColor)),
-        borderRadius: isCircle
-            ? SBorderRadius.leftRight()
-            : SBorderRadius.normal(radius: radius));
+        radius: radius,
+        isCircle: isCircle);
   }
 
   static BoxDecoration borderUnilateral(
     int leftOrTopOrRightOrBottom, {
     Color color,
     Color borderColor = Colors.black,
-    double radius = 20,
     bool isCircle = false,
     BorderStyle style = BorderStyle.solid,
     bool reverse = false,

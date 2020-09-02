@@ -1,5 +1,6 @@
 library fast_develop;
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fast_develop/fast_develop.dart';
 
@@ -68,6 +69,7 @@ class FastDevelopConfig {
   num singleLineOfNameLeftPadding;
   num singleLineOfNameRightPadding;
   bool singleLineOfIsPrimary;
+  IconData singleLineOfRightIconData;
 
   double touchWidgetOfPressedOpacity;
   double touchWidgetOfPadding;
@@ -101,6 +103,7 @@ class FastDevelopConfig {
     this.singleLineOfNameLeftPadding = 20,
     this.singleLineOfNameRightPadding = 80,
     this.singleLineOfIsPrimary = false,
+    this.singleLineOfRightIconData = Icons.chevron_right,
     this.touchWidgetOfPressedOpacity = 0.4,
     this.touchWidgetOfPadding = 0.0,
     this.iconTextOfSpacing = 4,

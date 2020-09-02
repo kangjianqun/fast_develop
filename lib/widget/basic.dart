@@ -141,7 +141,7 @@ class IconText extends StatelessWidget {
     return isExpanded ? Expanded(child: textView) : textView;
   }
 
-  Widget _icon() {
+  Widget _icon(num iconBottom) {
     var _icon = Spacing.vView();
     if (icon != null || iData != null) {
       _icon = Container(
@@ -159,7 +159,8 @@ class IconText extends StatelessWidget {
     int w = 0;
     int h = 0;
 //    ThemeData themeData = Theme.of(context);
-
+    var _iconBottom =
+        iconBottom ?? FastDevelopConfig.instance.iconTextOfIconBottom;
     if (isV) {
       h = spacing ?? FastDevelopConfig.instance.iconTextOfSpacing;
     } else {
@@ -167,7 +168,7 @@ class IconText extends StatelessWidget {
     }
     List<Widget> childView = [];
     var view;
-    var icon = _icon();
+    var icon = _icon(_iconBottom);
     var text = _text();
     if (this.iconIsLeftOrTop) {
       childView.add(icon);
@@ -762,6 +763,7 @@ class SingleLine<T> extends StatelessWidget {
     this.nameLeftPadding,
     this.nameRightPadding,
     this.backgroundColor,
+    this.rightIconData,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
         super(key: key);
@@ -793,6 +795,7 @@ class SingleLine<T> extends StatelessWidget {
     this.nameLeftPadding,
     this.nameRightPadding,
     this.backgroundColor,
+    this.rightIconData,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
         super(key: key);
@@ -824,6 +827,7 @@ class SingleLine<T> extends StatelessWidget {
     this.nameLeftPadding,
     this.nameRightPadding,
     this.backgroundColor,
+    this.rightIconData,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
         super(key: key);
@@ -855,6 +859,7 @@ class SingleLine<T> extends StatelessWidget {
     this.nameLeftPadding,
     this.nameRightPadding,
     this.backgroundColor,
+    this.rightIconData,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
         super(key: key);
@@ -886,6 +891,7 @@ class SingleLine<T> extends StatelessWidget {
     this.nameLeftPadding,
     this.nameRightPadding,
     this.backgroundColor,
+    this.rightIconData,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
         super(key: key);
@@ -900,6 +906,7 @@ class SingleLine<T> extends StatelessWidget {
   final Color backgroundColor;
   final bool isPrimary;
   final bool rightShow;
+  final IconData rightIconData;
   final num minHeight;
   final num iconHeight;
   final num nameLeftPadding;
@@ -934,6 +941,9 @@ class SingleLine<T> extends StatelessWidget {
         FastDevelopConfig.instance.singleLineOfNameRightPadding;
     var _isPrimary =
         isPrimary ?? FastDevelopConfig.instance.singleLineOfIsPrimary;
+    var _rightIconData =
+        rightIconData ?? FastDevelopConfig.instance.singleLineOfRightIconData;
+    var _rightColor = _isPrimary ? theme.primaryColor : iconColor;
     return TouchWidget(
       onTap: onTap,
       child: ConstrainedBox(
@@ -960,11 +970,7 @@ class SingleLine<T> extends StatelessWidget {
             ),
             Spacing.vView(
               isShow: rightShow,
-              child: () => Container(
-                  child: Icon(
-                Icons.chevron_right,
-                color: _isPrimary ? theme.primaryColor : iconColor,
-              )),
+              child: () => Icon(_rightIconData, color: _rightColor),
             ),
           ]),
         ),

@@ -1,3 +1,8 @@
+## [1.1.3]
+新增配置 SConfig[radius][radiusOfCircle]
+初始化新增 singleLineOfRightIconData
+修复iconTextOfIconBottom 配置无效
+
 ## [1.1.2+7]
 配置项 调整 FastDevelopConfig 改为单例
 
