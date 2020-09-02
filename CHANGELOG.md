@@ -1,3 +1,7 @@
+## [1.1.3+1]
+初始化新增 editTextOfIconRightSpace
+修复EditText 高度问题
+
 ## [1.1.3]
 新增配置 SConfig[radius][radiusOfCircle]
 初始化新增 singleLineOfRightIconData

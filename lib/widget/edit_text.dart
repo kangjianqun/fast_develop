@@ -98,6 +98,7 @@ class EditText extends StatefulWidget {
     this.complete,
     this.textInputAction,
     this.onSubmitted,
+    this.iconRightSpace,
   })  : keyboardType = inputType ??
             (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
         super(key: key);
@@ -132,6 +133,7 @@ class EditText extends StatefulWidget {
     this.complete,
     this.textInputAction,
     this.onSubmitted,
+    this.iconRightSpace,
   })  : keyboardType = inputType ??
             (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
         super(key: key);
@@ -166,12 +168,14 @@ class EditText extends StatefulWidget {
     this.complete,
     this.textInputAction,
     this.onSubmitted,
+    this.iconRightSpace,
   })  : keyboardType = inputType ??
             (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
         super(key: key);
 
   final double height;
   final double width;
+  final num iconRightSpace;
   final String name;
   final String hint;
   final TextStyle hintStyle;
@@ -215,12 +219,15 @@ class _EditTextState extends State<EditText> {
   FocusNode _focusNode;
   FocusNode get _effectiveFNode =>
       widget.focusNode ?? (_focusNode ??= FocusNode());
+  var _iconRightSpace;
 
   @override
   void initState() {
     super.initState();
     if (widget.controller == null) _controller = TextEditingController();
     decorationChanger = widget.decorationChanger ?? DecorationChanger();
+    _iconRightSpace = widget.iconRightSpace ??
+        FastDevelopConfig.instance.editTextOfIconRightSpace;
   }
 
   @override
@@ -230,7 +237,8 @@ class _EditTextState extends State<EditText> {
 
     if (icon != null) {
       icon = Container(
-          margin: Spacing.leftOrRight(size: 72, isLeft: false), child: icon);
+          margin: Spacing.leftOrRight(size: _iconRightSpace, isLeft: false),
+          child: icon);
     } else {
       icon = Spacing.vView();
     }
@@ -239,7 +247,7 @@ class _EditTextState extends State<EditText> {
 
     InputDecoration _decoration = widget.decoration ??
         InputDecoration(
-          hintText: widget.hint,
+          hintText: widget.hint ?? "",
           counterText: widget.showCountHint ? null : "",
           hintStyle: widget.hintStyle ?? StyleText.grey(size: SConfig.textTwo),
           disabledBorder: InputBorder.none,

@@ -77,6 +77,8 @@ class FastDevelopConfig {
   num iconTextOfSpacing;
   num iconTextOfIconBottom;
 
+  num editTextOfIconRightSpace;
+
   num myBodyOfPadding;
 
   num checkboxOfSize;
@@ -114,6 +116,7 @@ class FastDevelopConfig {
     this.checkboxOfPadding = 8,
     this.cardExOfPaddingSize = 20,
     this.cardExOfMarginSize = 0,
+    this.editTextOfIconRightSpace = 48,
   }) {
     initFastDevelopOfData(toast);
     initFastDevelopOfRootLayout(switchTB);
