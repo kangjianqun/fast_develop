@@ -1,3 +1,6 @@
+## [1.1.3+2]
+修复主题配色问题
+
 ## [1.1.3+1]
 初始化新增 editTextOfIconRightSpace
 修复EditText 高度问题
