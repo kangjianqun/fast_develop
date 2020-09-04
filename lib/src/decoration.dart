@@ -4,7 +4,7 @@ import '../fast_develop.dart';
 
 class DecoUtil {
   static BoxDecoration img({
-    double radius,
+    num radius,
     bool isCircle = false,
     bool isAsset = true,
     @required String url,
@@ -19,7 +19,7 @@ class DecoUtil {
 
   static BoxDecoration normal({
     Color color,
-    double radius,
+    num radius,
     bool isCircle = false,
     ImageProvider image,
     Border border,
@@ -38,8 +38,8 @@ class DecoUtil {
 
   static BoxDecoration different({
     Color color = Colors.white,
-    double radius1 = 20,
-    double radius2 = 90,
+    num radius1 = 20,
+    num radius2 = 90,
     bool isV = true,
   }) {
     return BoxDecoration(
@@ -58,26 +58,23 @@ class DecoUtil {
     );
   }
 
-  static BoxDecoration grey(
-      {Color color, double radius, bool isCircle = false}) {
+  static BoxDecoration grey({Color color, num radius, bool isCircle = false}) {
     return normal(
         color: color ?? CConfig.grey, radius: radius, isCircle: isCircle);
   }
 
-  static BoxDecoration white(
-      {Color color, double radius, bool isCircle = false}) {
+  static BoxDecoration white({Color color, num radius, bool isCircle = false}) {
     return normal(
         color: color ?? CConfig.white, radius: radius, isCircle: isCircle);
   }
 
-  static BoxDecoration red(
-      {Color color, double radius, bool isCircle = false}) {
+  static BoxDecoration red({Color color, num radius, bool isCircle = false}) {
     return normal(
         color: color ?? CConfig.redBright, radius: radius, isCircle: isCircle);
   }
 
   static BoxDecoration primary(
-      {Color color, double radius, bool isCircle = false}) {
+      {Color color, num radius, bool isCircle = false}) {
     return normal(
         color: color ?? CConfig.primaryColor,
         radius: radius,
@@ -92,7 +89,7 @@ class DecoUtil {
 
   /// 0 - 3 leftOrTopOrRightOrBottom
   static BoxDecoration unilateral(int leftOrTopOrRightOrBottom,
-      {Color color, double radius, bool isCircle = false}) {
+      {Color color, num radius, bool isCircle = false}) {
     var borderRadius;
     var _radius = isCircle ? 200 : (radius ?? SConfig.radius);
     switch (leftOrTopOrRightOrBottom) {
@@ -119,7 +116,7 @@ class DecoUtil {
 
   /// 0 - 3 [topLeft]-[rightTop]-[rightBottom]-[leftBottom] 单
   static BoxDecoration only(int leftOrTopOrRightOrBottom,
-      {Color color = Colors.white, double radius, BoxBorder border}) {
+      {Color color = Colors.white, num radius, BoxBorder border}) {
     var _radius = radius ?? SConfig.radius;
     var topLeft = Radius.zero;
     var topRight = Radius.zero;
@@ -155,7 +152,7 @@ class DecoUtil {
   static BoxDecoration border(
       {Color color,
       Color borderColor = Colors.black,
-      double radius,
+      num radius,
       bool isCircle = false}) {
     return normal(
         color: color ?? CConfig.cBackgroundColor,

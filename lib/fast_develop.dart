@@ -93,11 +93,12 @@ class FastDevelopConfig {
 
   /// 默认 1920*1080
   FastDevelopConfig.init({
-    this.context,
     ToastShow toast,
     SwitchThemeBrightness switchTB,
     IconThemeGenerate iconTheme,
     TextThemeGenerate textTheme,
+    bool screenEnable = true,
+    this.context,
     this.titleWidgetOfHeight = 144,
     this.titleWidgetOfActionSpacing = 32,
     this.singleLineOfMinHeight = 144,
@@ -121,6 +122,7 @@ class FastDevelopConfig {
     initFastDevelopOfData(toast);
     initFastDevelopOfRootLayout(switchTB);
     initFastDevelopOfTitle(iconTheme, textTheme);
+    ScreenUtils.enable = screenEnable;
     _instance = this;
   }
 }

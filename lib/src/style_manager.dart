@@ -383,7 +383,7 @@ class StyleText {
   }
 
   static TextStyle red({
-    double size,
+    num size,
     Color color,
     Color backgroundColor,
     FontWeight fontWeight = FontWeight.normal,
@@ -418,12 +418,14 @@ class StyleText {
 }
 
 class SBorderRadius {
-  static BorderRadiusGeometry normal({num radius = 20}) {
-    return BorderRadius.all(Radius.circular(radius.s));
+  static BorderRadiusGeometry normal({num radius}) {
+    var _radius = radius ?? SConfig.radius;
+    return BorderRadius.all(Radius.circular(_radius.s));
   }
 
-  static BorderRadiusGeometry circle({num radius = 100}) {
-    return BorderRadius.circular(radius.s);
+  static BorderRadiusGeometry circle({num radius}) {
+    var _radius = radius ?? SConfig.radiusOfCircle;
+    return BorderRadius.circular(_radius.s);
   }
 
   static BorderRadiusGeometry only({
@@ -432,11 +434,16 @@ class SBorderRadius {
     num bottomLeft = 20,
     num bottomRight = 20,
   }) {
+    var _topLeft = topLeft ?? SConfig.radius;
+    var _topRight = topRight ?? SConfig.radius;
+    var _bottomLeft = bottomLeft ?? SConfig.radius;
+    var _bottomRight = bottomRight ?? SConfig.radius;
+
     return BorderRadius.only(
-      topLeft: Radius.circular(topLeft.s),
-      topRight: Radius.circular(topRight.s),
-      bottomLeft: Radius.circular(bottomLeft.s),
-      bottomRight: Radius.circular(bottomRight.s),
+      topLeft: Radius.circular(_topLeft.s),
+      topRight: Radius.circular(_topRight.s),
+      bottomLeft: Radius.circular(_bottomLeft.s),
+      bottomRight: Radius.circular(_bottomRight.s),
     );
   }
 
@@ -456,18 +463,18 @@ class SBorderRadius {
           );
   }
 
-  static BorderRadiusGeometry leftRight(
-      {double radius = 100, bool isH = true}) {
-    var value = Radius.circular(radius);
+  static BorderRadiusGeometry leftRight({num radius, bool isH = true}) {
+    var _radius = radius ?? SConfig.radiusOfCircle;
+    var value = Radius.circular(_radius.s);
 
     return isH
         ? BorderRadius.horizontal(left: value, right: value)
         : BorderRadius.vertical(top: value, bottom: value);
   }
 
-  static BorderRadiusGeometry leftOrRight(
-      {double radius = 20, bool isLeft = true}) {
-    var value = Radius.circular(radius.s);
+  static BorderRadiusGeometry leftOrRight({num radius, bool isLeft = true}) {
+    var _radius = radius ?? SConfig.radius;
+    var value = Radius.circular(_radius.s);
     var nullValue = Radius.circular(0);
     return BorderRadius.only(
       topLeft: isLeft ? value : nullValue,
@@ -477,9 +484,9 @@ class SBorderRadius {
     );
   }
 
-  static BorderRadiusGeometry topOrButton(
-      {double radius = 20, bool isTop = true}) {
-    var value = Radius.circular(radius.s);
+  static BorderRadiusGeometry topOrButton({num radius, bool isTop = true}) {
+    var _radius = radius ?? SConfig.radius;
+    var value = Radius.circular(_radius.s);
     var nullValue = Radius.circular(0);
     return BorderRadius.only(
       topLeft: isTop ? value : nullValue,

@@ -429,6 +429,7 @@ class CardEx extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeData = Theme.of(context);
     var _paddingSize =
         paddingSize ?? FastDevelopConfig.instance.cardExOfPaddingSize;
     var _marginSize =
@@ -436,14 +437,16 @@ class CardEx extends StatelessWidget {
 
     var _padding = padding ?? Spacing.all(size: _paddingSize);
     var _margin = margin ?? Spacing.all(size: _marginSize);
+    Brightness _brightness = brightness ?? themeData.brightness;
 
     Color color =
-        backgroundColor ?? CConfig.getBackground(brightness: brightness);
+        backgroundColor ?? CConfig.getBackground(brightness: _brightness);
     Color _titleColor = textColor ?? titleColor;
     Color _subTitleColor = textColor ?? subTitleColor;
 
     var _view = _child(_titleColor, _subTitleColor);
     if (shadow) {
+      color = backgroundColor ?? themeData.cardTheme.color;
       return Card(
         margin: _margin,
         color: color,
@@ -458,6 +461,147 @@ class CardEx extends StatelessWidget {
         child: Padding(padding: _padding, child: _view),
       );
     }
+  }
+}
+
+/// 扩展模式， 加入自动配置背景色
+class ContainerEx extends StatelessWidget {
+  const ContainerEx({
+    Key key,
+    this.color,
+    this.child,
+    this.alignment,
+    this.padding,
+    this.decoration,
+    this.foregroundDecoration,
+    this.constraints,
+    this.margin,
+    this.transform,
+    this.clipBehavior,
+    this.brightness,
+    this.height,
+    this.width,
+    this.isSquare = false,
+  }) : super(key: key);
+
+  const ContainerEx.square({
+    Key key,
+    this.color,
+    this.child,
+    this.alignment,
+    this.padding,
+    this.decoration,
+    this.foregroundDecoration,
+    this.constraints,
+    this.margin,
+    this.transform,
+    this.clipBehavior,
+    this.brightness,
+    this.height,
+    this.width,
+  })  : this.isSquare = true,
+        super(key: key);
+
+  final double height;
+  final double width;
+
+  /// The [child] contained by the container.
+  ///
+  /// If null, and if the [constraints] are unbounded or also null, the
+  /// container will expand to fill all available space in its parent, unless
+  /// the parent provides unbounded constraints, in which case the container
+  /// will attempt to be as small as possible.
+  ///
+  /// {@macro flutter.widgets.child}
+  final Widget child;
+
+  /// Align the [child] within the container.
+  ///
+  /// If non-null, the container will expand to fill its parent and position its
+  /// child within itself according to the given value. If the incoming
+  /// constraints are unbounded, then the child will be shrink-wrapped instead.
+  ///
+  /// Ignored if [child] is null.
+  ///
+  /// See also:
+  ///
+  ///  * [Alignment], a class with convenient constants typically used to
+  ///    specify an [AlignmentGeometry].
+  ///  * [AlignmentDirectional], like [Alignment] for specifying alignments
+  ///    relative to text direction.
+  final AlignmentGeometry alignment;
+
+  /// Empty space to inscribe inside the [decoration]. The [child], if any, is
+  /// placed inside this padding.
+  ///
+  /// This padding is in addition to any padding inherent in the [decoration];
+  /// see [Decoration.padding].
+  final EdgeInsetsGeometry padding;
+
+  /// The color to paint behind the [child].
+  ///
+  /// This property should be preferred when the background is a simple color.
+  /// For other cases, such as gradients or images, use the [decoration]
+  /// property.
+  ///
+  /// If the [decoration] is used, this property must be null. A background
+  /// color may still be painted by the [decoration] even if this property is
+  /// null.
+  final Color color;
+
+  /// The decoration to paint behind the [child].
+  ///
+  /// Use the [color] property to specify a simple solid color.
+  ///
+  /// The [child] is not clipped to the decoration. To clip a child to the shape
+  /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
+  final Decoration decoration;
+
+  /// The decoration to paint in front of the [child].
+  final Decoration foregroundDecoration;
+
+  /// Additional constraints to apply to the child.
+  ///
+  /// The constructor `width` and `height` arguments are combined with the
+  /// `constraints` argument to set this property.
+  ///
+  /// The [padding] goes inside the constraints.
+  final BoxConstraints constraints;
+
+  /// Empty space to surround the [decoration] and [child].
+  final EdgeInsetsGeometry margin;
+
+  /// The transformation matrix to apply before painting the container.
+  final Matrix4 transform;
+
+  /// The clip behavior when [Container.decoration] has a clipPath.
+  ///
+  /// Defaults to [Clip.none].
+  final Clip clipBehavior;
+  final Brightness brightness;
+
+  /// 宽高适配一致 适合方形
+  final bool isSquare;
+
+  @override
+  Widget build(BuildContext context) {
+    Brightness _brightness = brightness ?? Theme.of(context).brightness;
+    Color _color = color ?? CConfig.getBackground(brightness: _brightness);
+
+    return Container(
+      color: _color,
+      width: width.s,
+      height: isSquare ? height.s : height.sh,
+      child: child,
+      padding: padding,
+      decoration: decoration,
+      margin: margin,
+      alignment: alignment,
+      clipBehavior: clipBehavior,
+      transform: transform,
+      constraints: constraints,
+      foregroundDecoration: foregroundDecoration,
+    );
   }
 }
 
