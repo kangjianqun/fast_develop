@@ -1,3 +1,8 @@
+## [1.1.5]
+配置新增 singleLineOfLeftRight|singleLineOfTopBottom|singleLineOfUrlSize;\n
+SingleLine 新增 rightWidget \n
+删除SingleLine.text改用SingleLine.normal
+
 ## [1.1.4+2]
 修复 ContainerEx 宽高
 优化 ScreenUtils 空异常

@@ -68,6 +68,9 @@ class FastDevelopConfig {
   num singleLineOfIconHeight;
   num singleLineOfNameLeftPadding;
   num singleLineOfNameRightPadding;
+  num singleLineOfLeftRight;
+  num singleLineOfTopBottom;
+  num singleLineOfUrlSize;
   bool singleLineOfIsPrimary;
   IconData singleLineOfRightIconData;
 
@@ -105,6 +108,9 @@ class FastDevelopConfig {
     this.singleLineOfIconHeight = 90,
     this.singleLineOfNameLeftPadding = 20,
     this.singleLineOfNameRightPadding = 80,
+    this.singleLineOfLeftRight = 32,
+    this.singleLineOfTopBottom = 16,
+    this.singleLineOfUrlSize = 200,
     this.singleLineOfIsPrimary = false,
     this.singleLineOfRightIconData = Icons.chevron_right,
     this.touchWidgetOfPressedOpacity = 0.4,

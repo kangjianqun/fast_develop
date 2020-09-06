@@ -16,7 +16,12 @@ class PSDisplay extends StatelessWidget {
   final Child secondary;
 
   @override
-  Widget build(BuildContext context) => primary() ?? secondary();
+  Widget build(BuildContext context) {
+    if (primary == null)
+      return secondary();
+    else
+      return primary() ?? secondary();
+  }
 }
 
 class AutoText extends StatelessWidget {
@@ -880,38 +885,6 @@ class GridIntervalView extends StatelessWidget {
 
 /// 单行 多用于单行item显示
 class SingleLine<T> extends StatelessWidget {
-  const SingleLine.txt(
-    this.name, {
-    Key key,
-    @required this.iconData,
-    this.iconUrl,
-    this.padding,
-    this.nameTxtStyle,
-    this.nameWidget,
-    this.leftView,
-    this.onDropdownChanged,
-    this.dropdownItems,
-    this.dropdownValue,
-    this.centerTxt,
-    this.centerTxtStyle,
-    this.centerWidget,
-    this.onTap,
-    this.rightShow = true,
-    this.isPrimary,
-    this.rightTxt,
-    this.rightTxtStyle,
-    this.url,
-    this.decoration,
-    this.minHeight,
-    this.iconHeight,
-    this.nameLeftPadding,
-    this.nameRightPadding,
-    this.backgroundColor,
-    this.rightIconData,
-  })  : assert(name == null || nameWidget == null),
-        assert(centerTxt == null || centerWidget == null),
-        super(key: key);
-
   const SingleLine({
     Key key,
     this.padding,
@@ -933,6 +906,7 @@ class SingleLine<T> extends StatelessWidget {
     this.rightTxt,
     this.rightTxtStyle,
     this.url,
+    this.urlSize,
     this.decoration,
     this.minHeight,
     this.iconHeight,
@@ -940,6 +914,9 @@ class SingleLine<T> extends StatelessWidget {
     this.nameRightPadding,
     this.backgroundColor,
     this.rightIconData,
+    this.leftRight,
+    this.topBottom,
+    this.rightWidget,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
         super(key: key);
@@ -965,6 +942,7 @@ class SingleLine<T> extends StatelessWidget {
     this.rightTxt,
     this.rightTxtStyle,
     this.url,
+    this.urlSize,
     this.decoration,
     this.minHeight,
     this.iconHeight,
@@ -972,6 +950,9 @@ class SingleLine<T> extends StatelessWidget {
     this.nameRightPadding,
     this.backgroundColor,
     this.rightIconData,
+    this.leftRight,
+    this.topBottom,
+    this.rightWidget,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
         super(key: key);
@@ -997,6 +978,7 @@ class SingleLine<T> extends StatelessWidget {
     this.rightTxt,
     this.rightTxtStyle,
     this.url,
+    this.urlSize,
     this.decoration,
     this.minHeight,
     this.iconHeight,
@@ -1004,6 +986,9 @@ class SingleLine<T> extends StatelessWidget {
     this.nameRightPadding,
     this.backgroundColor,
     this.rightIconData,
+    this.leftRight,
+    this.topBottom,
+    this.rightWidget,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
         super(key: key);
@@ -1029,6 +1014,7 @@ class SingleLine<T> extends StatelessWidget {
     this.rightTxt,
     this.rightTxtStyle,
     this.url,
+    this.urlSize,
     this.decoration,
     this.minHeight,
     this.iconHeight,
@@ -1036,8 +1022,11 @@ class SingleLine<T> extends StatelessWidget {
     this.nameRightPadding,
     this.backgroundColor,
     this.rightIconData,
+    this.leftRight,
+    this.topBottom,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
+        this.rightWidget = null,
         super(key: key);
 
   final String name;
@@ -1053,14 +1042,18 @@ class SingleLine<T> extends StatelessWidget {
   final IconData rightIconData;
   final num minHeight;
   final num iconHeight;
+  final num leftRight;
+  final num topBottom;
   final num nameLeftPadding;
   final num nameRightPadding;
   final String centerTxt;
   final TextStyle centerTxtStyle;
   final Widget centerWidget;
+  final Widget rightWidget;
   final String rightTxt;
   final TextStyle rightTxtStyle;
   final String url;
+  final num urlSize;
   final EdgeInsets padding;
   final Decoration decoration;
   final List<DropdownMenuItem<T>> dropdownItems;
@@ -1074,7 +1067,6 @@ class SingleLine<T> extends StatelessWidget {
     Color bg =
         backgroundColor ?? theme.backgroundColor ?? CConfig.cBackgroundColor;
     Color iconColor = iconThemeData.color;
-
     var _minHeight =
         minHeight ?? FastDevelopConfig.instance.singleLineOfMinHeight;
     var _iconHeight =
@@ -1088,34 +1080,25 @@ class SingleLine<T> extends StatelessWidget {
     var _rightIconData =
         rightIconData ?? FastDevelopConfig.instance.singleLineOfRightIconData;
     var _rightColor = _isPrimary ? theme.primaryColor : iconColor;
+
+    var _leftR = leftRight ?? FastDevelopConfig.instance.singleLineOfLeftRight;
+    var _topB = leftRight ?? FastDevelopConfig.instance.singleLineOfTopBottom;
+    var _urlSize = urlSize ?? FastDevelopConfig.instance.singleLineOfUrlSize;
+
     return TouchWidget(
       onTap: onTap,
       child: ConstrainedBox(
         constraints: BoxConstraints(minHeight: _minHeight.sh),
         child: Container(
-          padding: padding ?? Spacing.all(leftR: 32, topB: 16),
-          decoration: decoration ?? DecoUtil.normal(color: bg, radius: 15),
+          padding: padding ?? Spacing.all(leftR: _leftR, topB: _topB),
+          decoration:
+              decoration ?? DecoUtil.normal(color: bg, radius: SConfig.radius),
           child: Row(children: <Widget>[
             _icon(iconColor, _iconHeight, _nameLeftPadding),
             _name(_nameRightPadding),
             _center(),
             _dropdown(bg),
-            Spacing.vView(
-              isShow: url.en,
-              child: () => ClipRRect(
-                borderRadius: SBorderRadius.circle(),
-                child: WrapperImage.size(size: 200.s, url: url),
-              ),
-            ),
-            Spacing.vView(
-              isShow: rightTxt.en,
-              child: () =>
-                  Text(rightTxt, style: rightTxtStyle ?? StyleText.grey()),
-            ),
-            Spacing.vView(
-              isShow: rightShow,
-              child: () => Icon(_rightIconData, color: _rightColor),
-            ),
+            ..._right(_urlSize, _rightColor, _rightIconData),
           ]),
         ),
       ),
@@ -1160,12 +1143,7 @@ class SingleLine<T> extends StatelessWidget {
     } else {
       return Spacing.vView(
         isShow: centerTxt.en,
-        child: () => Container(
-          child: Text(
-            centerTxt,
-            style: centerTxtStyle ?? StyleText.grey(size: 32),
-          ),
-        ),
+        child: () => Text(centerTxt, style: centerTxtStyle ?? StyleText.grey()),
       );
     }
   }
@@ -1199,5 +1177,27 @@ class SingleLine<T> extends StatelessWidget {
         );
       },
     );
+  }
+
+  List<Widget> _right(num urlSize, Color rightColor, IconData rightIconData) {
+    return [
+      Spacing.vView(
+        isShow: url.en,
+        child: () => ClipRRect(
+          borderRadius: SBorderRadius.circle(),
+          child: WrapperImage.size(size: urlSize.s, url: url),
+        ),
+      ),
+      Spacing.vView(
+        isShow: rightTxt.en,
+        child: () => Text(rightTxt, style: rightTxtStyle ?? StyleText.grey()),
+      ),
+      Spacing.vView(
+        isShow: rightShow,
+        child: () => PSDisplay(
+            primary: () => rightWidget,
+            secondary: () => Icon(rightIconData, color: rightColor)),
+      ),
+    ];
   }
 }
