@@ -1,7 +1,9 @@
 ## [1.1.5]
 配置新增 singleLineOfLeftRight|singleLineOfTopBottom|singleLineOfUrlSize;\n
 SingleLine 新增 rightWidget \n
-删除SingleLine.text改用SingleLine.normal
+删除SingleLine.text改用SingleLine.normal \n
+新增 theme_vm 主题配置
+新增 example
 
 ## [1.1.4+2]
 修复 ContainerEx 宽高

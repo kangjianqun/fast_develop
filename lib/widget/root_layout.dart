@@ -162,6 +162,7 @@ class MyScaffold extends StatelessWidget {
           : (themeData?.appBarTheme?.color ??
               CConfig.getBackground(
                   brightness: _brightness,
+                  context: ctx,
                   color: (bgIsTr || backgroundWidget != null)
                       ? CConfig.transparent
                       : null));
@@ -205,8 +206,8 @@ class MyScaffold extends StatelessWidget {
         ],
       );
     }
-    Color backgroundColor = CConfig.getScaffoldBackground(
-        color: bgColor, brightness: brightness, context: context);
+
+    var _bgColor = bgColor ?? Theme.of(context).scaffoldBackgroundColor;
     var isTransparent = immerse && backgroundWidget != null;
 
     if (isMaterial) {
@@ -217,13 +218,13 @@ class MyScaffold extends StatelessWidget {
         resizeToAvoidBottomPadding: isBottom,
         drawer: drawerIsLeft && stateWidget == null ? _drawer : null,
         endDrawer: !drawerIsLeft && stateWidget == null ? _drawer : null,
-        backgroundColor: !isTransparent ? backgroundColor : CConfig.transparent,
+        backgroundColor: !isTransparent ? _bgColor : CConfig.transparent,
         bottomNavigationBar: _bottom,
       );
 
       if (stateWidget == null && isTransparent) {
         bodyView = Stack(children: [
-          Container(color: backgroundColor),
+          Container(color: _bgColor),
           backgroundWidget(context),
           bodyView,
         ]);
@@ -267,8 +268,7 @@ class MyScaffold extends StatelessWidget {
             isSafeArea.right ? padding.right : 0,
             isSafeArea.bottom ? padding.bottom : 0);
       }
-      bodyView =
-          Container(color: backgroundColor, padding: safePadding, child: _view);
+      bodyView = Container(color: _bgColor, padding: safePadding, child: _view);
     }
     return bodyView;
   }
