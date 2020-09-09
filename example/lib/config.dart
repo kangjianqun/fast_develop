@@ -19,12 +19,11 @@ List<SingleChildWidget> independentServices = [
 ];
 
 /// 需要依赖的
-///
 List<SingleChildWidget> dependentServices = [];
 
 List<SingleChildWidget> uiConsumableProviders = [];
 
-/// 需要context  分配初始化  可以一个方法或者多个方法
+/// 需要context  分批初始化  可以一个方法或者多个方法
 Future<void> initConfig({BuildContext context}) async {
   if (context == null) {
     CConfig.backgroundColor = Colors.white;

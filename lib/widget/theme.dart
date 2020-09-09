@@ -13,7 +13,6 @@ class ThemeVM with ChangeNotifier {
 
   static const kThemeColorIndex = 'kThemeColorIndex';
   static const kThemeBrightnessIndex = 'kThemeBrightnessIndex';
-  static const kFontIndex = 'kFontIndex';
   static int defaultIndex = 1;
 
   /// 明暗模式
