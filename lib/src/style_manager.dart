@@ -262,12 +262,13 @@ class StyleText {
   }) {
     return normal(
       size: SConfig.textOne,
-      color: color ?? CConfig.getOne(brightness: brightness),
+      color: color ?? CConfig.cTextColorOne,
       fontWeight: weight,
       ignoreColor: ignoreColor,
     );
   }
 
+  /// 采用默认 [DefaultTextStyle] 的颜色
   static TextStyle oneNoColor(
       {Color color,
       FontWeight weight = FontWeight.normal,
@@ -283,7 +284,7 @@ class StyleText {
   }) {
     return normal(
       size: SConfig.textOne,
-      color: color ?? CConfig.getOne(brightness: brightness),
+      color: color ?? CConfig.cTextColorOne,
       fontWeight: weight,
       ignoreColor: ignoreColor,
     );
@@ -298,13 +299,14 @@ class StyleText {
   }) {
     return normal(
       size: SConfig.textTwo,
-      color: color ?? CConfig.getTwo(brightness: brightness),
+      color: color ?? CConfig.cTextColorTwo,
       fontWeight: weight,
       decoration: decoration,
       ignoreColor: ignoreColor,
     );
   }
 
+  /// 采用默认 [DefaultTextStyle] 的颜色
   static TextStyle twoNoColor(
       {Color color,
       FontWeight weight = FontWeight.normal,
@@ -321,13 +323,14 @@ class StyleText {
   }) {
     return normal(
       size: SConfig.textThree,
-      color: color ?? CConfig.getThree(brightness: brightness),
+      color: color ?? CConfig.cTextColorThree,
       fontWeight: weight,
       decoration: decoration,
       ignoreColor: ignoreColor,
     );
   }
 
+  /// 采用默认 [DefaultTextStyle] 的颜色
   static TextStyle threeNoColor(
       {Color color,
       FontWeight weight = FontWeight.normal,
