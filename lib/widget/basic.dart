@@ -1,4 +1,3 @@
-import 'package:fast_mvvm/fast_mvvm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -664,6 +663,7 @@ class ListIntervalView extends StatelessWidget {
     @required this.itemBuilder,
     this.mainPadding = 32,
     this.crossPadding = 32,
+    this.cacheExtent,
   })  : this.children = null,
         super(key: key);
 
@@ -682,6 +682,7 @@ class ListIntervalView extends StatelessWidget {
     @required this.children,
     this.mainPadding = 32,
     this.crossPadding = 32,
+    this.cacheExtent,
   })  : this.itemCount = children.length,
         this.itemBuilder = null,
         super(key: key);
@@ -702,6 +703,7 @@ class ListIntervalView extends StatelessWidget {
     @required this.itemBuilder,
     this.mainPadding = 0,
     this.crossPadding = 0,
+    this.cacheExtent,
   })  : this.children = null,
         super(key: key);
 
@@ -714,6 +716,7 @@ class ListIntervalView extends StatelessWidget {
 
   final bool shrinkWrap;
   final num height;
+  final num cacheExtent;
   final EdgeInsets margin;
   final int itemCount;
   final IndexedWidgetBuilder itemBuilder;
@@ -743,7 +746,8 @@ class ListIntervalView extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget _separator = _getSeparator();
     bool isH = direction == Axis.horizontal;
-
+    var _cacheExtent =
+        cacheExtent ?? FastDevelopConfig.instance.listIntervalViewOfCacheExtent;
     return Container(
       height: isH ? height.s : null,
       color: color,
@@ -759,7 +763,7 @@ class ListIntervalView extends StatelessWidget {
         itemCount: itemCount,
         itemBuilder: _getItem,
         separatorBuilder: (_, __) => _separator,
-        cacheExtent: pageHeight,
+        cacheExtent: _cacheExtent,
       ),
     );
   }
@@ -784,6 +788,7 @@ class GridIntervalView extends StatelessWidget {
     this.ratio,
     @required this.crossAxisCount,
     @required this.itemCount,
+    this.cacheExtent,
   })  : children = null,
         super(key: key);
 
@@ -806,6 +811,7 @@ class GridIntervalView extends StatelessWidget {
     @required this.crossAxisCount,
     @required this.itemCount,
     @required this.itemBuilder,
+    this.cacheExtent,
   })  : children = null,
         super(key: key);
 
@@ -829,6 +835,7 @@ class GridIntervalView extends StatelessWidget {
     @required this.children,
   })  : itemCount = children.length,
         itemBuilder = null,
+        this.cacheExtent = null,
         super(key: key);
 
   final IndexedWidgetBuilder itemBuilder;
@@ -842,6 +849,7 @@ class GridIntervalView extends StatelessWidget {
   /// padding top  bottom
   final num mainPadding;
   final num crossPadding;
+  final num cacheExtent;
 
   final int itemCount;
   final crossAxisCount;
@@ -859,6 +867,8 @@ class GridIntervalView extends StatelessWidget {
       leftR: isH ? mainPadding : crossPadding,
       topB: isH ? crossPadding : mainPadding,
     );
+    var _cacheExtent =
+        cacheExtent ?? FastDevelopConfig.instance.gridIntervalViewOfCacheExtent;
     return Container(
       height: isH || height != null ? height.s : null,
       width: width != null ? width.s : null,
@@ -871,7 +881,7 @@ class GridIntervalView extends StatelessWidget {
         physics: physics,
         padding: _padding,
         itemBuilder: itemBuilder ?? (_, index) => children[index],
-        cacheExtent: pageHeight,
+        cacheExtent: _cacheExtent,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,
           childAspectRatio: ratio ?? 1.0,

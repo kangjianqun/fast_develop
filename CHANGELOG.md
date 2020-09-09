@@ -1,3 +1,6 @@
+## [1.1.5+2]
+配置新增 listIntervalViewOfCacheExtent|gridIntervalViewOfCacheExtent
+
 ## [1.1.5+1]
 修复 ContainerEx 异常
 

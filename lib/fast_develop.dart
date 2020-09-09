@@ -56,6 +56,7 @@ class FastDevelopConfig {
   factory FastDevelopConfig() => _getInstance();
   static FastDevelopConfig instance = _getInstance();
   static FastDevelopConfig _instance;
+
   static FastDevelopConfig _getInstance() {
     if (_instance == null) {
       _instance = FastDevelopConfig.init();
@@ -65,6 +66,8 @@ class FastDevelopConfig {
 
   BuildContext context;
 
+  num gridIntervalViewOfCacheExtent;
+  num listIntervalViewOfCacheExtent;
   num singleLineOfMinHeight;
   num singleLineOfIconHeight;
   num singleLineOfNameLeftPadding;
@@ -125,6 +128,8 @@ class FastDevelopConfig {
     this.cardExOfPaddingSize = 20,
     this.cardExOfMarginSize = 0,
     this.editTextOfIconRightSpace = 48,
+    this.listIntervalViewOfCacheExtent,
+    this.gridIntervalViewOfCacheExtent,
   }) {
     initFastDevelopOfData(toast);
     initFastDevelopOfRootLayout(switchTB);
