@@ -1,16 +1,19 @@
-import 'package:fast_develop/fast_develop.dart' hide showToast;
-import 'package:fast_mvvm/fast_mvvm.dart';
+import 'package:fast_develop/widget/theme.dart';
+import 'package:fast_router/fast_router.dart';
 import 'package:flutter/material.dart' hide Checkbox;
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 
 import 'config.dart';
+import 'home_page.dart';
 
 main() => runApp(MyApp(future: initConfig()));
 
 class MyApp extends StatelessWidget {
   final Future future;
-  MyApp({this.future});
+  MyApp({this.future}) {
+    FastRouter.configureRouters(FastRouter(), []);
+  }
 
   @override
   Widget build(BuildContext context) => FutureBuilder(
@@ -27,6 +30,8 @@ class MyApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 title: 'Develop Demo',
                 theme: themeVM.themeData,
+                onGenerateRoute: FastRouter.router.generator,
+                navigatorObservers: [FastRouter.observer],
                 home: HomePage(),
               ),
             ),
@@ -42,40 +47,5 @@ class InitPage extends StatelessWidget {
 
     /// 可以自己换配图
     return Container(color: Colors.black);
-  }
-}
-
-class HomePageVM extends BaseViewModel {
-  ValueNotifier<bool> vnCheck = ValueNotifier(false);
-
-  modifyCheck(bool value) {
-    vnCheck.value = value;
-  }
-}
-
-class HomePage extends StatelessWidget with BaseView<HomePageVM> {
-  @override
-  ViewConfig<HomePageVM> initConfig(BuildContext context) =>
-      ViewConfig.noLoad(vm: HomePageVM());
-
-  @override
-  Widget vmBuild(
-      BuildContext context, HomePageVM vm, Widget child, Widget state) {
-    return MyScaffold.center(
-      title: "菜单页",
-      body: (_) => MyBody(fullLine: false, children: [
-        SingleLine.normal(name: "测试的"),
-        SingleLine.normal(
-          name: "选择",
-          rightWidget: ValueListenableBuilder(
-            valueListenable: vm.vnCheck,
-            builder: (_, check, __) => Checkbox(
-              value: check,
-              onChanged: vm.modifyCheck,
-            ),
-          ),
-        ),
-      ]),
-    );
   }
 }

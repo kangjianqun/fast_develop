@@ -1,3 +1,10 @@
+## [1.1.5+3]
+修改依赖问题
+
+新增 MyBody =>cacheExtent
+
+优化demo
+
 ## [1.1.5+2]
 配置新增 listIntervalViewOfCacheExtent|gridIntervalViewOfCacheExtent
 
@@ -5,9 +12,12 @@
 修复 ContainerEx 异常
 
 ## [1.1.5]
-配置新增 singleLineOfLeftRight|singleLineOfTopBottom|singleLineOfUrlSize;\n
-SingleLine 新增 rightWidget \n
-删除SingleLine.text改用SingleLine.normal \n
+配置新增 singleLineOfLeftRight|singleLineOfTopBottom|singleLineOfUrlSize;
+
+SingleLine 新增 rightWidget
+
+删除SingleLine.text改用SingleLine.normal
+
 新增 theme_vm 主题配置
 新增 example
 

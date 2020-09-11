@@ -1,4 +1,3 @@
-import 'package:fast_mvvm/fast_mvvm.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
@@ -16,6 +15,7 @@ Widget easyRefreshList({
   num mainPadding = 0,
   num crossPadding = 0,
   bool fullLine = true,
+  double cacheExtent,
   Footer footer,
   Header header,
 }) {
@@ -36,7 +36,7 @@ Widget easyRefreshList({
     bottomBouncing: slide,
     footer: footer,
     header: header,
-    cacheExtent: pageHeight,
+    cacheExtent: cacheExtent,
     slivers: <Widget>[SliverList(delegate: SliverChildListDelegate(child))],
   );
 
@@ -62,6 +62,7 @@ Widget easyRefresh({
   num mainPadding = 0,
   num crossPadding = 0,
   bool fullLine = true,
+  double cacheExtent,
   Footer footer,
   Header header,
 }) {
@@ -84,7 +85,7 @@ Widget easyRefresh({
     bottomBouncing: slide,
     footer: footer,
     header: header,
-    cacheExtent: pageHeight,
+    cacheExtent: cacheExtent,
     slivers: <Widget>[SliverList(delegate: SliverChildListDelegate(child))],
   );
 }
