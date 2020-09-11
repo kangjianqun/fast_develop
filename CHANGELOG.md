@@ -1,3 +1,16 @@
+## [1.1.5+3]
+
+>修改UI效果
+>
+>配置新增
+>>pageHeight|pageWidth|myBodyOfSpace|checkboxOfBorderWidth
+
+>>initFastDevelopOfRespData(processingExtend); Http 可以自定义初始化。
+
+>>initFastDevelopOfHttp(baseOptions, parseJson, dioInit); RespData 可以处理扩展参数
+
+>>initFastDevelopOfApiInterceptor(onRequest); ApiInterceptor 可以自定义onRequest
+
 ## [1.1.5+2]
 配置新增 listIntervalViewOfCacheExtent|gridIntervalViewOfCacheExtent
 
@@ -5,10 +18,14 @@
 修复 ContainerEx 异常
 
 ## [1.1.5]
-配置新增 singleLineOfLeftRight|singleLineOfTopBottom|singleLineOfUrlSize;\n
-SingleLine 新增 rightWidget \n
-删除SingleLine.text改用SingleLine.normal \n
+配置新增 singleLineOfLeftRight|singleLineOfTopBottom|singleLineOfUrlSize;
+
+SingleLine 新增 rightWidget
+
+删除SingleLine.text改用SingleLine.normal
+
 新增 theme_vm 主题配置
+
 新增 example
 
 ## [1.1.4+2]

@@ -664,6 +664,8 @@ class ListIntervalView extends StatelessWidget {
     this.mainPadding = 32,
     this.crossPadding = 32,
     this.cacheExtent,
+    this.controller,
+    this.fullLineIgnoreOfIndex,
   })  : this.children = null,
         super(key: key);
 
@@ -683,6 +685,8 @@ class ListIntervalView extends StatelessWidget {
     this.mainPadding = 32,
     this.crossPadding = 32,
     this.cacheExtent,
+    this.controller,
+    this.fullLineIgnoreOfIndex,
   })  : this.itemCount = children.length,
         this.itemBuilder = null,
         super(key: key);
@@ -704,6 +708,8 @@ class ListIntervalView extends StatelessWidget {
     this.mainPadding = 0,
     this.crossPadding = 0,
     this.cacheExtent,
+    this.controller,
+    this.fullLineIgnoreOfIndex,
   })  : this.children = null,
         super(key: key);
 
@@ -726,7 +732,11 @@ class ListIntervalView extends StatelessWidget {
 
   /// 整行 item 填充宽度
   final bool fullLine;
+
+  /// 忽略的index  适用于 item 带[Expanded]
+  final List<int> fullLineIgnoreOfIndex;
   final bool primary;
+  final ScrollController controller;
 
   Widget _getSeparator() {
     return separator ?? Spacing.spacingView(width: space, height: space);
@@ -734,7 +744,9 @@ class ListIntervalView extends StatelessWidget {
 
   Widget _getItem(BuildContext ctx, int index) {
     bool isChild = children.en;
-    if (fullLine)
+    if (fullLine &&
+        (fullLineIgnoreOfIndex == null ||
+            fullLineIgnoreOfIndex.indexOf(index) == -1))
       return isChild ? children[index] : itemBuilder(ctx, index);
     else
       return Row(
@@ -747,24 +759,28 @@ class ListIntervalView extends StatelessWidget {
     bool isH = direction == Axis.horizontal;
     var _cacheExtent =
         cacheExtent ?? FastDevelopConfig.instance.listIntervalViewOfCacheExtent;
-    return Container(
-      height: isH ? height.s : null,
-      color: color,
-      child: ListView.separated(
-        shrinkWrap: shrinkWrap,
-        primary: primary,
-        padding: Spacing.all(
-          leftR: isH ? mainPadding : crossPadding,
-          topB: isH ? crossPadding : mainPadding,
-        ),
-        physics: physics ?? NeverScrollableScrollPhysics(),
-        scrollDirection: direction,
-        itemCount: itemCount,
-        itemBuilder: _getItem,
-        separatorBuilder: (_, __) => _separator,
-        cacheExtent: _cacheExtent,
+
+    Widget view = ListView.separated(
+      shrinkWrap: shrinkWrap,
+      primary: primary,
+      padding: Spacing.all(
+        leftR: isH ? mainPadding : crossPadding,
+        topB: isH ? crossPadding : mainPadding,
       ),
+      physics: physics ?? NeverScrollableScrollPhysics(),
+      scrollDirection: direction,
+      itemCount: itemCount,
+      itemBuilder: _getItem,
+      controller: controller,
+      separatorBuilder: (_, __) => _separator,
+      cacheExtent: _cacheExtent,
     );
+
+    if (isH || color != null) {
+      var _height = isH ? height.s : null;
+      view = Container(height: _height, color: color, child: view);
+    }
+    return view;
   }
 }
 

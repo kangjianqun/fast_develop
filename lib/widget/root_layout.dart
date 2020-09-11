@@ -454,16 +454,9 @@ class MyBody extends StatelessWidget {
     if (topWidget != null) {
       Widget _topWidget = topWidget;
       if (topShrink)
-        _topWidget = Container(
-          margin: Spacing.all(size: _padding),
-          child: topWidget,
-        );
-      view = Column(
-        children: <Widget>[
-          _topWidget,
-          Expanded(child: view),
-        ],
-      );
+        _topWidget =
+            Container(margin: Spacing.all(size: _padding), child: topWidget);
+      view = Column(children: [_topWidget, Expanded(child: view)]);
     }
     return view;
   }
