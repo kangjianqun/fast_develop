@@ -77,6 +77,8 @@ class ApiInterceptor extends InterceptorsWrapper {
       _RespData respData = _RespData.fromJson(jsonData);
 
       response.data = respData.data;
+      response.extra
+          .update(keyJson, (v) => respData.json, ifAbsent: () => respData.json);
       response.extra.update(keyIsMore, (v) => respData.isMore,
           ifAbsent: () => respData.isMore);
       response.extra.update(keyTotalPage, (v) => respData.totalPageNum,
@@ -127,6 +129,8 @@ void initFastDevelopOfRespData(ProcessingExtend processingExtend) {
 }
 
 class _RespData {
+  _RespData({this.data, this.code});
+
   Map<String, dynamic> json;
   dynamic data;
   int code = 0;
@@ -153,15 +157,16 @@ class _RespData {
     return data;
   }
 
-  _RespData({this.data, this.code});
-
   @override
   String toString() {
-    return 'RespData{status: $code, datas: $data}';
+    if (json == null)
+      return "";
+    else
+      return json.toString();
   }
 
   _RespData.fromJson(Map<String, dynamic> json) {
-    json = json;
+    this.json = json;
     code = json['code'];
     data = json['datas'];
     login = json['login'];

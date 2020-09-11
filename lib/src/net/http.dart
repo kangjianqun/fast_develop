@@ -15,6 +15,7 @@ String keyShowHint = "key_show_hint";
 String keyDisposeJson = "key_disponse_json";
 
 String keyIsMore = "key_isMore";
+String keyJson = "key_json";
 String keyExtendData = "key_extendData";
 String keyTotalPage = "key_totalPage";
 String keyHint = "key_hint";

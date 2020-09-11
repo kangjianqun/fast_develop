@@ -171,8 +171,8 @@ class TitleWidget extends StatelessWidget implements PreferredSizeWidget {
   final Brightness brightness;
 
   @override
-  Size get preferredSize =>
-      Size.fromHeight((height ?? FastDevelopConfig.instance.titleWidgetOfHeight).sh);
+  Size get preferredSize => Size.fromHeight(
+      (height ?? FastDevelopConfig.instance.titleWidgetOfHeight).sh);
 
   @override
   Widget build(BuildContext context) {

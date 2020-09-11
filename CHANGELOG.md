@@ -1,4 +1,7 @@
 ## [1.1.5+4]
+response.extra 新增 key_json 字段 数据为初始 response.data
+
+## [1.1.5+4]
 修改依赖问题
 
 新增 MyBody =>cacheExtent
