@@ -1,3 +1,10 @@
+## [1.1.5+4]
+修改依赖问题
+
+新增 MyBody =>cacheExtent
+
+优化demo
+
 ## [1.1.5+3]
 
 >修改UI效果
@@ -25,7 +32,6 @@ SingleLine 新增 rightWidget
 删除SingleLine.text改用SingleLine.normal
 
 新增 theme_vm 主题配置
-
 新增 example
 
 ## [1.1.4+2]

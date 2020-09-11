@@ -293,10 +293,7 @@ class MyScaffold extends StatelessWidget {
   }
 }
 
-enum ShowType {
-  Default,
-  Hide,
-}
+enum ShowType { Default, Hide }
 
 class MyBody extends StatelessWidget {
   const MyBody({
@@ -321,6 +318,7 @@ class MyBody extends StatelessWidget {
     this.header,
     this.footer,
     this.topShrink = false,
+    this.cacheExtent,
   })  : this.child = null,
         itemBuilder = null,
         itemCount = null,
@@ -349,6 +347,7 @@ class MyBody extends StatelessWidget {
     this.header,
     this.footer,
     this.topShrink = false,
+    this.cacheExtent,
   })  : child = null,
         children = null,
         super(key: key);
@@ -376,6 +375,7 @@ class MyBody extends StatelessWidget {
     this.header,
     this.footer,
     this.topShrink = false,
+    this.cacheExtent,
   })  : children = null,
         itemBuilder = null,
         itemCount = null,
@@ -399,6 +399,7 @@ class MyBody extends StatelessWidget {
   final int right;
   final num space;
   final int itemCount;
+  final double cacheExtent;
   final EasyRefreshController controller;
   final OnRefreshCallback refresh;
   final OnLoadCallback load;
@@ -430,6 +431,7 @@ class MyBody extends StatelessWidget {
         fullLine: fullLine,
         space: space,
         slide: slide,
+        cacheExtent: cacheExtent,
         header: header,
         footer: footer,
       );

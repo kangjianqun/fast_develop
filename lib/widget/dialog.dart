@@ -40,7 +40,8 @@ class DialogSimple {
 
     if (_dict.length == 0 && _loadStatue) {
       _loadStatue = false;
-      tryCatch(() => FastRouter.popBackDialog(FastDevelopConfig.instance.context));
+      tryCatch(
+          () => FastRouter.popBackDialog(FastDevelopConfig.instance.context));
     }
   }
 }
