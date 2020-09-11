@@ -307,7 +307,7 @@ class MyBody extends StatelessWidget {
     this.left = 0,
     this.top = 0,
     this.right = 0,
-    this.space = 0,
+    this.space,
     this.bottom = true,
     this.slide = false,
     this.backgroundColor,
@@ -335,7 +335,7 @@ class MyBody extends StatelessWidget {
     this.left = 0,
     this.top = 0,
     this.right = 0,
-    this.space = 0,
+    this.space,
     this.bottom = true,
     this.slide = false,
     this.backgroundColor,
@@ -362,7 +362,7 @@ class MyBody extends StatelessWidget {
     this.left = 0,
     this.top = 0,
     this.right = 0,
-    this.space = 0,
+    this.space,
     this.bottom = true,
     this.slide = false,
     this.backgroundColor,
@@ -412,44 +412,27 @@ class MyBody extends StatelessWidget {
   final Header header;
   final Footer footer;
 
-  Widget _content(num padding) {
+  Widget _content(num padding, space) {
     List<Widget> _children = children ?? [child];
 
     Widget view;
     if (noList) {
       view = child;
     } else {
-      if (itemBuilder != null) {
-        view = easyRefresh(
-          itemCount: itemCount,
-          itemBuilder: itemBuilder,
-          controller: controller,
-          refresh: refresh,
-          mainPadding: padding,
-          crossPadding: padding,
-          load: load,
-          fullLine: fullLine,
-          space: space,
-          slide: slide,
-          header: header,
-          footer: footer,
-        );
-      } else {
-        view = easyRefreshList(
-          children: _children,
-          controller: controller,
-          refresh: refresh,
-          mainPadding: padding,
-          crossPadding: padding,
-          load: load,
-          isInterval: listEx ?? space != 0,
-          fullLine: fullLine,
-          space: space,
-          slide: slide,
-          header: header,
-          footer: footer,
-        );
-      }
+      view = easyRefresh(
+        itemCount: itemCount ?? _children.length,
+        itemBuilder: itemBuilder ?? (_, index) => _children[index],
+        controller: controller,
+        refresh: refresh,
+        mainPadding: padding,
+        crossPadding: padding,
+        load: load,
+        fullLine: fullLine,
+        space: space,
+        slide: slide,
+        header: header,
+        footer: footer,
+      );
     }
 
     return Container(
@@ -465,7 +448,9 @@ class MyBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _padding = padding ?? FastDevelopConfig.instance.myBodyOfPadding;
-    Widget view = _content(_padding);
+    var _space =
+        space ?? FastDevelopConfig.instance.myBodyOfSpace ?? SConfig.listSpace;
+    Widget view = _content(_padding, _space);
     if (topWidget != null) {
       Widget _topWidget = topWidget;
       if (topShrink)
@@ -473,7 +458,6 @@ class MyBody extends StatelessWidget {
           margin: Spacing.all(size: _padding),
           child: topWidget,
         );
-
       view = Column(
         children: <Widget>[
           _topWidget,

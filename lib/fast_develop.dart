@@ -1,5 +1,6 @@
 library fast_develop;
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fast_develop/fast_develop.dart';
@@ -87,10 +88,12 @@ class FastDevelopConfig {
   num editTextOfIconRightSpace;
 
   num myBodyOfPadding;
+  num myBodyOfSpace;
 
   num checkboxOfSize;
   num checkboxOfSpacing;
   num checkboxOfPadding;
+  num checkboxOfBorderWidth;
 
   num cardExOfPaddingSize;
   num cardExOfMarginSize;
@@ -104,8 +107,15 @@ class FastDevelopConfig {
     SwitchThemeBrightness switchTB,
     IconThemeGenerate iconTheme,
     TextThemeGenerate textTheme,
+    ProcessingExtend processingExtend,
     bool screenEnable = true,
+    BaseOptions baseOptions,
+    JsonDecodeCallback parseJson,
+    DioInit dioInit,
+    ApiInterceptorOnRequest onRequest,
     this.context,
+    num pageWidth = 1080,
+    num pageHeight = 1920,
     this.titleWidgetOfHeight = 144,
     this.titleWidgetOfActionSpacing = 32,
     this.singleLineOfMinHeight = 144,
@@ -122,19 +132,26 @@ class FastDevelopConfig {
     this.iconTextOfSpacing = 4,
     this.iconTextOfIconBottom = 8,
     this.myBodyOfPadding = 32,
+    this.myBodyOfSpace,
     this.checkboxOfSize = 50,
     this.checkboxOfSpacing = 16,
     this.checkboxOfPadding = 8,
+    this.checkboxOfBorderWidth = 2,
     this.cardExOfPaddingSize = 20,
     this.cardExOfMarginSize = 0,
     this.editTextOfIconRightSpace = 48,
     this.listIntervalViewOfCacheExtent,
     this.gridIntervalViewOfCacheExtent,
   }) {
+    initFastDevelopOfRespData(processingExtend);
+    initFastDevelopOfHttp(baseOptions, parseJson, dioInit);
+    initFastDevelopOfApiInterceptor(onRequest);
     initFastDevelopOfData(toast);
     initFastDevelopOfRootLayout(switchTB);
     initFastDevelopOfTitle(iconTheme, textTheme);
     ScreenUtils.enable = screenEnable;
     _instance = this;
+    SConfig.pageWidth = pageWidth;
+    SConfig.pageHeight = pageHeight;
   }
 }

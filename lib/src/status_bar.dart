@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import '../fast_develop.dart';
 
-/// 还原
+/// 还原标题栏
 statusBarReduction() {
   if (CConfig.platformBrightness == Brightness.dark) {
     statusBarTransparent(brightness: Brightness.light);
@@ -16,7 +16,7 @@ statusBarReduction() {
 statusBarTransparent({Brightness brightness = Brightness.dark, Color color}) {
   bool light = brightness == Brightness.light;
   SystemUiOverlayStyle style = SystemUiOverlayStyle(
-    systemNavigationBarColor: Color(0xFF000000),
+    systemNavigationBarColor: color ?? Color(0xFF000000),
     systemNavigationBarDividerColor: null,
 
     /// 注意安卓要想实现沉浸式的状态栏 需要底部设置透明色

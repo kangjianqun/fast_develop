@@ -5,7 +5,7 @@ import 'package:package_info/package_info.dart';
 import 'package:universal_io/io.dart';
 import '../fast_develop.dart';
 
-/// 是否资源版本  判断线上与线下
+/// 是否资源版本  判断正式与测试
 const bool inProduction = bool.fromEnvironment("dart.vm.product");
 
 class PlatformUtils {

@@ -232,6 +232,9 @@ class CConfig {
 }
 
 class SConfig {
+  static num pageHeight;
+  static num pageWidth;
+
   static num listSpace = 26;
 
   /// 根布局 左右间隔

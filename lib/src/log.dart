@@ -15,17 +15,14 @@ void showToast(String hint) {
 
 class LogUtil {
   static const String _TAG = "projectDebugLog";
-  static const bool _DEBUG_PRINT = true;
+  static bool isDebugPrint = true;
 
   static void printLog(Object msg) {
     var content = "$_TAG: ";
-
     content += msg.toString();
-
-    if (_DEBUG_PRINT) {
+    if (isDebugPrint)
       debugPrint(content);
-    } else {
+    else
       print(content);
-    }
   }
 }

@@ -20,16 +20,12 @@ Widget easyRefreshList({
   Header header,
 }) {
   List<Widget> child = [];
-  if (isInterval) {
-    child.add(ListIntervalView.children(
-        children: children,
-        space: space,
-        fullLine: fullLine,
-        mainPadding: mainPadding,
-        crossPadding: crossPadding));
-  } else {
-    child.addAll(children);
-  }
+  child.add(ListIntervalView.children(
+      children: children,
+      space: space,
+      fullLine: fullLine,
+      mainPadding: mainPadding,
+      crossPadding: crossPadding));
 
   Widget view = EasyRefresh.custom(
     controller: controller,

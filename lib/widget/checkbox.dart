@@ -6,10 +6,11 @@ import '../fast_develop.dart';
 class Checkbox extends StatelessWidget {
   const Checkbox({
     Key key,
-    this.size = 50,
+    this.size,
     this.description,
-    this.spacing = 16,
-    this.padding = 8,
+    this.spacing,
+    this.padding,
+    this.borderWidth,
     @required this.value,
     @required this.onChanged,
     this.unselectedBGColor,
@@ -19,10 +20,11 @@ class Checkbox extends StatelessWidget {
     this.checkColor,
   }) : super(key: key);
 
-  final int size;
-  final int padding;
+  final num size;
+  final num padding;
   final Widget description;
   final double spacing;
+  final double borderWidth;
   final ValueChanged<bool> onChanged;
   final bool value;
 
@@ -52,19 +54,21 @@ class Checkbox extends StatelessWidget {
     var _spacing = spacing ?? FastDevelopConfig.instance.checkboxOfSpacing;
     var __size = size ?? FastDevelopConfig.instance.checkboxOfSize;
     var _padding = padding ?? FastDevelopConfig.instance.checkboxOfPadding;
+    var _borderWidth =
+        borderWidth ?? FastDevelopConfig.instance.checkboxOfBorderWidth;
     var _size = (__size + _padding).s;
 
     final ThemeData themeData = Theme.of(context);
     var borderColor = value
-        ? (selectedBorderColor ?? Colors.transparent)
+        ? (selectedBorderColor ?? CConfig.transparent)
         : (unselectedBorderColor ?? themeData.unselectedWidgetColor);
     var bgColor = value
         ? (selectedBGColor ?? themeData.toggleableActiveColor)
-        : (unselectedBGColor ?? Colors.transparent);
-    var color = checkColor ?? Colors.white;
+        : (unselectedBGColor ?? CConfig.transparent);
+    var color = checkColor ?? CConfig.white;
     var tick = !value
         ? Container()
-        : Center(child: Icon(Icons.check, size: size.ssp, color: color));
+        : Center(child: Icon(Icons.check, size: __size.ssp, color: color));
 
     Widget _view = Container(
       width: _size,
@@ -73,7 +77,7 @@ class Checkbox extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(_size / 2)),
         color: bgColor,
-        border: Border.all(color: borderColor, width: 1),
+        border: Border.all(color: borderColor, width: _borderWidth.s),
       ),
       child: tick,
     );

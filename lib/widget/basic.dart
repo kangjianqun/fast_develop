@@ -657,7 +657,7 @@ class ListIntervalView extends StatelessWidget {
     this.physics,
     this.color,
     this.fullLine = true,
-    this.primary = false,
+    this.primary = true,
     this.shrinkWrap = true,
     @required this.itemCount,
     @required this.itemBuilder,
@@ -677,7 +677,7 @@ class ListIntervalView extends StatelessWidget {
     this.physics,
     this.color,
     this.fullLine = true,
-    this.primary = false,
+    this.primary = true,
     this.shrinkWrap = true,
     @required this.children,
     this.mainPadding = 32,
@@ -734,12 +734,11 @@ class ListIntervalView extends StatelessWidget {
 
   Widget _getItem(BuildContext ctx, int index) {
     bool isChild = children.en;
-    if (!fullLine)
-      return Row(children: <Widget>[
-        isChild ? children[index] : itemBuilder(ctx, index)
-      ]);
-    else
+    if (fullLine)
       return isChild ? children[index] : itemBuilder(ctx, index);
+    else
+      return Row(
+          children: [isChild ? children[index] : itemBuilder(ctx, index)]);
   }
 
   @override
@@ -1094,15 +1093,17 @@ class SingleLine<T> extends StatelessWidget {
     var _leftR = leftRight ?? FastDevelopConfig.instance.singleLineOfLeftRight;
     var _topB = leftRight ?? FastDevelopConfig.instance.singleLineOfTopBottom;
     var _urlSize = urlSize ?? FastDevelopConfig.instance.singleLineOfUrlSize;
-
+    var _width = SConfig.pageWidth;
+    var _decoration =
+        decoration ?? DecoUtil.normal(color: bg, radius: SConfig.radius);
     return TouchWidget(
       onTap: onTap,
       child: ConstrainedBox(
-        constraints: BoxConstraints(minHeight: _minHeight.sh),
+        constraints: BoxConstraints(
+            minHeight: _minHeight.sh, maxWidth: (_width - _leftR * 2).s),
         child: Container(
           padding: padding ?? Spacing.all(leftR: _leftR, topB: _topB),
-          decoration:
-              decoration ?? DecoUtil.normal(color: bg, radius: SConfig.radius),
+          decoration: _decoration,
           child: Row(children: <Widget>[
             _icon(iconColor, _iconHeight, _nameLeftPadding),
             _name(_nameRightPadding),

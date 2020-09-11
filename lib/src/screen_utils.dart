@@ -7,6 +7,7 @@ const double height = 1920;
 /// 是否不匹配高度
 bool pixelMatching = true;
 
+/// TODO 宽高比的问题，用来处理平板，未开发完
 void setPixelMatching(bool isPixelMatching) {
   pixelMatching = isPixelMatching ??
       ScreenUtil.screenHeight / ScreenUtil.screenWidth >= 1.5;

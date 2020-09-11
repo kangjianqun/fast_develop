@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:dio/native_imp.dart';
-import 'package:dio_http2_adapter/dio_http2_adapter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fast_mvvm/fast_mvvm.dart';
 import '../../fast_develop.dart';
@@ -21,24 +20,30 @@ String keyTotalPage = "key_totalPage";
 String keyHint = "key_hint";
 String keyResult = "key_result";
 
-BaseOptions _baseOptions = BaseOptions(
-  connectTimeout: 1000 * 60,
-  receiveTimeout: 1000 * 60,
-);
+typedef DioInit = void Function(Dio dio, String baseUrl);
 
-// 必须是顶层函数
-_parseJson(String text) {
+/// [parseJson]必须是顶层函数
+void initFastDevelopOfHttp(
+  BaseOptions baseOptions,
+  JsonDecodeCallback parseJson,
+  DioInit dioInit,
+) {
+  if (baseOptions != null) _baseOptions = baseOptions;
+  if (parseJson != null) _parseJson = parseJson;
+}
+
+BaseOptions _baseOptions =
+    BaseOptions(connectTimeout: 1000 * 60, receiveTimeout: 1000 * 60);
+
+/// 必须是顶层函数
+JsonDecodeCallback _parseJson = (String text) {
   return compute(jsonDecode(text), text);
-}
+};
 
-///http2的策略
-// ignore: unused_element
-_getConnectionManager() {
-  return ConnectionManager(
-    idleTimeout: 1000 * 10,
-    onClientCreate: (_, config) => config.onBadCertificate = (_) => true,
-  );
-}
+/// 初始化 Dio
+DioInit _dioInit = (Dio dio, String baseUrl) {
+  dio.interceptors.add(ApiInterceptor(baseUrl));
+};
 
 class Http extends DioForNative {
   static Http instance;
@@ -59,25 +64,11 @@ class Http extends DioForNative {
   /// 初始化 加入app通用处理
   _init(String baseUrl, [BaseOptions options]) {
     (transformer as DefaultTransformer).jsonDecodeCallback = _parseJson;
-//    httpClientAdapter = Http2Adapter(_getConnectionManager());
-
-    interceptors
-          // JSON处理
-          ..add(ApiInterceptor(baseUrl))
-        // 日志输出
-//      ..add(LogInterceptor(
-//        request: false,
-//        requestHeader: false,
-//        responseHeader: false,
-//      ))
-        ;
+    _dioInit(this, baseUrl);
   }
 }
 
-enum RequestType {
-  Get,
-  Post,
-}
+enum RequestType { Get, Post }
 
 typedef RequestSucceed = void Function(Response);
 typedef RequestFailure = void Function(DioError);

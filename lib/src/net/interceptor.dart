@@ -6,25 +6,36 @@ import 'package:fast_mvvm/fast_mvvm.dart';
 
 import '../../fast_develop.dart';
 
+typedef ApiInterceptorOnRequest = Future<RequestOptions> Function(
+    RequestOptions options, String baseUrl);
+
+void initFastDevelopOfApiInterceptor(ApiInterceptorOnRequest onRequest) {
+  if (onRequest != null) _onRequest = onRequest;
+}
+
+/// 配置[headers] 等
+ApiInterceptorOnRequest _onRequest = (options, String baseUrl) async {
+  var version = await PlatformUtils.getAppVersion();
+  options.headers.putIfAbsent("version", () => "v$version");
+  if (BoolUtil.parse(options.extra[keyShowDialog])) {
+//      LogUtil.printLog("showDialog");
+    try {
+      DialogSimple.show(options.uri.toString());
+    } catch (e) {}
+  }
+  LogUtil.printLog(options.uri);
+  return options;
+};
+
 ///  API
 class ApiInterceptor extends InterceptorsWrapper {
   ApiInterceptor(this.baseUrl);
-
   final String baseUrl;
 
   @override
   onRequest(RequestOptions options) async {
-    var version = await PlatformUtils.getAppVersion();
     options.baseUrl = baseUrl;
-    options.headers.putIfAbsent("version", () => "v$version");
-    if (BoolUtil.parse(options.extra[keyShowDialog])) {
-//      LogUtil.printLog("showDialog");
-      try {
-        DialogSimple.show(options.uri.toString());
-      } catch (e) {}
-    }
-    LogUtil.printLog(options.uri);
-    return options;
+    await _onRequest(options, baseUrl);
   }
 
   @override
@@ -108,7 +119,15 @@ class ApiInterceptor extends InterceptorsWrapper {
   }
 }
 
+typedef ProcessingExtend = Map<String, dynamic> Function(
+    Map<String, dynamic> json);
+
+void initFastDevelopOfRespData(ProcessingExtend processingExtend) {
+  if (processingExtend != null) _RespData.processingExtend = processingExtend;
+}
+
 class _RespData {
+  Map<String, dynamic> json;
   dynamic data;
   int code = 0;
   String login;
@@ -116,6 +135,9 @@ class _RespData {
   int totalPageNum = 1;
   String error;
   String hint;
+
+  /// 处理扩展参数
+  static ProcessingExtend processingExtend;
 
   /// 下一步路由路径
   String next;
@@ -126,12 +148,8 @@ class _RespData {
   bool get result => 200 == code;
 
   Map<String, dynamic> getExtend() {
-    if (next.e) return null;
-
     var data = Map<String, dynamic>();
-    data["next"] = next;
-    data["back"] = back;
-    data["error"] = error;
+    if (processingExtend != null) data = processingExtend(json);
     return data;
   }
 
@@ -143,6 +161,7 @@ class _RespData {
   }
 
   _RespData.fromJson(Map<String, dynamic> json) {
+    json = json;
     code = json['code'];
     data = json['datas'];
     login = json['login'];

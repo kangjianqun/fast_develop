@@ -150,26 +150,27 @@ class DecoUtil {
   }
 
   static BoxDecoration border(
-      {Color color,
-      Color borderColor = Colors.black,
-      num radius,
-      bool isCircle = false}) {
+      {Color color, Color borderColor, num radius, bool isCircle = false}) {
     return normal(
-        color: color ?? CConfig.cBackgroundColor,
-        border: Border.all(color: CConfig.getMatching(color: borderColor)),
-        radius: radius,
-        isCircle: isCircle);
+      color: color ?? CConfig.cBackgroundColor,
+      border: Border.all(
+        color: CConfig.getMatching(color: borderColor ?? CConfig.black),
+      ),
+      radius: radius,
+      isCircle: isCircle,
+    );
   }
 
   static BoxDecoration borderUnilateral(
     int leftOrTopOrRightOrBottom, {
     Color color,
-    Color borderColor = Colors.black,
+    Color borderColor,
     bool isCircle = false,
     BorderStyle style = BorderStyle.solid,
     bool reverse = false,
   }) {
-    BorderSide side = BorderSide(color: borderColor, width: 1.0, style: style);
+    BorderSide side = BorderSide(
+        color: borderColor ?? CConfig.black, width: 1.0, style: style);
 
     var left;
     var top;

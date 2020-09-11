@@ -1,5 +1,6 @@
 import 'package:fast_develop/fast_develop.dart' hide showToast;
-import 'package:flutter/material.dart';
+import 'package:fast_mvvm/fast_mvvm.dart';
+import 'package:flutter/material.dart' hide Checkbox;
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 
@@ -44,13 +45,36 @@ class InitPage extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePageVM extends BaseViewModel {
+  ValueNotifier<bool> vnCheck = ValueNotifier(false);
+
+  modifyCheck(bool value) {
+    vnCheck.value = value;
+  }
+}
+
+class HomePage extends StatelessWidget with BaseView<HomePageVM> {
   @override
-  Widget build(BuildContext context) {
+  ViewConfig<HomePageVM> initConfig(BuildContext context) =>
+      ViewConfig.noLoad(vm: HomePageVM());
+
+  @override
+  Widget vmBuild(
+      BuildContext context, HomePageVM vm, Widget child, Widget state) {
     return MyScaffold.center(
       title: "菜单页",
-      body: (_) => MyBody(children: [
+      body: (_) => MyBody(fullLine: false, children: [
         SingleLine.normal(name: "测试的"),
+        SingleLine.normal(
+          name: "选择",
+          rightWidget: ValueListenableBuilder(
+            valueListenable: vm.vnCheck,
+            builder: (_, check, __) => Checkbox(
+              value: check,
+              onChanged: vm.modifyCheck,
+            ),
+          ),
+        ),
       ]),
     );
   }
