@@ -38,7 +38,11 @@ extension ScreenUtils on num {
   static num _width(num num) {
     if (num == null) return null;
     if (enable)
-      return ScreenUtil().setWidth(num);
+      try {
+        return ScreenUtil().setWidth(num);
+      } catch (e) {
+        return num;
+      }
     else
       return num;
   }
@@ -46,9 +50,13 @@ extension ScreenUtils on num {
   static num _height(num num) {
     if (num == null) return null;
     if (enable)
-      return pixelMatching
-          ? ScreenUtil().setWidth(num)
-          : ScreenUtil().setHeight(num);
+      try {
+        return pixelMatching
+            ? ScreenUtil().setWidth(num)
+            : ScreenUtil().setHeight(num);
+      } catch (e) {
+        return num;
+      }
     else
       return num;
   }
@@ -56,8 +64,12 @@ extension ScreenUtils on num {
   static num _fontSize(num num, bool allowFontScalingSelf) {
     if (num == null) return null;
     if (enable)
-      return ScreenUtil()
-          .setSp(num, allowFontScalingSelf: allowFontScalingSelf);
+      try {
+        return ScreenUtil()
+            .setSp(num, allowFontScalingSelf: allowFontScalingSelf);
+      } catch (e) {
+        return num;
+      }
     else
       return num;
   }

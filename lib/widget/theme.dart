@@ -26,10 +26,15 @@ class ThemeVM with ChangeNotifier {
 
   /// 切换指定色彩
   /// 没有传[brightness]就不改变brightness,color同理
+  ///  [forciblyModify]强制修改 用于初始化的时候没有适配文字大小的问题
   void switchTheme(
-      {Brightness brightness, MaterialColor color, bool isInit = false}) {
-    if (brightness == _brightness && (color == null || _themeColor == color))
-      return;
+      {Brightness brightness,
+      MaterialColor color,
+      bool isInit = false,
+      bool forciblyModify = false}) {
+    if (forciblyModify &&
+        brightness == _brightness &&
+        (color == null || _themeColor == color)) return;
     _brightness = brightness ?? _brightness;
     _themeColor = color ?? _themeColor;
     _themeData = _generateThemeData(_brightness,

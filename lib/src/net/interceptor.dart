@@ -9,8 +9,10 @@ import '../../fast_develop.dart';
 typedef ApiInterceptorOnRequest = Future<RequestOptions> Function(
     RequestOptions options, String baseUrl);
 
-void initFastDevelopOfApiInterceptor(ApiInterceptorOnRequest onRequest) {
+void initFastDevelopOfApiInterceptor(
+    ApiInterceptorOnRequest onRequest, bool extraSaveJson) {
   if (onRequest != null) _onRequest = onRequest;
+  if (extraSaveJson != null) ApiInterceptor.extraSaveJson = extraSaveJson;
 }
 
 /// 配置[headers] 等
@@ -31,6 +33,9 @@ ApiInterceptorOnRequest _onRequest = (options, String baseUrl) async {
 class ApiInterceptor extends InterceptorsWrapper {
   ApiInterceptor(this.baseUrl);
   final String baseUrl;
+
+  /// 是否在[Response]的extra保存原始json
+  static bool extraSaveJson = true;
 
   @override
   onRequest(RequestOptions options) async {
@@ -77,8 +82,9 @@ class ApiInterceptor extends InterceptorsWrapper {
       _RespData respData = _RespData.fromJson(jsonData);
 
       response.data = respData.data;
-      response.extra
-          .update(keyJson, (v) => respData.json, ifAbsent: () => respData.json);
+      if (extraSaveJson)
+        response.extra.update(keyJson, (v) => respData.json,
+            ifAbsent: () => respData.json);
       response.extra.update(keyIsMore, (v) => respData.isMore,
           ifAbsent: () => respData.isMore);
       response.extra.update(keyTotalPage, (v) => respData.totalPageNum,

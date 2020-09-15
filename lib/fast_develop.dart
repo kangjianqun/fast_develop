@@ -113,6 +113,7 @@ class FastDevelopConfig {
     JsonDecodeCallback parseJson,
     DioInit dioInit,
     ApiInterceptorOnRequest onRequest,
+    bool extraSaveJson = true,
     this.context,
     num pageWidth = 1080,
     num pageHeight = 1920,
@@ -145,7 +146,7 @@ class FastDevelopConfig {
   }) {
     initFastDevelopOfRespData(processingExtend);
     initFastDevelopOfHttp(baseOptions, parseJson, dioInit);
-    initFastDevelopOfApiInterceptor(onRequest);
+    initFastDevelopOfApiInterceptor(onRequest, extraSaveJson);
     initFastDevelopOfData(toast);
     initFastDevelopOfRootLayout(switchTB);
     initFastDevelopOfTitle(iconTheme, textTheme);

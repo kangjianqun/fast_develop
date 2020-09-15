@@ -1,3 +1,10 @@
+## [1.1.6]
+增加ThemeVM->switchTheme 强制修改，解决初始化问题
+
+ApiInterceptor 新增 extraSaveJson
+
+修复屏幕适配初始化异常
+
 ## [1.1.5+5]
 response.extra 新增 key_json 字段 数据为初始 response.data
 
@@ -10,16 +17,17 @@ response.extra 新增 key_json 字段 数据为初始 response.data
 
 ## [1.1.5+3]
 
->修改UI效果
->
->配置新增
->>pageHeight|pageWidth|myBodyOfSpace|checkboxOfBorderWidth
+修改UI效果
 
->>initFastDevelopOfRespData(processingExtend); Http 可以自定义初始化。
+配置新增
 
->>initFastDevelopOfHttp(baseOptions, parseJson, dioInit); RespData 可以处理扩展参数
+pageHeight|pageWidth|myBodyOfSpace|checkboxOfBorderWidth
 
->>initFastDevelopOfApiInterceptor(onRequest); ApiInterceptor 可以自定义onRequest
+initFastDevelopOfRespData(processingExtend); Http 可以自定义初始化。
+
+initFastDevelopOfHttp(baseOptions, parseJson, dioInit); RespData 可以处理扩展参数
+
+initFastDevelopOfApiInterceptor(onRequest); ApiInterceptor 可以自定义onRequest
 
 ## [1.1.5+2]
 配置新增 listIntervalViewOfCacheExtent|gridIntervalViewOfCacheExtent
