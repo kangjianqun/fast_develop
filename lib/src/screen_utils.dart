@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:fast_develop/fast_develop.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 const double width = 1080;
@@ -37,6 +38,7 @@ extension ScreenUtils on num {
 
   static num _width(num num) {
     if (num == null) return null;
+    num = valueByType(num, double);
     if (enable)
       try {
         return ScreenUtil().setWidth(num);
@@ -49,6 +51,7 @@ extension ScreenUtils on num {
 
   static num _height(num num) {
     if (num == null) return null;
+    num = valueByType(num, double);
     if (enable)
       try {
         return pixelMatching
@@ -63,6 +66,7 @@ extension ScreenUtils on num {
 
   static num _fontSize(num num, bool allowFontScalingSelf) {
     if (num == null) return null;
+    num = valueByType(num, double);
     if (enable)
       try {
         return ScreenUtil()

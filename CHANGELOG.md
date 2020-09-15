@@ -1,9 +1,11 @@
+## [1.1.6+1]
+修复屏幕适配初始化异常
+
 ## [1.1.6]
 增加ThemeVM->switchTheme 强制修改，解决初始化问题
 
 ApiInterceptor 新增 extraSaveJson
 
-修复屏幕适配初始化异常
 
 ## [1.1.5+5]
 response.extra 新增 key_json 字段 数据为初始 response.data
