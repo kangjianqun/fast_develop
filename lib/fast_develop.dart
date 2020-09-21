@@ -86,6 +86,9 @@ class FastDevelopConfig {
   num iconTextOfIconBottom;
 
   num editTextOfIconRightSpace;
+  num editTextOfLeftRight;
+  num editTextOfTopBottom;
+  num editTextOfSignLeftPadding;
 
   num myBodyOfPadding;
   num myBodyOfSpace;
@@ -141,6 +144,9 @@ class FastDevelopConfig {
     this.cardExOfPaddingSize = 20,
     this.cardExOfMarginSize = 0,
     this.editTextOfIconRightSpace = 48,
+    this.editTextOfLeftRight = 32,
+    this.editTextOfTopBottom = 16,
+    this.editTextOfSignLeftPadding = 20,
     this.listIntervalViewOfCacheExtent,
     this.gridIntervalViewOfCacheExtent,
   }) {

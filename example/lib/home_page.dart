@@ -44,6 +44,7 @@ class HomePage extends StatelessWidget with BaseView<HomePageVM> {
             ),
           ),
         ),
+        EditText.text(name: "输入框"),
       ]),
     );
   }

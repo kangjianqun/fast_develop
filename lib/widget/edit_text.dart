@@ -99,6 +99,7 @@ class EditText extends StatefulWidget {
     this.textInputAction,
     this.onSubmitted,
     this.iconRightSpace,
+    this.signLeftPadding,
   })  : keyboardType = inputType ??
             (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
         super(key: key);
@@ -134,6 +135,7 @@ class EditText extends StatefulWidget {
     this.textInputAction,
     this.onSubmitted,
     this.iconRightSpace,
+    this.signLeftPadding,
   })  : keyboardType = inputType ??
             (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
         super(key: key);
@@ -169,6 +171,7 @@ class EditText extends StatefulWidget {
     this.textInputAction,
     this.onSubmitted,
     this.iconRightSpace,
+    this.signLeftPadding,
   })  : keyboardType = inputType ??
             (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
         super(key: key);
@@ -176,6 +179,7 @@ class EditText extends StatefulWidget {
   final double height;
   final double width;
   final num iconRightSpace;
+  final num signLeftPadding;
   final String name;
   final String hint;
   final TextStyle hintStyle;
@@ -230,21 +234,33 @@ class _EditTextState extends State<EditText> {
         FastDevelopConfig.instance.editTextOfIconRightSpace;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    Widget icon = widget.icon ??
+  Widget _leftSign(num nameLeftPadding) {
+    Widget view = widget.icon ??
         (widget.name.e ? null : Text(widget.name, style: StyleText.normal()));
 
-    if (icon != null) {
-      icon = Container(
+    if (view != null) {
+      view = Container(
           margin: Spacing.leftOrRight(size: _iconRightSpace, isLeft: false),
-          child: icon);
+          child: view);
     } else {
-      icon = Spacing.vView();
+      view = Spacing.vView();
     }
 
-    Widget right = widget.rightChild ?? Spacing.vView();
+    return Container(
+      margin: Spacing.leftOrRight(size: nameLeftPadding),
+      child: view,
+    );
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    var _leftR = FastDevelopConfig.instance.editTextOfLeftRight;
+    var _topB = FastDevelopConfig.instance.editTextOfTopBottom;
+    var _signLeftPadding = widget.signLeftPadding ??
+        FastDevelopConfig.instance.singleLineOfNameLeftPadding;
+
+    Widget leftSign = _leftSign(_signLeftPadding);
+    Widget right = widget.rightChild ?? Spacing.vView();
     InputDecoration _decoration = widget.decoration ??
         InputDecoration(
           hintText: widget.hint ?? "",
@@ -267,7 +283,7 @@ class _EditTextState extends State<EditText> {
       height: widget.height == null ? null : widget.height.sh,
       alignment: Alignment.center,
       margin: widget.margin,
-      padding: widget.padding ?? Spacing.rootLR(size: SConfig.rootSpace),
+      padding: widget.padding ?? Spacing.all(leftR: _leftR, topB: _topB),
       decoration: BoxDecoration(
         color: decorationChanger.getColor(_effectiveFNode.hasFocus),
         borderRadius: decorationChanger.getBRadius(_effectiveFNode.hasFocus),
@@ -276,7 +292,7 @@ class _EditTextState extends State<EditText> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          icon,
+          leftSign,
           Expanded(
             child: TextField(
               autofocus: widget.autoFocus,
