@@ -189,7 +189,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
         loopList: loopList,
       ),
     );
-    ThemeData inheritTheme = Theme.of(context, shadowThemeOnly: true);
+    ThemeData inheritTheme = Theme.of(context);
     if (inheritTheme != null) {
       bottomSheet = new Theme(data: inheritTheme, child: bottomSheet);
     }
@@ -205,7 +205,8 @@ class _DatePickerComponent extends StatefulWidget {
       this.locale,
       this.pickerModel,
       bool loopList})
-      : this.loop = loopList ?? pickerModel.columnCount > 1;
+      : this.loop = loopList ?? pickerModel.columnCount > 1,
+        super(key: key);
 
   final DateChangedCallback onChanged;
 

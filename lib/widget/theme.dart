@@ -87,11 +87,12 @@ class ThemeVM with ChangeNotifier {
       scaffoldBackgroundColor: scaffoldBackground,
       splashColor: pColor.withAlpha(50),
       errorColor: focus,
-      cursorColor: accentColor,
-      textSelectionColor: accentColor?.withAlpha(60),
-      textSelectionHandleColor: accentColor?.withAlpha(60),
       toggleableActiveColor: accentColor,
-
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: accentColor,
+        selectionColor: accentColor?.withAlpha(60),
+        selectionHandleColor: accentColor?.withAlpha(60),
+      ),
       tabBarTheme: TabBarTheme(
         unselectedLabelColor: blackWhite,
         labelColor: focus,

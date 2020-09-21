@@ -32,32 +32,39 @@ ApiInterceptorOnRequest _onRequest = (options, String baseUrl) async {
 ///  API
 class ApiInterceptor extends InterceptorsWrapper {
   ApiInterceptor(this.baseUrl);
+
   final String baseUrl;
 
   /// 是否在[Response]的extra保存原始json
   static bool extraSaveJson = true;
 
   @override
-  onRequest(RequestOptions options) async {
+  onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     options.baseUrl = baseUrl;
     await _onRequest(options, baseUrl);
   }
 
   @override
-  onResponse(Response response) async {
-    bool dialog = BoolUtil.parse(response.request.extra[keyShowDialog]);
+  onResponse(Response response, ResponseInterceptorHandler handler) async {
+    bool dialog = BoolUtil.parse(response.requestOptions.extra[keyShowDialog]);
     if (dialog) {
 //      LogUtil.printLog("closeDialog");
-      bool allClear = BoolUtil.parse(response.request.extra[keyDialogAllClear]);
-      DialogSimple.close(response.request.uri.toString(), clear: allClear);
+      bool allClear =
+          BoolUtil.parse(response.requestOptions?.extra[keyDialogAllClear]);
+      DialogSimple.close(response.requestOptions.uri.toString(),
+          clear: allClear);
     }
 
-    var disposeJson = BoolUtil.parse(response.request.extra[keyDisposeJson]);
+    var disposeJson =
+        BoolUtil.parse(response.requestOptions.extra[keyDisposeJson]);
     response.extra.update(keyDisposeJson, (v) => disposeJson,
         ifAbsent: () => disposeJson);
     if (disposeJson) {
       response.extra.update(keyResult, (v) => true, ifAbsent: () => true);
-      return Http(baseUrl).resolve(response);
+      return handler.resolve(response);
     } else {
       Map<String, dynamic> jsonData = {};
       try {
@@ -99,7 +106,7 @@ class ApiInterceptor extends InterceptorsWrapper {
       if (!respData.result) {
         response.statusCode = respData.code;
         LogUtil.printLog('---api-response--->error---->$respData');
-        if (BoolUtil.parse(response.request.extra[keyShowError]) &&
+        if (BoolUtil.parse(response.requestOptions.extra[keyShowError]) &&
             respData.error.en) {
           showToast(respData.error);
         }
@@ -110,20 +117,20 @@ class ApiInterceptor extends InterceptorsWrapper {
         }
       }
 
-      if (BoolUtil.parse(response.request.extra[keyShowHint]) &&
+      if (BoolUtil.parse(response.requestOptions.extra[keyShowHint]) &&
           respData.hint.en) {
         showToast(respData.error);
       }
-      return Http(baseUrl).resolve(response);
+      return handler.resolve(response);
     }
   }
 
   @override
-  Future onError(DioError err) {
+  void onError(DioError err, ErrorInterceptorHandler handler) {
     DialogSimple.close("", clear: true);
     LogUtil.printLog(err.toString());
     LogUtil.printLog('---api-response--->error---->$err');
-    return super.onError(err);
+    super.onError(err, handler);
   }
 }
 

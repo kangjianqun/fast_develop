@@ -65,7 +65,7 @@ class CityPicker {
           selectProvince: selectProvince,
           selectCity: selectCity,
           selectArea: selectArea,
-          theme: Theme.of(context, shadowThemeOnly: true),
+          theme: Theme.of(context),
           barrierLabel:
               MaterialLocalizations.of(context).modalBarrierDismissLabel),
     );
@@ -138,7 +138,7 @@ class _CityPickerWidget<T extends BaseItem> extends StatefulWidget {
     this.selectProvince,
     this.selectCity,
     this.selectArea,
-  });
+  }) : super(key: key);
 
   final _CityPickerRoute route;
   final List<T> data;
@@ -155,7 +155,7 @@ class _CityPickerState<T extends BaseItem> extends State<_CityPickerWidget> {
   FixedExtentScrollController cityController;
   FixedExtentScrollController areaController;
   int provinceIndex = 0, cityIndex = 0, areaIndex = 0;
-  List<T> province = List();
+  List<T> province = [];
   List<T> city;
   List<T> area;
 
@@ -188,7 +188,7 @@ class _CityPickerState<T extends BaseItem> extends State<_CityPickerWidget> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -199,7 +199,7 @@ class _CityPickerState<T extends BaseItem> extends State<_CityPickerWidget> {
                   ),
                 ),
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   Map<String, dynamic> provinceMap = {
                     "code": province[provinceIndex].value(),

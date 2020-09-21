@@ -365,6 +365,13 @@ class CardEx extends StatelessWidget {
     this.gradient,
     this.paddingSize,
     this.marginSize,
+    this.shadowColor,
+    this.isChild,
+    this.elevation,
+    this.clipBehavior,
+    this.semanticContainer = true,
+    this.borderOnForeground = true,
+    this.shape,
   }) : super(key: key);
 
   final EdgeInsets margin;
@@ -380,16 +387,23 @@ class CardEx extends StatelessWidget {
 
   /// 阴影 默认false
   final bool shadow;
-
+  final bool isChild;
+  final bool borderOnForeground;
+  final Clip clipBehavior;
+  final bool semanticContainer;
+  final ShapeBorder shape;
   final String title;
   final String subTitle;
   final num space;
+  final num elevation;
   final Color backgroundColor;
+  final Color shadowColor;
   final Brightness brightness;
   final Color textColor;
   final Color titleColor;
   final Color subTitleColor;
   final Gradient gradient;
+
   Widget _child(Color titleColor, Color subTitleColor) {
     var view;
     if (title.en || subTitle.en || center != null) {
@@ -448,12 +462,18 @@ class CardEx extends StatelessWidget {
     Color _titleColor = textColor ?? titleColor;
     Color _subTitleColor = textColor ?? subTitleColor;
 
-    var _view = _child(_titleColor, _subTitleColor);
+    var _view = isChild ? child : _child(_titleColor, _subTitleColor);
     if (shadow) {
       color = backgroundColor ?? themeData.cardTheme.color;
       return Card(
         margin: _margin,
         color: color,
+        shadowColor: shadowColor,
+        elevation: elevation,
+        shape: shape,
+        borderOnForeground: borderOnForeground,
+        clipBehavior: clipBehavior,
+        semanticContainer: semanticContainer,
         child: Padding(padding: _padding, child: _view),
       );
     } else {
@@ -590,7 +610,9 @@ class ContainerEx extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Brightness _brightness = brightness ?? Theme.of(context).brightness;
-    Color _color = color ?? CConfig.getBackground(brightness: _brightness);
+    Color _color = decoration != null
+        ? null
+        : (color ?? CConfig.getBackground(brightness: _brightness));
 
     return Container(
       color: _color,
@@ -942,6 +964,7 @@ class SingleLine<T> extends StatelessWidget {
     this.leftRight,
     this.topBottom,
     this.rightWidget,
+    this.radius,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
         super(key: key);
@@ -978,6 +1001,7 @@ class SingleLine<T> extends StatelessWidget {
     this.leftRight,
     this.topBottom,
     this.rightWidget,
+    this.radius,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
         super(key: key);
@@ -1014,6 +1038,7 @@ class SingleLine<T> extends StatelessWidget {
     this.leftRight,
     this.topBottom,
     this.rightWidget,
+    this.radius,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
         super(key: key);
@@ -1049,6 +1074,7 @@ class SingleLine<T> extends StatelessWidget {
     this.rightIconData,
     this.leftRight,
     this.topBottom,
+    this.radius,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
         this.rightWidget = null,
@@ -1068,6 +1094,7 @@ class SingleLine<T> extends StatelessWidget {
   final num minHeight;
   final num iconHeight;
   final num leftRight;
+  final num radius;
   final num topBottom;
   final num nameLeftPadding;
   final num nameRightPadding;
@@ -1109,9 +1136,11 @@ class SingleLine<T> extends StatelessWidget {
     var _leftR = leftRight ?? FastDevelopConfig.instance.singleLineOfLeftRight;
     var _topB = leftRight ?? FastDevelopConfig.instance.singleLineOfTopBottom;
     var _urlSize = urlSize ?? FastDevelopConfig.instance.singleLineOfUrlSize;
+    var _radius = radius ??
+        FastDevelopConfig.instance.singleLineOfRadius ??
+        SConfig.radius;
     var _width = SConfig.pageWidth;
-    var _decoration =
-        decoration ?? DecoUtil.normal(color: bg, radius: SConfig.radius);
+    var _decoration = decoration ?? DecoUtil.normal(color: bg, radius: _radius);
     return TouchWidget(
       onTap: onTap,
       child: ConstrainedBox(

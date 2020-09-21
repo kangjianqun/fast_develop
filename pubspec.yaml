@@ -1,58 +1,58 @@
 name: fast_develop
 description: A new fast develop package.
-version: 1.1.6+1
+version: 2.0.0+2
 author: kang_1994@outlook.com
 homepage: https://github.com/StrangerKjq/fast_develop
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
-  flutter: ">=1.17.0 <2.0.0"
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=2.0.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
   # https://pub.flutter-io.cn/packages/fast_mvvm
-  fast_mvvm: ^1.2.2+2
+  fast_mvvm: ^2.0.0
 
-  fast_router: ^1.0.3+1
+  fast_router: ^1.0.5+2
 
   # Flutter 轮播图 https://pub.flutter-io.cn/packages/flutter_swiper
   flutter_swiper: ^1.1.6
   #  一个适用于iOS和Android的Flutter插件，用于从图像库中拾取图像，并使用相机拍摄新照片。
   #  https://pub.flutter-io.cn/packages/image_picker
-  image_picker: ^0.6.7+4
+  image_picker: ^0.7.3
   # 图片缓存 https://pub.flutter-io.cn/packages/cached_network_image
-  cached_network_image: ^2.3.1
+  cached_network_image: ^2.5.0
   # https://pub.flutter-io.cn/packages/cropƒ
-  crop: ^0.4.0
+  crop: ^0.5.0
 
   # https://pub.flutter-io.cn/packages/url_launcher
   url_launcher: ^5.5.0
 
   # 本地json对象存储 https://pub.flutter-io.cn/packages/localstorage
-  localstorage: ^3.0.2+5
+  localstorage: ^3.0.6+9
   #  https://pub.flutter-io.cn/packages/flutter_screenutil
   flutter_screenutil: ^2.3.1
 
   #  https://pub.flutter-io.cn/packages/flutter_easyrefresh
-  flutter_easyrefresh: ^2.1.5
+  flutter_easyrefresh: ^2.1.8
   # https://pub.flutter-io.cn/packages/universal_io
-  universal_io: ^1.0.1
+  universal_io: ^2.0.3
   # https://pub.flutter-io.cn/packages/device_info
   device_info: ^0.4.2+4
   # https://pub.flutter-io.cn/packages/package_info
   package_info: ^0.4.1
   # https://pub.flutter-io.cn/packages/dio
-  dio: ^3.0.9
-  dio_cookie_manager: ^1.0.0
-  dio_http2_adapter: ^1.0.0
+  dio: ^4.0.0-prev3
+  dio_cookie_manager: ^2.0.0-prev1
+  dio_http2_adapter: ^2.0.0-prev1
 
 
-  convert: ^2.1.1
-  crypto: ^2.1.5
+  convert: ^3.0.0
+  crypto: ^3.0.0
   # State https://pub.flutter-io.cn/packages/provider
-  provider: ^4.3.1
+  provider: ^5.0.0
 
 
 dev_dependencies:

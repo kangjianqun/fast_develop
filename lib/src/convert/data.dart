@@ -22,14 +22,14 @@ class ListKV<T> {
 
 class KeyValue<T> {
   static List<KeyValue<String>> listStr(json) {
-    List<KeyValue<String>> data = List<KeyValue<String>>();
+    List<KeyValue<String>> data = [];
     if (json != null && json is Map)
       json.forEach((key, value) => data.add(KeyValue<String>(key, value)));
     return data;
   }
 
   static List<KeyValue> list(json) {
-    List<KeyValue> data = List<KeyValue<String>>();
+    List<KeyValue> data = [];
     if (json != null && json is Map)
       json.forEach((key, value) => data.add(KeyValue<String>(key, value)));
     return data;
@@ -109,7 +109,7 @@ dynamic valueByType<T>(value, Type type,
     } else if (type == bool) {
       return false;
     } else if (type == List) {
-      return List<T>();
+      return [];
     } else if (type == Map) {
       return {};
     }
@@ -304,7 +304,7 @@ extension ListUtil on List {
     }
 
     if (data == null) {
-      return List<T>();
+      return [];
     } else {
       List<T> list = [];
       data.forEach((item) {

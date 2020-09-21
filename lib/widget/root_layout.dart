@@ -215,7 +215,7 @@ class MyScaffold extends StatelessWidget {
         appBar: top,
         body: bodyView,
         resizeToAvoidBottomInset: isBottom,
-        resizeToAvoidBottomPadding: isBottom,
+        // resizeToAvoidBottomPadding: isBottom,
         drawer: drawerIsLeft && stateWidget == null ? _drawer : null,
         endDrawer: !drawerIsLeft && stateWidget == null ? _drawer : null,
         backgroundColor: !isTransparent ? _bgColor : CConfig.transparent,

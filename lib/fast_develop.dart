@@ -62,6 +62,7 @@ class FastDevelopConfig {
     if (_instance == null) {
       _instance = FastDevelopConfig.init();
     }
+
     return _instance;
   }
 
@@ -76,6 +77,7 @@ class FastDevelopConfig {
   num singleLineOfLeftRight;
   num singleLineOfTopBottom;
   num singleLineOfUrlSize;
+  num singleLineOfRadius;
   bool singleLineOfIsPrimary;
   IconData singleLineOfRightIconData;
 
@@ -86,6 +88,9 @@ class FastDevelopConfig {
   num iconTextOfIconBottom;
 
   num editTextOfIconRightSpace;
+  num editTextOfLeftRight;
+  num editTextOfTopBottom;
+  num editTextOfSignLeftPadding;
 
   num myBodyOfPadding;
   num myBodyOfSpace;
@@ -126,6 +131,7 @@ class FastDevelopConfig {
     this.singleLineOfLeftRight = 32,
     this.singleLineOfTopBottom = 16,
     this.singleLineOfUrlSize = 200,
+    this.singleLineOfRadius = 20,
     this.singleLineOfIsPrimary = false,
     this.singleLineOfRightIconData = Icons.chevron_right,
     this.touchWidgetOfPressedOpacity = 0.4,
@@ -141,6 +147,9 @@ class FastDevelopConfig {
     this.cardExOfPaddingSize = 20,
     this.cardExOfMarginSize = 0,
     this.editTextOfIconRightSpace = 48,
+    this.editTextOfLeftRight = 32,
+    this.editTextOfTopBottom = 16,
+    this.editTextOfSignLeftPadding = 20,
     this.listIntervalViewOfCacheExtent,
     this.gridIntervalViewOfCacheExtent,
   }) {

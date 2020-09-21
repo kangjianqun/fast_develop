@@ -1,3 +1,9 @@
+## [1.1.6+3]
+新增 SingleLine => singleLineOfRadius 配置
+
+## [1.1.6+2]
+修复EditText和SingleLine 间距
+
 ## [1.1.6+1]
 修复屏幕适配初始化异常
 
