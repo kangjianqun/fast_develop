@@ -10,7 +10,7 @@ typedef ApiInterceptorOnRequest = Future<RequestOptions> Function(
     RequestOptions options, String baseUrl);
 
 void initFastDevelopOfApiInterceptor(
-    ApiInterceptorOnRequest onRequest, bool extraSaveJson) {
+    ApiInterceptorOnRequest? onRequest, bool? extraSaveJson) {
   if (onRequest != null) _onRequest = onRequest;
   if (extraSaveJson != null) ApiInterceptor.extraSaveJson = extraSaveJson;
 }
@@ -137,7 +137,7 @@ class ApiInterceptor extends InterceptorsWrapper {
 typedef ProcessingExtend = Map<String, dynamic> Function(
     Map<String, dynamic> json);
 
-void initFastDevelopOfRespData(ProcessingExtend processingExtend) {
+void initFastDevelopOfRespData(ProcessingExtend? processingExtend) {
   if (processingExtend != null) _RespData.processingExtend = processingExtend;
 }
 

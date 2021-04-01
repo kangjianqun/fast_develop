@@ -6,11 +6,10 @@ import '../fast_develop.dart';
 /// 主次显示
 class PSDisplay extends StatelessWidget {
   const PSDisplay({
-    Key key,
-    @required this.primary,
-    @required this.secondary,
-  })  : assert(primary != null && secondary != null),
-        super(key: key);
+    Key? key,
+    required this.primary,
+    required this.secondary,
+  }) : super(key: key);
   final Child primary;
   final Child secondary;
 
@@ -26,18 +25,17 @@ class PSDisplay extends StatelessWidget {
 class AutoText extends StatelessWidget {
   const AutoText(
     this.data, {
-    Key key,
+    Key? key,
     this.style,
     this.child,
     this.alignment = Alignment.centerLeft,
     this.fit = BoxFit.scaleDown,
-  })  : assert(data != null),
-        assert(child == null),
+  })  : assert(child == null),
         super(key: key);
 
-  final Text child;
+  final Text? child;
   final String data;
-  final TextStyle style;
+  final TextStyle? style;
   final AlignmentGeometry alignment;
   final BoxFit fit;
 
@@ -51,8 +49,8 @@ class AutoText extends StatelessWidget {
 
 class AutoWidget extends StatelessWidget {
   const AutoWidget({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.alignment = Alignment.center,
     this.fit = BoxFit.scaleDown,
   }) : super(key: key);
@@ -68,9 +66,9 @@ class AutoWidget extends StatelessWidget {
 
 class IconText extends StatelessWidget {
   const IconText({
-    Key key,
-    @required this.icon,
-    @required this.text,
+    Key? key,
+    required this.icon,
+    required this.text,
     this.isV = true,
     this.iconIsLeftOrTop = true,
     this.spacing,
@@ -86,11 +84,11 @@ class IconText extends StatelessWidget {
         super(key: key);
 
   const IconText.simple({
-    Key key,
-    @required this.data,
-    @required this.iData,
-    @required this.color,
-    @required this.size,
+    Key? key,
+    required this.data,
+    required this.iData,
+    required this.color,
+    required this.size,
     this.textSize,
     this.isV = true,
     this.iconIsLeftOrTop = true,
@@ -104,8 +102,8 @@ class IconText extends StatelessWidget {
         super(key: key);
 
   const IconText.img({
-    Key key,
-    @required this.icon,
+    Key? key,
+    required this.icon,
     this.isV = true,
     this.iconIsLeftOrTop = true,
     this.spacing,
@@ -121,20 +119,20 @@ class IconText extends StatelessWidget {
         this.size = null,
         super(key: key);
 
-  final Widget icon;
-  final IconData iData;
-  final Widget text;
-  final String data;
-  final Color color;
-  final double size;
-  final double textSize;
-  final num spacing;
+  final Widget? icon;
+  final IconData? iData;
+  final Widget? text;
+  final String? data;
+  final Color? color;
+  final double? size;
+  final double? textSize;
+  final num? spacing;
   final double iconBottom;
   final bool isV;
   final bool iconIsLeftOrTop;
   final bool adaptChildrenSize;
   final bool isExpanded;
-  final CrossAxisAlignment crossAxisAlignment;
+  final CrossAxisAlignment? crossAxisAlignment;
 
   Widget _text() {
     var textView = text;

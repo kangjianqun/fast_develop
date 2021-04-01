@@ -76,13 +76,13 @@ class DatePicker {
   static Future showDateTimePicker(
     BuildContext context, {
     bool showTitleActions: true,
-    DateTime minTime,
-    DateTime maxTime,
-    DateChangedCallback onChanged,
-    DateChangedCallback onConfirm,
+    DateTime? minTime,
+    DateTime? maxTime,
+    DateChangedCallback? onChanged,
+    DateChangedCallback? onConfirm,
     locale: LocaleType.zh,
-    DateTime currentTime,
-    DatePickerTheme theme,
+    DateTime? currentTime,
+    DatePickerTheme? theme,
   }) {
     return Navigator.push(
         context,
@@ -139,18 +139,18 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
     this.barrierLabel,
     this.locale,
     this.loopList,
-    RouteSettings settings,
+    RouteSettings? settings,
     pickerModel,
   })  : this.pickerModel = pickerModel ?? DatePickerModel(),
         this.theme = theme ?? DatePickerTheme.autoColor(),
         super(settings: settings);
 
-  final bool showTitleActions;
-  final DateChangedCallback onChanged;
-  final DateChangedCallback onConfirm;
+  final bool? showTitleActions;
+  final DateChangedCallback? onChanged;
+  final DateChangedCallback? onConfirm;
   final DatePickerTheme theme;
-  final LocaleType locale;
-  final bool loopList;
+  final LocaleType? locale;
+  final bool? loopList;
   final CommonPickerData pickerModel;
 
   @override
@@ -160,7 +160,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   bool get barrierDismissible => true;
 
   @override
-  final String barrierLabel;
+  final String? barrierLabel;
 
   @override
   Color get barrierColor => Colors.black54;
@@ -171,7 +171,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   AnimationController createAnimationController() {
     assert(_animationController == null);
     _animationController =
-        BottomSheet.createAnimationController(navigator.overlay);
+        BottomSheet.createAnimationController(navigator!.overlay!);
     return _animationController;
   }
 
@@ -199,16 +199,16 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
 
 class _DatePickerComponent extends StatefulWidget {
   _DatePickerComponent(
-      {Key key,
+      {Key? key,
       @required this.route,
       this.onChanged,
       this.locale,
       this.pickerModel,
-      bool loopList})
+      bool? loopList})
       : this.loop = loopList ?? pickerModel.columnCount > 1,
         super(key: key);
 
-  final DateChangedCallback onChanged;
+  final DateChangedCallback? onChanged;
 
   final _DatePickerRoute route;
 
@@ -493,14 +493,14 @@ class _BottomPickerLayout extends SingleChildLayoutDelegate {
       {this.itemCount, this.showTitleActions});
 
   final double progress;
-  final int itemCount;
-  final bool showTitleActions;
+  final int? itemCount;
+  final bool? showTitleActions;
   final DatePickerTheme theme;
 
   @override
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
     double maxHeight = theme.containerHeight;
-    if (showTitleActions) {
+    if (showTitleActions != null && showTitleActions!) {
       maxHeight += theme.titleHeight;
     }
 

@@ -11,8 +11,8 @@ typedef SwitchThemeBrightness = ThemeData Function(
 
 SwitchThemeBrightness _switchThemeBrightness;
 
-initFastDevelopOfRootLayout(SwitchThemeBrightness switchThemeBrightness) {
-  _switchThemeBrightness = switchThemeBrightness;
+initFastDevelopOfRootLayout(SwitchThemeBrightness? stb) {
+  if (stb != null) _switchThemeBrightness = stb;
 }
 
 class SafePadding {

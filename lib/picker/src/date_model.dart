@@ -16,8 +16,8 @@ class ItemData {
 }
 
 class CompleteData {
-  DateTime dateTime;
-  List<ItemData> data;
+  DateTime? dateTime;
+  List<ItemData>? data;
   CompleteData({this.dateTime, this.data});
 }
 
@@ -356,10 +356,10 @@ class DateTimePickerModel extends CommonPickerData {
   DateTime maxTime;
   DateTime minTime;
   DateTimePickerModel(
-      {DateTime currentTime,
-      DateTime maxTime,
-      DateTime minTime,
-      LocaleType locale})
+      {DateTime? currentTime,
+      DateTime? maxTime,
+      DateTime? minTime,
+      LocaleType? locale})
       : super(locale: locale) {
     if (currentTime != null) {
       this.currentTime = currentTime;

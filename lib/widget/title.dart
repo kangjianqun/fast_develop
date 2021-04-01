@@ -16,10 +16,10 @@ typedef TextThemeGenerate = TextTheme Function(
 IconThemeGenerate _iconThemeGenerate;
 TextThemeGenerate _textThemeGenerate;
 
-initFastDevelopOfTitle(
-    IconThemeGenerate iconThemeGenerate, TextThemeGenerate textThemeGenerate) {
-  _iconThemeGenerate = iconThemeGenerate;
-  _textThemeGenerate = textThemeGenerate;
+initFastDevelopOfTitle(IconThemeGenerate? iconThemeGenerate,
+    TextThemeGenerate? textThemeGenerate) {
+  if (iconThemeGenerate != null) _iconThemeGenerate = iconThemeGenerate;
+  if (textThemeGenerate != null) _textThemeGenerate = textThemeGenerate;
 }
 
 class TitleAction extends StatelessWidget {

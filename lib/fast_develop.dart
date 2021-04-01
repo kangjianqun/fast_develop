@@ -56,20 +56,20 @@ export 'src/types.dart';
 class FastDevelopConfig {
   factory FastDevelopConfig() => _getInstance();
   static FastDevelopConfig instance = _getInstance();
-  static FastDevelopConfig _instance;
+  static FastDevelopConfig? _instance;
 
   static FastDevelopConfig _getInstance() {
     if (_instance == null) {
       _instance = FastDevelopConfig.init();
     }
 
-    return _instance;
+    return _instance!;
   }
 
-  BuildContext context;
+  BuildContext? context;
 
-  num gridIntervalViewOfCacheExtent;
-  num listIntervalViewOfCacheExtent;
+  num? gridIntervalViewOfCacheExtent;
+  num? listIntervalViewOfCacheExtent;
   num singleLineOfMinHeight;
   num singleLineOfIconHeight;
   num singleLineOfNameLeftPadding;
@@ -93,7 +93,7 @@ class FastDevelopConfig {
   num editTextOfSignLeftPadding;
 
   num myBodyOfPadding;
-  num myBodyOfSpace;
+  num? myBodyOfSpace;
 
   num checkboxOfSize;
   num checkboxOfSpacing;
@@ -108,16 +108,16 @@ class FastDevelopConfig {
 
   /// 默认 1920*1080
   FastDevelopConfig.init({
-    ToastShow toast,
-    SwitchThemeBrightness switchTB,
-    IconThemeGenerate iconTheme,
-    TextThemeGenerate textTheme,
-    ProcessingExtend processingExtend,
+    ToastShow? toast,
+    SwitchThemeBrightness? switchTB,
+    IconThemeGenerate? iconTheme,
+    TextThemeGenerate? textTheme,
+    ProcessingExtend? processingExtend,
     bool screenEnable = true,
-    BaseOptions baseOptions,
-    JsonDecodeCallback parseJson,
-    DioInit dioInit,
-    ApiInterceptorOnRequest onRequest,
+    BaseOptions? baseOptions,
+    JsonDecodeCallback? parseJson,
+    DioInit? dioInit,
+    ApiInterceptorOnRequest? onRequest,
     bool extraSaveJson = true,
     this.context,
     num pageWidth = 1080,

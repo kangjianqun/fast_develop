@@ -25,9 +25,9 @@ typedef DioInit = void Function(Dio dio, String baseUrl);
 
 /// [parseJson]必须是顶层函数
 void initFastDevelopOfHttp(
-  BaseOptions baseOptions,
-  JsonDecodeCallback parseJson,
-  DioInit dioInit,
+  BaseOptions? baseOptions,
+  JsonDecodeCallback? parseJson,
+  DioInit? dioInit,
 ) {
   if (baseOptions != null) _baseOptions = baseOptions;
   if (parseJson != null) _parseJson = parseJson;

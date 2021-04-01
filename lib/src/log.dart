@@ -5,8 +5,8 @@ typedef ToastShow = Function(String hint);
 ///  toast
 ToastShow? _showToast;
 
-initFastDevelopOfData(ToastShow toastShow) {
-  _showToast = toastShow;
+initFastDevelopOfData(ToastShow? toastShow) {
+  if (toastShow != null) _showToast = toastShow;
 }
 
 void showToast(String hint) {
