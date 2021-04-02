@@ -5,12 +5,14 @@ import '../../fast_develop.dart';
 /// 子类生成器
 typedef ItemBuild<T> = T Function(dynamic data);
 
-class ListKV<T> {
-  List<KeyValue<T>> list;
+class ListKV {
+  late List<KeyValue> list;
   ListKV();
 
   factory ListKV.fromJson(Map<String, dynamic> json) {
-    return ListKV()..list = KeyValue.list(json);
+    var v = ListKV();
+    v..list = KeyValue.list(json);
+    return v;
   }
 
   Map<String, dynamic> toJson() {

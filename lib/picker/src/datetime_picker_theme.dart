@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import '../../fast_develop.dart';
 
 class DatePickerTheme with Diagnosticable {
-  final TextStyle cancelStyle;
-  final TextStyle doneStyle;
+  final TextStyle? cancelStyle;
+  final TextStyle? doneStyle;
   final TextStyle itemStyle;
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   final double containerHeight;
   final double titleHeight;
@@ -25,7 +25,7 @@ class DatePickerTheme with Diagnosticable {
   /// 自动
   static autoColor() {
     return DatePickerTheme(
-      backgroundColor: CConfig.cBackgroundColor,
+      backgroundColor: CConfig.cBackgroundColor!,
       itemStyle: TextStyle(color: CConfig.cTextColorOne),
       cancelStyle: TextStyle(color: CConfig.primaryColor, fontSize: 16),
       doneStyle: TextStyle(color: CConfig.primaryColor, fontSize: 16),

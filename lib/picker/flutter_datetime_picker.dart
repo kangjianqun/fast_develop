@@ -1,3 +1,4 @@
+import 'package:fast_develop/fast_develop.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,13 +20,13 @@ class DatePicker {
   static Future showDatePicker(
     BuildContext context, {
     bool showTitleActions: true,
-    DateTime minTime,
-    DateTime maxTime,
-    DateChangedCallback onChanged,
-    DateChangedCallback onConfirm,
+    DateTime? minTime,
+    DateTime? maxTime,
+    DateChangedCallback? onChanged,
+    DateChangedCallback? onConfirm,
     locale: LocaleType.zh,
-    DateTime currentTime,
-    DatePickerTheme theme,
+    DateTime? currentTime,
+    DatePickerTheme? theme,
   }) {
     return Navigator.push(
         context,
@@ -50,11 +51,11 @@ class DatePicker {
   static Future showTimePicker(
     BuildContext context, {
     bool showTitleActions: true,
-    DateChangedCallback onChanged,
-    DateChangedCallback onConfirm,
+    DateChangedCallback? onChanged,
+    DateChangedCallback? onConfirm,
     locale: LocaleType.zh,
-    DateTime currentTime,
-    DatePickerTheme theme,
+    DateTime? currentTime,
+    DatePickerTheme? theme,
   }) {
     return Navigator.push(
         context,
@@ -106,12 +107,12 @@ class DatePicker {
   static Future showPicker(
     BuildContext context, {
     bool showTitleActions: true,
-    bool loopList,
-    DateChangedCallback onChanged,
-    DateChangedCallback onConfirm,
+    bool? loopList,
+    DateChangedCallback? onChanged,
+    DateChangedCallback? onConfirm,
     locale: LocaleType.zh,
-    CommonPickerData pickerData,
-    DatePickerTheme theme,
+    CommonPickerData? pickerData,
+    DatePickerTheme? theme,
   }) {
     return Navigator.push(
       context,
@@ -132,7 +133,7 @@ class DatePicker {
 
 class _DatePickerRoute<T> extends PopupRoute<T> {
   _DatePickerRoute({
-    this.showTitleActions,
+    this.showTitleActions = false,
     this.onChanged,
     this.onConfirm,
     theme,
@@ -145,7 +146,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
         this.theme = theme ?? DatePickerTheme.autoColor(),
         super(settings: settings);
 
-  final bool? showTitleActions;
+  final bool showTitleActions;
   final DateChangedCallback? onChanged;
   final DateChangedCallback? onConfirm;
   final DatePickerTheme theme;
@@ -165,14 +166,14 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   @override
   Color get barrierColor => Colors.black54;
 
-  AnimationController _animationController;
+  late AnimationController? _animationController;
 
   @override
   AnimationController createAnimationController() {
     assert(_animationController == null);
     _animationController =
         BottomSheet.createAnimationController(navigator!.overlay!);
-    return _animationController;
+    return _animationController!;
   }
 
   @override
@@ -190,29 +191,27 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
       ),
     );
     ThemeData inheritTheme = Theme.of(context);
-    if (inheritTheme != null) {
-      bottomSheet = new Theme(data: inheritTheme, child: bottomSheet);
-    }
+    bottomSheet = new Theme(data: inheritTheme, child: bottomSheet);
     return bottomSheet;
   }
 }
 
 class _DatePickerComponent extends StatefulWidget {
-  _DatePickerComponent(
-      {Key? key,
-      @required this.route,
-      this.onChanged,
-      this.locale,
-      this.pickerModel,
-      bool? loopList})
-      : this.loop = loopList ?? pickerModel.columnCount > 1,
+  _DatePickerComponent({
+    Key? key,
+    required this.route,
+    this.onChanged,
+    this.locale,
+    required this.pickerModel,
+    bool? loopList,
+  })  : this.loop = loopList ?? pickerModel.columnCount > 1,
         super(key: key);
 
   final DateChangedCallback? onChanged;
 
   final _DatePickerRoute route;
 
-  final LocaleType locale;
+  final LocaleType? locale;
 
   final bool loop;
 
@@ -241,9 +240,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
     List.generate(allCount, (columnIndex) {
       var index = widget.pickerModel.getColumnIndex(columnIndex);
 //      LogUtil.printLog("index: $index");
-      scrollList.add(
-        FixedExtentScrollController(initialItem: index),
-      );
+      scrollList.add(FixedExtentScrollController(initialItem: index));
       changers.add(ValueNotifier(0));
     });
   }
@@ -270,12 +267,15 @@ class _DatePickerState extends State<_DatePickerComponent> {
 
     return GestureDetector(
       child: AnimatedBuilder(
-        animation: widget.route.animation,
-        builder: (BuildContext context, Widget child) {
+        animation: widget.route.animation!,
+        builder: (BuildContext context, Widget? child) {
           return ClipRect(
             child: CustomSingleChildLayout(
-              delegate: _BottomPickerLayout(widget.route.animation.value, theme,
-                  showTitleActions: widget.route.showTitleActions),
+              delegate: _BottomPickerLayout(
+                widget.route.animation!.value,
+                theme,
+                showTitleActions: widget.route.showTitleActions,
+              ),
               child: GestureDetector(
                 child: Material(
                   color: Colors.transparent,
@@ -291,7 +291,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
 
   void _notifyDateChanged() {
     if (widget.onChanged != null) {
-      widget.onChanged(widget.pickerModel.onComplete());
+      widget.onChanged!(widget.pickerModel.onComplete()!);
     }
   }
 
@@ -396,7 +396,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
               onPressed: () {
                 Navigator.pop(context);
                 if (widget.route.onConfirm != null) {
-                  widget.route.onConfirm(widget.pickerModel.onComplete());
+                  widget.route.onConfirm!(widget.pickerModel.onComplete()!);
                 }
               },
             ),
@@ -407,11 +407,11 @@ class _DatePickerState extends State<_DatePickerComponent> {
   }
 
   String _localeDone() {
-    return i18nObjInLocale(widget.locale)['done'];
+    return i18nObjInLocale(widget.locale!)?['done'];
   }
 
   String _localeCancel() {
-    return i18nObjInLocale(widget.locale)['cancel'];
+    return i18nObjInLocale(widget.locale!)?['cancel'];
   }
 }
 
@@ -419,25 +419,25 @@ class _PickerColumn extends StatefulWidget {
   _PickerColumn({
     this.key,
     this.column,
-    this.createWidgetList,
+    required this.createWidgetList,
     this.controller,
-    this.theme,
-    this.changer,
+    required this.theme,
+    required this.changer,
     this.changerEnd,
-    this.viewRefresh,
+    required this.viewRefresh,
     this.loopList = true,
   });
 
+  final Key? key;
   final bool loopList;
   final CreateWidgetList createWidgetList;
-  final Key key;
-  final FixedExtentScrollController controller;
+  final FixedExtentScrollController? controller;
   final DatePickerTheme theme;
   final ValueChanged<int> changer;
-  final ValueChanged<int> changerEnd;
+  final ValueChanged<int>? changerEnd;
   final ValueNotifier<int> viewRefresh;
 
-  final int column;
+  final int? column;
 
   @override
   State createState() {
@@ -463,9 +463,10 @@ class _PickerColumnState extends State<_PickerColumn> {
                     widget.changerEnd != null &&
                     notification is ScrollEndNotification &&
                     notification.metrics is FixedExtentMetrics) {
-                  final FixedExtentMetrics metrics = notification.metrics;
+                  final FixedExtentMetrics metrics =
+                      valueByType(notification.metrics, FixedExtentMetrics);
                   final int currentItemIndex = metrics.itemIndex;
-                  widget.changerEnd(currentItemIndex);
+                  widget.changerEnd!(currentItemIndex);
                 }
                 return false;
               },

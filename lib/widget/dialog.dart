@@ -14,14 +14,14 @@ class DialogSimple {
 
   static closeS() => close(_s);
 
-  static show(String url, {String content}) {
+  static show(String url, {String? content}) {
     _dict.add(url);
     if (_loadStatue || _dict.length >= 2) {
       return;
     }
     _loadStatue = true;
     showDialogCustom(
-      context: FastDevelopConfig.instance.context,
+      context: FastDevelopConfig.instance.context!,
       barrierDismissible: false,
       builder: (_) => WillPopScope(
         onWillPop: () async => false,
@@ -48,22 +48,22 @@ class DialogSimple {
 
 class NameFunction {
   String name;
-  GestureTapCallback function;
+  GestureTapCallback? function;
 
   NameFunction(this.name, this.function);
 }
 
 class DialogListSelect extends StatelessWidget {
   const DialogListSelect({
-    Key key,
-    @required this.children,
+    Key? key,
+    required this.children,
     this.color,
     this.margin,
   }) : super(key: key);
 
   final List<NameFunction> children;
-  final Color color;
-  final EdgeInsetsGeometry margin;
+  final Color? color;
+  final EdgeInsetsGeometry? margin;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +77,7 @@ class DialogListSelect extends StatelessWidget {
           paddingChild: 56,
           onTap: (_) {
             FastRouter.popBack();
-            if (item.function != null) item.function();
+            if (item.function != null) item.function!();
           },
           child: Center(child: Text(item.name)),
         ),
@@ -286,7 +286,7 @@ class DialogView extends Dialog {
           style: StyleText.normal(size: 40),
           child: Container(
             padding: Spacing.topOrBottom(size: isLoad ? 96 : 48),
-            width: isLoad ? 500.s : null,
+            width: isLoad ? 500.ww : null,
             decoration: BoxDecoration(
               color: backgroundColor ??
                   dialogTheme.backgroundColor ??
@@ -321,9 +321,9 @@ class DialogView extends Dialog {
 
 class DialogCustom extends StatelessWidget {
   const DialogCustom({
-    Key key,
-    @required this.name,
-    @required this.height,
+    Key? key,
+    required this.name,
+    required this.height,
     this.margin = 32,
     this.color,
     this.decoration,
@@ -335,7 +335,7 @@ class DialogCustom extends StatelessWidget {
 
   /// 只有中间可以滑动的部分
   const DialogCustom.body({
-    Key key,
+    Key? key,
     this.height,
     this.margin = 0,
     this.color,
@@ -348,24 +348,24 @@ class DialogCustom extends StatelessWidget {
         super(key: key);
 
   final bool isBody;
-  final double height;
+  final double? height;
   final int margin;
-  final Decoration decoration;
-  final Color color;
-  final String name;
-  final Widget operate;
-  final List<Widget> children;
+  final Decoration? decoration;
+  final Color? color;
+  final String? name;
+  final Widget? operate;
+  final List<Widget>? children;
 
-  final EdgeInsetsGeometry rootMargin;
+  final EdgeInsetsGeometry? rootMargin;
 
   Widget _title() {
     return Container(
-      width: width.s,
+      width: width.ww,
       margin: Spacing.all(size: margin),
       child: Stack(
         children: <Widget>[
           Container(
-            child: Text(name, style: StyleText.normal(size: 48)),
+            child: Text(name!, style: StyleText.normal(size: 48)),
             alignment: Alignment.center,
           ),
           Positioned(
@@ -386,24 +386,24 @@ class DialogCustom extends StatelessWidget {
 
     if (isBody) {
       body =
-          Center(child: easyRefreshList(children: children, shrinkWrap: true));
+          Center(child: easyRefreshList(children: children!, shrinkWrap: true));
     } else {
       body = Column(
         children: <Widget>[
-          Spacing.vView(isShow: name.en, child: () => _title()),
+          Spacing.vView(isShow: name!.en, child: () => _title()),
           Expanded(
             child: Container(
               margin: Spacing.all(size: margin),
-              child: easyRefreshList(children: children),
+              child: easyRefreshList(children: children!),
             ),
           ),
-          Spacing.vView(isShow: operate != null, child: () => operate),
+          Spacing.vView(isShow: operate != null, child: () => operate!),
         ],
       );
     }
 
     return Container(
-      height: height?.s,
+      height: height?.ww,
       margin: rootMargin,
       decoration: decoration ??
           DecoUtil.unilateral(1,
@@ -438,23 +438,25 @@ RouteTransitionsBuilder offsetAnim(OffsetHandle oh) {
 }
 
 Offset fromLeft(Animation animation) => Offset(animation.value - 1, 0);
-Offset fromRight(Animation animation) => Offset(1 - animation.value, 0);
+Offset fromRight(Animation animation) =>
+    Offset(valueByType(1 - animation.value, double), 0);
 Offset fromTop(Animation animation) => Offset(0, animation.value - 1);
-Offset fromBottom(Animation animation) => Offset(0, 1 - animation.value);
+Offset fromBottom(Animation animation) =>
+    Offset(0, valueByType(1 - animation.value, double));
 Offset fromTopLeft(Animation anim) => fromLeft(anim) + fromTop(anim);
 
 /// [cushion] 垫层  [offset]偏移值
-Future<T> showDialogCustom<T>({
-  @required BuildContext context,
-  @required WidgetBuilder builder,
-  Duration duration,
+Future<T?> showDialogCustom<T>({
+  required BuildContext context,
+  required WidgetBuilder builder,
+  Duration? duration,
   Color barrierColor = Colors.black54,
   bool barrierDismissible = true,
   bool cushion = true,
   double offset = 0,
   Location location = Location.center,
-  OffsetHandle offsetHandle,
-  TextStyle style,
+  OffsetHandle? offsetHandle,
+  TextStyle? style,
 }) {
   assert(debugCheckHasMaterialLocalizations(context));
   var _targetContext = context;

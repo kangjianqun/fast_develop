@@ -4,10 +4,10 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:fast_mvvm/fast_mvvm.dart';
 import '../fast_develop.dart';
 
-typedef ChildBuild<T> = T Function(BuildContext context);
+typedef ChildBuild<T> = T Function(BuildContext? context);
 
 typedef SwitchThemeBrightness = ThemeData Function(
-    Brightness brightness, ThemeData themeData);
+    Brightness? brightness, ThemeData? themeData);
 
 late SwitchThemeBrightness _switchThemeBrightness;
 
@@ -140,18 +140,18 @@ class MyScaffold extends StatelessWidget {
   /// 如果单独设置标题栏则使用 否则使用[brightness]设置全局
   final Brightness? appBarBrightness;
 
-  static void setTitle(String title, {BuildContext context}) {
+  static void setTitle(String title, {BuildContext? context}) {
     context ??= FastDevelopConfig.instance.context;
     delayed(() => getVM<TitleVM>(context).setTitle(title));
   }
 
   /// 生成top
-  Widget _resultTop(BuildContext ctx) {
+  Widget _resultTop(BuildContext? ctx) {
     var _brightness = appBarBrightness ?? brightness;
-    Widget top = appBar == null ? null : appBar(ctx);
+    Widget? top = appBar == null ? null : appBar!(ctx);
 
-    List<Widget> _actions = actions == null ? [] : actions(ctx);
-    if (nextWidget != null) _actions = [nextWidget(ctx)];
+    List<Widget> _actions = actions == null ? [] : actions!(ctx);
+    if (nextWidget != null) _actions = [nextWidget!(ctx)];
 
     if (top == null && isShowTitle) {
       var bgIsTr = stateWidget == null && immerse && backgroundWidget != null;
@@ -159,7 +159,7 @@ class MyScaffold extends StatelessWidget {
       var bgColor = titleBackgroundColor;
       bgColor ??= backgroundWidget != null
           ? CConfig.transparent
-          : (themeData?.appBarTheme?.color ??
+          : (themeData?.appBarTheme.color ??
               CConfig.getBackground(
                   brightness: _brightness,
                   context: ctx,
@@ -172,14 +172,14 @@ class MyScaffold extends StatelessWidget {
         backgroundColor: bgColor,
         title: title,
         brightness: _brightness,
-        tWidget: titleWidget == null ? null : titleWidget(ctx),
+        tWidget: titleWidget == null ? null : titleWidget!(ctx),
         actions: stateWidget != null ? null : _actions,
       );
     }
-    return top;
+    return top!;
   }
 
-  Widget _resultView(BuildContext context, Widget top) {
+  Widget _resultView(BuildContext context, Widget? top) {
     /// 判断是否有状态需要显示  优先显示状态
     var style = StyleText.normal(
         color: defaultTextColor ??
@@ -187,12 +187,12 @@ class MyScaffold extends StatelessWidget {
     Widget bodyView =
         DefaultTextStyle(style: style, child: stateWidget ?? body(context));
 
-    Widget _bottom = bottom == null ? null : bottom(context);
+    Widget? _bottom = bottom == null ? null : bottom!(context);
     if (_bottom != null) {
       _bottom = DefaultTextStyle(style: style, child: stateWidget ?? _bottom);
     }
 
-    Widget _drawer = drawer == null ? null : drawer(context);
+    Widget? _drawer = drawer == null ? null : drawer!(context);
 
     /// 不显示标题和不是沉浸式  填充标题栏颜色
     if (!isShowTitle && !immerse) {
@@ -224,7 +224,7 @@ class MyScaffold extends StatelessWidget {
       if (stateWidget == null && isTransparent) {
         bodyView = Stack(children: [
           Container(color: _bgColor),
-          backgroundWidget(context),
+          backgroundWidget!(context),
           bodyView,
         ]);
       }
@@ -236,7 +236,7 @@ class MyScaffold extends StatelessWidget {
               height: ScreenUtils.height,
               decoration: BoxDecoration(),
               child: Column(
-                  children: [Expanded(child: bodyView), bottom(context)]))
+                  children: [Expanded(child: bodyView), bottom!(context)]))
           : bodyView;
 
       var _top = top;
@@ -251,21 +251,21 @@ class MyScaffold extends StatelessWidget {
 
       if (stateWidget == null && isTransparent) {
         _view = _top == null
-            ? Stack(children: [backgroundWidget(context), center])
-            : Stack(children: [backgroundWidget(context), center, _top]);
+            ? Stack(children: [backgroundWidget!(context), center])
+            : Stack(children: [backgroundWidget!(context), center, _top]);
       } else {
         _view = _top == null ? center : Column(children: [_top, center]);
       }
 
       /// 安全间距
-      EdgeInsets safePadding;
+      EdgeInsets? safePadding;
       if (isSafeArea != null) {
         var padding = MediaQuery.of(context).padding;
         safePadding = Spacing.fromLTRB(
-            isSafeArea.left ? padding.left : 0,
-            isSafeArea.top ? padding.top : 0,
-            isSafeArea.right ? padding.right : 0,
-            isSafeArea.bottom ? padding.bottom : 0);
+            isSafeArea!.left ? padding.left : 0,
+            isSafeArea!.top ? padding.top : 0,
+            isSafeArea!.right ? padding.right : 0,
+            isSafeArea!.bottom ? padding.bottom : 0);
       }
       bodyView = Container(color: _bgColor, padding: safePadding, child: _view);
     }
@@ -296,8 +296,8 @@ enum ShowType { Default, Hide }
 
 class MyBody extends StatelessWidget {
   const MyBody({
-    Key key,
-    @required this.children,
+    Key? key,
+    required this.children,
     this.topWidget,
     this.padding,
     this.left = 0,
@@ -324,9 +324,9 @@ class MyBody extends StatelessWidget {
         super(key: key);
 
   const MyBody.itemBuilder({
-    Key key,
-    @required this.itemCount,
-    @required this.itemBuilder,
+    Key? key,
+    required this.itemCount,
+    required this.itemBuilder,
     this.topWidget,
     this.padding,
     this.left = 0,
@@ -353,8 +353,8 @@ class MyBody extends StatelessWidget {
 
   /// 非list 需自己处理或者[noList] = true;
   const MyBody.child({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.topWidget,
     this.padding,
     this.left = 0,
@@ -380,42 +380,42 @@ class MyBody extends StatelessWidget {
         itemCount = null,
         super(key: key);
 
-  final List<Widget> children;
-  final IndexedWidgetBuilder itemBuilder;
-  final Widget child;
+  final List<Widget>? children;
+  final IndexedWidgetBuilder? itemBuilder;
+  final Widget? child;
 
   /// top 收缩
   final bool topShrink;
-  final Widget topWidget;
-  final Color backgroundColor;
-  final Decoration decoration;
+  final Widget? topWidget;
+  final Color? backgroundColor;
+  final Decoration? decoration;
   final bool bottom;
   final bool noList;
   final bool slide;
-  final num padding;
+  final num? padding;
   final int left;
   final int top;
   final int right;
-  final num space;
-  final int itemCount;
-  final double cacheExtent;
-  final EasyRefreshController controller;
-  final OnRefreshCallback refresh;
-  final OnLoadCallback load;
+  final num? space;
+  final int? itemCount;
+  final double? cacheExtent;
+  final EasyRefreshController? controller;
+  final OnRefreshCallback? refresh;
+  final OnLoadCallback? load;
 
   /// 整行 item 填充宽度
   final bool fullLine;
 
   /// 是否 [ListIntervalView]扩展
-  final bool listEx;
+  final bool? listEx;
 
-  final Header header;
-  final Footer footer;
+  final Header? header;
+  final Footer? footer;
 
   Widget _content(num padding, space) {
-    List<Widget> _children = children ?? [child];
+    List<Widget> _children = children ?? [child!];
 
-    Widget view;
+    Widget? view;
     if (noList) {
       view = child;
     } else {
@@ -453,7 +453,7 @@ class MyBody extends StatelessWidget {
         space ?? FastDevelopConfig.instance.myBodyOfSpace ?? SConfig.listSpace;
     Widget view = _content(_padding, _space);
     if (topWidget != null) {
-      Widget _topWidget = topWidget;
+      Widget _topWidget = topWidget!;
       if (topShrink)
         _topWidget =
             Container(margin: Spacing.all(size: _padding), child: topWidget);
@@ -466,30 +466,30 @@ class MyBody extends StatelessWidget {
 /// 持久头用的
 class SPHDelegate extends SliverPersistentHeaderDelegate {
   final ChildBuild child;
-  final Widget unfoldChild;
+  final Widget? unfoldChild;
   final double maxOfExtent;
   final double minOfExtent;
-  final Widget background;
+  final Widget? background;
   final double heightRatio;
 
-  ShowType showType = ShowType.Default;
+  ShowType? showType = ShowType.Default;
 
   SPHDelegate({
     this.unfoldChild,
     this.background,
     this.showType,
-    @required this.maxOfExtent,
-    @required this.minOfExtent,
-    @required this.child,
+    required this.maxOfExtent,
+    required this.minOfExtent,
+    required this.child,
   }) : this.heightRatio = 1 - (minOfExtent / maxOfExtent);
 
   /// 高度 最大/最小相同
   SPHDelegate.same({
     this.background,
-    @required this.child,
+    required this.child,
     this.unfoldChild,
-    @required extent,
-  })  : this.maxOfExtent = extent,
+    required extent,
+  })   : this.maxOfExtent = extent,
         this.minOfExtent = extent,
         this.heightRatio = 1;
 
@@ -501,7 +501,7 @@ class SPHDelegate extends SliverPersistentHeaderDelegate {
     switch (showType) {
       case ShowType.Hide:
         view = Stack(children: <Widget>[
-          this.background,
+          this.background!,
           Positioned(
             top: 0,
             child: Opacity(
@@ -542,10 +542,10 @@ class SPHDelegate extends SliverPersistentHeaderDelegate {
 
 class BodyE extends StatelessWidget {
   const BodyE({
-    Key key,
+    Key? key,
     this.topHint,
     this.operate,
-    @required this.children,
+    required this.children,
     this.child,
     this.padding = 32,
     this.left = 0,
@@ -564,10 +564,10 @@ class BodyE extends StatelessWidget {
   }) : super(key: key);
 
   const BodyE.child({
-    Key key,
+    Key? key,
     this.topHint,
     this.operate,
-    @required this.child,
+    required this.child,
     this.padding = 32,
     this.left = 0,
     this.top = 0,
@@ -585,12 +585,12 @@ class BodyE extends StatelessWidget {
   })  : this.children = null,
         super(key: key);
 
-  final List<Widget> children;
-  final Widget child;
-  final Widget operate;
-  final Widget topHint;
-  final Color backgroundColor;
-  final Decoration decoration;
+  final List<Widget>? children;
+  final Widget? child;
+  final Widget? operate;
+  final Widget? topHint;
+  final Color? backgroundColor;
+  final Decoration? decoration;
   final bool bottom;
   final bool noList;
   final bool slide;
@@ -599,17 +599,17 @@ class BodyE extends StatelessWidget {
   final int top;
   final int right;
   final double space;
-  final EasyRefreshController controller;
-  final OnRefreshCallback refresh;
-  final OnLoadCallback load;
+  final EasyRefreshController? controller;
+  final OnRefreshCallback? refresh;
+  final OnLoadCallback? load;
 
   /// 整行 item 填充宽度
   final bool fullLine;
 
   Widget _content() {
-    List<Widget> _children = children ?? [child];
+    List<Widget> _children = children ?? [child!];
 
-    Widget view;
+    Widget? view;
     if (noList) {
       view = child;
     } else {
@@ -649,9 +649,9 @@ class BodyE extends StatelessWidget {
     if (operate != null || topHint != null) {
       view = Column(
         children: <Widget>[
-          Spacing.vView(isShow: topHint != null, child: () => topHint),
+          Spacing.vView(isShow: topHint != null, child: () => topHint!),
           Expanded(child: view),
-          Spacing.vView(isShow: operate != null, child: () => operate),
+          Spacing.vView(isShow: operate != null, child: () => operate!),
         ],
       );
     }

@@ -16,20 +16,18 @@ class RatingBar extends StatefulWidget {
       this.count = 5,
       this.value = 10.0,
       this.size = 20,
-      this.normalImage,
-      this.selectImage,
+      required this.normalImage,
+      required this.selectImage,
       this.padding = 5,
       this.selectAble = false,
-      @required this.onRatingUpdate})
-      : assert(normalImage != null),
-        assert(selectImage != null);
+      required this.onRatingUpdate});
 
   @override
   _RatingBarState createState() => _RatingBarState();
 }
 
 class _RatingBarState extends State<RatingBar> {
-  double value;
+  double? value;
 
   @override
   Widget build(BuildContext context) {
@@ -73,23 +71,23 @@ class _RatingBarState extends State<RatingBar> {
       }
     }
     setState(() {
-      widget.onRatingUpdate(value.toStringAsFixed(1));
+      widget.onRatingUpdate(value!.toStringAsFixed(1));
     });
   }
 
   int fullStars() {
     if (value != null) {
-      return (value / (widget.maxRating / widget.count)).floor();
+      return (value! / (widget.maxRating / widget.count)).floor();
     }
     return 0;
   }
 
   double star() {
     if (value != null) {
-      if (widget.count / fullStars() == widget.maxRating / value) {
+      if (widget.count / fullStars() == widget.maxRating / value!) {
         return 0;
       }
-      return (value % (widget.maxRating / widget.count)) /
+      return (value! % (widget.maxRating / widget.count)) /
           (widget.maxRating / widget.count);
     }
     return 0;
@@ -144,12 +142,8 @@ class _RatingBarState extends State<RatingBar> {
     return Container(
       child: Stack(
         children: <Widget>[
-          Row(
-            children: buildNormalRow(),
-          ),
-          Row(
-            children: buildRow(),
-          )
+          Row(children: buildNormalRow()),
+          Row(children: buildRow())
         ],
       ),
     );
@@ -164,7 +158,8 @@ class _RatingBarState extends State<RatingBar> {
 
 class SMClipper extends CustomClipper<Rect> {
   final double rating;
-  SMClipper({this.rating}) : assert(rating != null);
+  SMClipper({required this.rating});
+
   @override
   Rect getClip(Size size) {
     return Rect.fromLTRB(0.0, 0.0, rating, size.height);

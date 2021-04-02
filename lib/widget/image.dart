@@ -8,10 +8,10 @@ import 'package:image_picker/image_picker.dart';
 import '../fast_develop.dart';
 
 class ImgHelp {
-  String key;
+  String? key;
   String url;
-  String thumbnail;
-  ValueNotifier<String> vnUrl;
+  String? thumbnail;
+  late ValueNotifier<String> vnUrl;
 
   /// 优先缩略图 然后 原图
   String img() => thumbnail ?? url;

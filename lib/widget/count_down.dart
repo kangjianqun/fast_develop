@@ -14,7 +14,7 @@ const Widget DefaultSpace = const Text(
 
 class CountDown extends StatefulWidget {
   const CountDown({
-    Key key,
+    Key? key,
     this.space = DefaultSpace,
     this.duration = const Duration(hours: 10, minutes: 30, seconds: 0),
     this.textStyle =
@@ -35,9 +35,9 @@ class CountDown extends StatefulWidget {
     this.space,
     this.timeOver,
     this.duration = const Duration(seconds: 60),
-    @required this.onlyHint,
-    @required this.onTap,
-    @required this.build,
+    required this.onlyHint,
+    required this.onTap,
+    required this.build,
     this.textStyle =
         const TextStyle(color: Colors.white, backgroundColor: Colors.red),
     this.borderRadius = const BorderRadius.all(Radius.circular(3)),
@@ -47,13 +47,13 @@ class CountDown extends StatefulWidget {
   final bool onlyAutoStart;
   final String onlyHint;
   final Duration duration;
-  final Color backgroundColor;
-  final Widget space;
-  final Future<bool> Function() onTap;
-  final void Function() timeOver;
+  final Color? backgroundColor;
+  final Widget? space;
+  final Future<bool> Function()? onTap;
+  final void Function()? timeOver;
   final TextStyle textStyle;
   final BorderRadius borderRadius;
-  final Widget Function(BuildContext buildContext, Widget child) build;
+  final Widget Function(BuildContext buildContext, Widget child)? build;
 
   @override
   CountDownState createState() => CountDownState();
@@ -62,10 +62,10 @@ class CountDown extends StatefulWidget {
 enum TimeType { Hours, Minutes, Seconds }
 
 class CountDownState extends State<CountDown> with TickerProviderStateMixin {
-  Timer _timer;
-  int _allSeconds;
+  late Timer? _timer;
+  late int _allSeconds;
   bool timeFinish = true;
-  Color backgroundColor;
+  late Color backgroundColor;
   ValueNotifier<String> _vNDay = ValueNotifier("");
   ValueNotifier<String> _vNHour = ValueNotifier("");
   ValueNotifier<String> _vNMinute = ValueNotifier("");
@@ -80,7 +80,7 @@ class CountDownState extends State<CountDown> with TickerProviderStateMixin {
     int second = seconds % 60;
 
     try {
-      if (ModalRoute.of(context).isCurrent) {
+      if (ModalRoute.of(context)!.isCurrent) {
         _vNDay.value = _formatTime(day);
         _vNHour.value = _formatTime(hour);
         _vNMinute.value = _formatTime(minute);
@@ -110,7 +110,7 @@ class CountDownState extends State<CountDown> with TickerProviderStateMixin {
         //倒计时秒数为0，取消定时器
         _cancelTimer();
         if (widget.timeOver != null) {
-          widget.timeOver();
+          widget.timeOver!();
         } else {
           if (widget.only) _initOnly();
         }
@@ -122,7 +122,7 @@ class CountDownState extends State<CountDown> with TickerProviderStateMixin {
 
   void _cancelTimer() {
     if (_timer != null) {
-      _timer.cancel();
+      _timer!.cancel();
       _timer = null;
     }
   }
@@ -131,7 +131,7 @@ class CountDownState extends State<CountDown> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _allSeconds = widget.duration.inSeconds;
-    backgroundColor = widget.backgroundColor;
+    backgroundColor = widget.backgroundColor!;
     _constructTime(_allSeconds);
 
     if (widget.only) {
@@ -156,17 +156,14 @@ class CountDownState extends State<CountDown> with TickerProviderStateMixin {
       builder: (ctx, value, child) {
         Widget view = ClipRRect(
           borderRadius: widget.borderRadius,
-          child: widget.build(
-            ctx,
-            Text(value, style: widget.textStyle),
-          ),
+          child: widget.build!(ctx, Text(value, style: widget.textStyle)),
         );
 
         if (widget.onTap != null) {
           view = TouchWidget(
             onTap: (_) {
               if (timeFinish) {
-                widget.onTap().then((start) {
+                widget.onTap!().then((start) {
                   if (start != null && start) _startTimer();
                 });
               }
@@ -187,7 +184,7 @@ class CountDownState extends State<CountDown> with TickerProviderStateMixin {
           borderRadius: widget.borderRadius,
           child: Container(
             color: backgroundColor,
-            height: 65.sh,
+            height: 65.hh,
             alignment: Alignment.center,
             child: ValueListenableBuilder<String>(
               valueListenable: _vNDay,
@@ -205,8 +202,8 @@ class CountDownState extends State<CountDown> with TickerProviderStateMixin {
           borderRadius: widget.borderRadius,
           child: Container(
             color: backgroundColor,
-            width: 45.s,
-            height: 65.sh,
+            width: 45.ww,
+            height: 65.hh,
             alignment: Alignment.center,
             child: ValueListenableBuilder<String>(
               valueListenable: _vNHour,
@@ -214,13 +211,13 @@ class CountDownState extends State<CountDown> with TickerProviderStateMixin {
             ),
           ),
         ),
-        widget.space,
+        widget.space!,
         ClipRRect(
           borderRadius: widget.borderRadius,
           child: Container(
             color: backgroundColor,
-            width: 45.s,
-            height: 65.sh,
+            width: 45.ww,
+            height: 65.hh,
             alignment: Alignment.center,
             child: ValueListenableBuilder<String>(
               valueListenable: _vNMinute,
@@ -228,13 +225,13 @@ class CountDownState extends State<CountDown> with TickerProviderStateMixin {
             ),
           ),
         ),
-        widget.space,
+        widget.space!,
         ClipRRect(
           borderRadius: widget.borderRadius,
           child: Container(
             color: backgroundColor,
-            width: 45.s,
-            height: 65.sh,
+            width: 45.ww,
+            height: 65.hh,
             alignment: Alignment.center,
             child: ValueListenableBuilder<String>(
               valueListenable: _vNSecond,

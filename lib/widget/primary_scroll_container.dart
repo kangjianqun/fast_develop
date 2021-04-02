@@ -16,8 +16,8 @@ class PrimaryScrollContainer extends StatefulWidget {
   State<StatefulWidget> createState() => PrimaryScrollContainerState();
 }
 
-ScrollController getNestedScrollViewInner(BuildContext context) {
-  final PrimaryScrollController primaryScrollController =
+ScrollController? getNestedScrollViewInner(BuildContext context) {
+  final PrimaryScrollController? primaryScrollController =
       context.dependOnInheritedWidgetOfExactType<PrimaryScrollController>();
   if (primaryScrollController == null) {
     throw ("未找到NestedScrollView");
@@ -27,10 +27,10 @@ ScrollController getNestedScrollViewInner(BuildContext context) {
 }
 
 class PrimaryScrollContainerState extends State<PrimaryScrollContainer> {
-  ScrollControllerWrapper _scrollController;
+  late ScrollControllerWrapper _scrollController;
 
   get scrollController {
-    _scrollController.inner = getNestedScrollViewInner(context);
+    _scrollController.inner = getNestedScrollViewInner(context)!;
     return _scrollController;
   }
 
@@ -59,9 +59,9 @@ class PrimaryScrollControllerWrapper extends InheritedWidget
   final ScrollController scrollController;
 
   const PrimaryScrollControllerWrapper({
-    Key key,
-    @required Widget child,
-    @required this.scrollController,
+    Key? key,
+    required Widget child,
+    required this.scrollController,
   }) : super(key: key, child: child);
 
   get runtimeType => PrimaryScrollController;
@@ -77,12 +77,12 @@ class PrimaryScrollControllerWrapper extends InheritedWidget
 class ScrollControllerWrapper implements ScrollController {
   static int a = 1;
 
-  ScrollController inner;
+  late ScrollController inner;
 
   int code = a++;
 
-  ScrollPosition interceptedAttachPosition; //拦截的position
-  ScrollPosition lastPosition;
+  late ScrollPosition? interceptedAttachPosition; //拦截的position
+  late ScrollPosition? lastPosition;
 
   bool showing = true;
 
@@ -90,7 +90,8 @@ class ScrollControllerWrapper implements ScrollController {
   void addListener(listener) => inner.addListener(listener);
 
   @override
-  Future<void> animateTo(double offset, {Duration duration, Curve curve}) =>
+  Future<void> animateTo(double offset,
+          {required Duration duration, required Curve curve}) =>
       inner.animateTo(offset, duration: duration, curve: curve);
 
   @override
@@ -139,15 +140,15 @@ class ScrollControllerWrapper implements ScrollController {
 //    print('{$code}:change{$b}');
     showing = b;
     if (!showing) {
-      if (lastPosition != null) detach(lastPosition, fake: true);
+      if (lastPosition != null) detach(lastPosition!, fake: true);
     } else {
-      if (interceptedAttachPosition != null) attach(interceptedAttachPosition);
+      if (interceptedAttachPosition != null) attach(interceptedAttachPosition!);
     }
   }
 
   @override
   ScrollPosition createScrollPosition(ScrollPhysics physics,
-          ScrollContext context, ScrollPosition oldPosition) =>
+          ScrollContext context, ScrollPosition? oldPosition) =>
       inner.createScrollPosition(physics, context, oldPosition);
 
   @override
@@ -155,7 +156,7 @@ class ScrollControllerWrapper implements ScrollController {
       inner.debugFillDescription(description);
 
   @override
-  String get debugLabel => inner.debugLabel;
+  String? get debugLabel => inner.debugLabel;
 
   @override
   void dispose() => inner.dispose();

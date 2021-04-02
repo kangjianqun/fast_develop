@@ -85,7 +85,7 @@ class IconText extends StatelessWidget {
 
   const IconText.simple({
     Key? key,
-    required this.data,
+   required this.data,
     required this.iData,
     required this.color,
     required this.size,
@@ -204,10 +204,10 @@ class IconText extends StatelessWidget {
 
 class Button extends StatelessWidget {
   const Button({
-    Key key,
+    Key? key,
     this.text,
     this.child,
-    @required this.onTap,
+    required this.onTap,
     this.isCircle = true,
     this.paddingInside,
     this.radius = 20,
@@ -228,11 +228,11 @@ class Button extends StatelessWidget {
 
   /// 图标按钮
   const Button.img({
-    Key key,
+    Key? key,
     this.text,
     this.child,
-    @required this.icon,
-    @required this.onTap,
+    required this.icon,
+    required this.onTap,
     this.isCircle = true,
     this.paddingInside,
     this.radius = 20,
@@ -251,25 +251,25 @@ class Button extends StatelessWidget {
         super(key: key);
 
   final bool isCircle;
-  final Color borderColor;
+  final Color? borderColor;
   final double radius;
-  final int touchSpaced;
-  final String text;
+  final int? touchSpaced;
+  final String? text;
   final TouchTap onTap;
-  final EdgeInsets paddingInside;
-  final Decoration decoration;
-  final Widget child;
+  final EdgeInsets? paddingInside;
+  final Decoration? decoration;
+  final Widget? child;
 
-  final num textSize;
-  final int paddingChild;
-  final EdgeInsets paddingOuter;
-  final EdgeInsets margin;
-  final IconData icon;
+  final num? textSize;
+  final int? paddingChild;
+  final EdgeInsets? paddingOuter;
+  final EdgeInsets? margin;
+  final IconData? icon;
 
   /// 图标容器大小
-  final double size;
-  final double sizeH;
-  final PrimarySecondary<Color> color;
+  final double? size;
+  final double? sizeH;
+  final PrimarySecondary<Color>? color;
   final TextStyle style;
   final double pressedOpacity;
 

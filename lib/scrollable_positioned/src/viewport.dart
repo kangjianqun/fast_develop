@@ -10,13 +10,13 @@ import 'package:flutter/widgets.dart';
 /// for more information.
 class UnboundedViewport extends Viewport {
   UnboundedViewport({
-    Key key,
+    Key? key,
     AxisDirection axisDirection = AxisDirection.down,
-    AxisDirection crossAxisDirection,
+    AxisDirection? crossAxisDirection,
     double anchor = 0.0,
-    @required ViewportOffset offset,
-    Key center,
-    double cacheExtent,
+    required ViewportOffset offset,
+    Key? center,
+    double? cacheExtent,
     List<Widget> slivers = const <Widget>[],
   })  : _anchor = anchor,
         super(
@@ -60,12 +60,12 @@ class UnboundedRenderViewport extends RenderViewport {
   /// Creates a viewport for [RenderSliver] objects.
   UnboundedRenderViewport({
     AxisDirection axisDirection = AxisDirection.down,
-    @required AxisDirection crossAxisDirection,
-    @required ViewportOffset offset,
+    required AxisDirection crossAxisDirection,
+    required ViewportOffset offset,
     double anchor = 0.0,
-    List<RenderSliver> children,
-    RenderSliver center,
-    double cacheExtent,
+    List<RenderSliver>? children,
+    RenderSliver? center,
+    double? cacheExtent,
   })  : _anchor = anchor,
         super(
             axisDirection: axisDirection,
@@ -80,8 +80,8 @@ class UnboundedRenderViewport extends RenderViewport {
   double _anchor;
 
   // Out-of-band data computed during layout.
-  double _minScrollExtent;
-  double _maxScrollExtent;
+  late double _minScrollExtent;
+  late double _maxScrollExtent;
   bool _hasVisualOverflow = false;
 
   @override
@@ -89,7 +89,6 @@ class UnboundedRenderViewport extends RenderViewport {
 
   @override
   set anchor(double value) {
-    assert(value != null);
     if (value == _anchor) return;
     _anchor = value;
     markNeedsLayout();
@@ -105,7 +104,7 @@ class UnboundedRenderViewport extends RenderViewport {
       offset.applyContentDimensions(0.0, 0.0);
       return;
     }
-    assert(center.parent == this);
+    assert(center!.parent == this);
 
     double mainAxisExtent;
     double crossAxisExtent;
@@ -120,7 +119,7 @@ class UnboundedRenderViewport extends RenderViewport {
         break;
     }
 
-    final centerOffsetAdjustment = center.centerOffsetAdjustment;
+    final centerOffsetAdjustment = center!.centerOffsetAdjustment;
 
     double correction;
     var count = 0;
@@ -186,14 +185,14 @@ class UnboundedRenderViewport extends RenderViewport {
     final double forwardDirectionRemainingPaintExtent =
         (mainAxisExtent - centerOffset).clamp(0.0, mainAxisExtent);
 
-    final fullCacheExtent = mainAxisExtent + 2 * cacheExtent;
-    final centerCacheOffset = centerOffset + cacheExtent;
+    final fullCacheExtent = mainAxisExtent + 2 * cacheExtent!;
+    final centerCacheOffset = centerOffset + cacheExtent!;
     final double reverseDirectionRemainingCacheExtent =
         centerCacheOffset.clamp(0.0, fullCacheExtent);
     final double forwardDirectionRemainingCacheExtent =
         (fullCacheExtent - centerCacheOffset).clamp(0.0, fullCacheExtent);
 
-    final leadingNegativeChild = childBefore(center);
+    final leadingNegativeChild = childBefore(center!);
 
     if (leadingNegativeChild != null) {
       // negative scroll offsets
@@ -208,7 +207,7 @@ class UnboundedRenderViewport extends RenderViewport {
         growthDirection: GrowthDirection.reverse,
         advance: childBefore,
         remainingCacheExtent: reverseDirectionRemainingCacheExtent,
-        cacheOrigin: (mainAxisExtent - centerOffset).clamp(-cacheExtent, 0.0),
+        cacheOrigin: (mainAxisExtent - centerOffset).clamp(-cacheExtent!, 0.0),
       );
       if (result != 0.0) return -result;
     }
@@ -228,7 +227,7 @@ class UnboundedRenderViewport extends RenderViewport {
       growthDirection: GrowthDirection.forward,
       advance: childAfter,
       remainingCacheExtent: forwardDirectionRemainingCacheExtent,
-      cacheOrigin: centerOffset.clamp(-cacheExtent, 0.0),
+      cacheOrigin: centerOffset.clamp(-cacheExtent!, 0.0),
     );
   }
 

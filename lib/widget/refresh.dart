@@ -4,10 +4,10 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import '../fast_develop.dart';
 
 Widget easyRefreshList({
-  @required List<Widget> children,
-  EasyRefreshController controller,
-  OnRefreshCallback refresh,
-  OnLoadCallback load,
+  required List<Widget> children,
+  EasyRefreshController? controller,
+  OnRefreshCallback? refresh,
+  OnLoadCallback? load,
   num space = 16,
   bool slide = true,
   bool isInterval = true,
@@ -15,9 +15,9 @@ Widget easyRefreshList({
   num mainPadding = 0,
   num crossPadding = 0,
   bool fullLine = true,
-  double cacheExtent,
-  Footer footer,
-  Header header,
+  double? cacheExtent,
+  Footer? footer,
+  Header? header,
 }) {
   List<Widget> child = [];
   child.add(ListIntervalView.children(
@@ -51,20 +51,20 @@ Widget easyRefreshList({
 }
 
 Widget easyRefresh({
-  @required itemCount,
-  @required IndexedWidgetBuilder itemBuilder,
-  EasyRefreshController controller,
-  OnRefreshCallback refresh,
-  OnLoadCallback load,
+  required itemCount,
+  required IndexedWidgetBuilder itemBuilder,
+  EasyRefreshController? controller,
+  OnRefreshCallback? refresh,
+  OnLoadCallback? load,
   num space = 16,
   bool slide = true,
   bool shrinkWrap = false,
   num mainPadding = 0,
   num crossPadding = 0,
   bool fullLine = true,
-  double cacheExtent,
-  Footer footer,
-  Header header,
+  double? cacheExtent,
+  Footer? footer,
+  Header? header,
 }) {
   List<Widget> child = [
     ListIntervalView(

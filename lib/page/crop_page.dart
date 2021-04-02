@@ -19,8 +19,8 @@ class CropVM extends BaseViewModel {
 
 class CropPage extends StatelessWidget with BaseView<CropVM> {
   const CropPage({
-    Key key,
-    @required this.filePath,
+    Key? key,
+    required this.filePath,
   }) : super(key: key);
 
   final String filePath;

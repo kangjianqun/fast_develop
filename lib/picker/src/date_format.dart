@@ -227,7 +227,7 @@ String formatDate(DateTime date, List<String> formats, LocaleType locale) {
         date.month == now.month &&
         date.day == now.day) {
       //today
-      return i18nObjInLocale(locale)['today'];
+      return i18nObjInLocale(locale)?['today'];
     } else if (date.year == now.year) {
       if (locale == LocaleType.zh) {
         return formatDate(date, [_mm, '月', _dd, '日 ', _D], locale);
@@ -271,10 +271,11 @@ String formatDate(DateTime date, List<String> formats, LocaleType locale) {
     } else if (format == _m) {
       sb.write(date.month);
     } else if (format == _MM) {
-      String monthLong = i18nObjInLocale(locale)['monthLong'][date.month - 1];
+      String monthLong = i18nObjInLocale(locale)?['monthLong'][date.month - 1];
       sb.write(monthLong);
     } else if (format == _M) {
-      String monthShort = i18nObjInLocale(locale)['monthShort'][date.month - 1];
+      String monthShort =
+          i18nObjInLocale(locale)?['monthShort'][date.month - 1];
       sb.write(monthShort);
     } else if (format == _dd) {
       sb.write(digits(date.day, 2));
@@ -287,7 +288,7 @@ String formatDate(DateTime date, List<String> formats, LocaleType locale) {
     } else if (format == _WW) {
       sb.write(digits((dayInYear(date) + 7) ~/ 7, 2));
     } else if (format == _D) {
-      String day = i18nObjInLocale(locale)['day'][date.weekday - 1];
+      String day = i18nObjInLocale(locale)?['day'][date.weekday - 1];
       if (locale == LocaleType.ko) {
         day = "($day)";
       }
@@ -302,8 +303,8 @@ String formatDate(DateTime date, List<String> formats, LocaleType locale) {
       sb.write(date.hour % 12);
     } else if (format == _am) {
       sb.write(date.hour < 12
-          ? i18nObjInLocale(locale)['am']
-          : i18nObjInLocale(locale)['pm']);
+          ? i18nObjInLocale(locale)!['am']
+          : i18nObjInLocale(locale)!['pm']);
     } else if (format == _nn) {
       sb.write(digits(date.minute, 2));
     } else if (format == _n) {

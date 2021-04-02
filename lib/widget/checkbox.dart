@@ -12,7 +12,7 @@ class Checkbox extends StatelessWidget {
     this.padding,
     this.borderWidth,
     required this.value,
-    required this.onChanged,
+    this.onChanged,
     this.unselectedBGColor,
     this.unselectedBorderColor,
     this.selectedBGColor,
@@ -25,7 +25,7 @@ class Checkbox extends StatelessWidget {
   final Widget? description;
   final double? spacing;
   final double? borderWidth;
-  final ValueChanged<bool> onChanged;
+  final ValueChanged<bool>? onChanged;
   final bool value;
 
   /// The color to use when this checkbox is checked.
@@ -75,21 +75,24 @@ class Checkbox extends StatelessWidget {
       height: _size,
       margin: description != null ? null : Spacing.all(size: _padding),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(_size / 2)),
+        borderRadius: BorderRadius.all(Radius.circular(_size! / 2)),
         color: bgColor,
-        border: Border.all(color: borderColor, width: _borderWidth.s),
+        border: Border.all(color: borderColor, width: _borderWidth.ww!),
       ),
       child: tick,
     );
 
     if (description != null) {
-      _view = Row(
-          children: [_view, Spacing.spacingView(width: _spacing), description]);
+      _view = Row(children: [
+        _view,
+        Spacing.spacingView(width: _spacing),
+        description!
+      ]);
     }
 
     if (onChanged == null)
       return _view;
     else
-      return TouchWidget(onTap: (_) => onChanged(!value), child: _view);
+      return TouchWidget(onTap: (_) => onChanged!(!value), child: _view);
   }
 }

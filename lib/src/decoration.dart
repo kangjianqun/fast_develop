@@ -89,7 +89,7 @@ class DecoUtil {
 
   /// 0 - 3 leftOrTopOrRightOrBottom
   static BoxDecoration unilateral(int leftOrTopOrRightOrBottom,
-      {Color color, num radius, bool isCircle = false}) {
+      {Color? color, num? radius, bool isCircle = false}) {
     var borderRadius;
     var _radius = isCircle ? 200 : (radius ?? SConfig.radius);
     switch (leftOrTopOrRightOrBottom) {
