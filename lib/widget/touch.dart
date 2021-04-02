@@ -6,22 +6,22 @@ typedef TouchTap = void Function(BuildContext context);
 /// 触摸
 class TouchWidget extends StatefulWidget {
   const TouchWidget({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.onTap,
     this.pressedOpacity,
     this.padding,
-    int touchSpaced,
+    int? touchSpaced,
   })  : this.onDoubleTap = null,
         this.onLongPressUp = null,
         this.touchSpaced = touchSpaced == null ? 1 : touchSpaced,
         super(key: key);
 
   final Widget child;
-  final double padding;
-  final TouchTap onTap;
-  final Function onDoubleTap;
-  final Function onLongPressUp;
+  final double? padding;
+  final TouchTap? onTap;
+  final Function? onDoubleTap;
+  final Function? onLongPressUp;
 
   /// 触摸事件的间隔  单位为秒 小于等于0 代表不开启间隔监听
   final int touchSpaced;
@@ -32,7 +32,7 @@ class TouchWidget extends StatefulWidget {
   /// This defaults to 0.4. If null, opacity will not change on pressed if using
   /// your own custom effects is desired.
   /// 0 关闭
-  final double pressedOpacity;
+  final double? pressedOpacity;
 
   @override
   _TouchWidgetState createState() => _TouchWidgetState();
@@ -44,11 +44,12 @@ class _TouchWidgetState extends State<TouchWidget>
   static const Duration kFadeInDuration = Duration(milliseconds: 100);
   final Tween<double> _opacityTween = Tween<double>(begin: 1.0);
 
-  AnimationController _animationController;
-  Animation<double> _opacityAnimation;
-  DateTime _lastPressed;
-  Duration _touchSp;
+  late AnimationController? _animationController;
+  late Animation<double> _opacityAnimation;
+  late DateTime? _lastPressed;
+  late Duration _touchSp;
   var _pressedOpacity;
+
   @override
   void initState() {
     super.initState();
@@ -59,7 +60,7 @@ class _TouchWidgetState extends State<TouchWidget>
       value: 0.0,
       vsync: this,
     );
-    _opacityAnimation = _animationController
+    _opacityAnimation = _animationController!
         .drive(CurveTween(curve: Curves.decelerate))
         .drive(_opacityTween);
     _setTween();
@@ -77,7 +78,7 @@ class _TouchWidgetState extends State<TouchWidget>
 
   @override
   void dispose() {
-    _animationController.dispose();
+    _animationController?.dispose();
     _animationController = null;
     super.dispose();
   }
@@ -106,11 +107,12 @@ class _TouchWidgetState extends State<TouchWidget>
   }
 
   void _animate() {
-    if (_animationController.isAnimating) return;
+    if (_animationController == null || _animationController!.isAnimating)
+      return;
     final bool wasHeldDown = _buttonHeldDown;
     final TickerFuture ticker = _buttonHeldDown
-        ? _animationController.animateTo(1.0, duration: kFadeOutDuration)
-        : _animationController.animateTo(0.0, duration: kFadeInDuration);
+        ? _animationController!.animateTo(1.0, duration: kFadeOutDuration)
+        : _animationController!.animateTo(0.0, duration: kFadeInDuration);
     ticker.then<void>((void value) {
       if (mounted && wasHeldDown != _buttonHeldDown) _animate();
     });
@@ -132,13 +134,13 @@ class _TouchWidgetState extends State<TouchWidget>
           if (widget.onTap == null) return;
 
           if (widget.touchSpaced <= 0) {
-            widget.onTap(context);
+            widget.onTap!(context);
           } else {
             _touchSp ??= Duration(seconds: widget.touchSpaced);
             if (_lastPressed == null ||
-                DateTime.now().difference(_lastPressed) > _touchSp) {
+                DateTime.now().difference(_lastPressed!) > _touchSp) {
               _lastPressed = DateTime.now();
-              widget.onTap(context);
+              widget.onTap!(context);
             }
             _lastPressed = DateTime.now();
           }

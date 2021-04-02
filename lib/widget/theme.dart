@@ -16,11 +16,11 @@ class ThemeVM with ChangeNotifier {
   static int defaultIndex = 1;
 
   /// 明暗模式
-  Brightness _brightness;
+  late Brightness _brightness;
 
   /// 当前主题颜色
-  MaterialColor _themeColor;
-  ThemeData _themeData;
+  late MaterialColor _themeColor;
+  late ThemeData _themeData;
   ThemeData get themeData => _themeData;
   ThemeData get darkTheme => _themeData.copyWith(brightness: Brightness.dark);
 
@@ -28,8 +28,8 @@ class ThemeVM with ChangeNotifier {
   /// 没有传[brightness]就不改变brightness,color同理
   ///  [forciblyModify]强制修改 用于初始化的时候没有适配文字大小的问题
   void switchTheme(
-      {Brightness brightness,
-      MaterialColor color,
+      {Brightness? brightness,
+      MaterialColor? color,
       bool isInit = false,
       bool forciblyModify = false}) {
     if (forciblyModify &&
@@ -52,11 +52,11 @@ class ThemeVM with ChangeNotifier {
 
   /// 根据主题 明暗 和 颜色 生成对应的主题 全局修改
   static ThemeData _generateThemeData(Brightness brightness,
-      {ThemeData themeData,
-      MaterialColor themeColor,
+      {ThemeData? themeData,
+      MaterialColor? themeColor,
       bool modifyGlobal = false}) {
     var _brightness = brightness;
-    MaterialColor accentColor = themeColor;
+    MaterialColor? accentColor = themeColor;
     var pColor = CConfig.primaryColor;
 
     var blackWhite = CConfig.getMatching(
@@ -133,7 +133,7 @@ class ThemeVM with ChangeNotifier {
   }
 
   /// 可以调用后二次修改 或者自己实现
-  static TextTheme textTheme({Brightness brightness, Color color}) {
+  static TextTheme textTheme({Brightness? brightness, Color? color}) {
     var _color = color;
     if (brightness != null) {
       _color = CConfig.getOne(brightness: brightness);
@@ -150,7 +150,7 @@ class ThemeVM with ChangeNotifier {
   }
 
   /// 可以调用后二次修改 或者自己实现
-  static IconThemeData iconTheme({Brightness brightness, Color color}) {
+  static IconThemeData iconTheme({Brightness? brightness, Color? color}) {
     var _color = color;
     if (brightness != null) {
       _color = CConfig.getOne(brightness: brightness);

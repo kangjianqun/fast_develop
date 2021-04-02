@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 
-typedef ToastShow = Function(String hint);
+import '../fast_develop.dart';
+
+typedef ToastShow = Function(String? hint);
 
 ///  toast
 ToastShow? _showToast;
@@ -9,8 +11,8 @@ initFastDevelopOfData(ToastShow? toastShow) {
   if (toastShow != null) _showToast = toastShow;
 }
 
-void showToast(String hint) {
-  if (_showToast != null) _showToast!(hint);
+void showToast(String? hint) {
+  if (_showToast != null && StringUtil.isNotEmpty(hint)) _showToast!(hint!);
 }
 
 class LogUtil {

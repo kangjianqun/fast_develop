@@ -5,18 +5,18 @@ import '../fast_develop.dart';
 class RichTextStyle {
   String text;
   double size;
-  Color color;
-  GestureRecognizer onTap;
+  Color? color;
+  GestureRecognizer? onTap;
   RichTextStyle({
-    @required this.text,
-    @required this.size,
-    @required this.color,
+    required this.text,
+    required this.size,
+    required this.color,
     this.onTap,
   });
 
   RichTextStyle.color({
-    @required this.text,
-    @required this.size,
+    required this.text,
+    required this.size,
     this.onTap,
     this.color,
   });
@@ -26,12 +26,12 @@ class RichTextStyle {
 class RichTextItem {
   String text;
   TextStyle textStyle;
-  GestureRecognizer onTap;
+  GestureRecognizer? onTap;
 
   RichTextItem(this.text, this.textStyle, {this.onTap});
 }
 
-List<RichTextItem> consistent(List<RichTextStyle> children, {Color color}) {
+List<RichTextItem> consistent(List<RichTextStyle> children, {Color? color}) {
   List<RichTextItem> list = [];
   children.forEach((style) {
     list.add(
@@ -48,7 +48,7 @@ List<RichTextItem> consistent(List<RichTextStyle> children, {Color color}) {
 /// 富文本集成
 class TextRich extends StatelessWidget {
   const TextRich({
-    Key key,
+    Key? key,
     this.list,
     this.children,
     this.color,
@@ -57,25 +57,25 @@ class TextRich extends StatelessWidget {
         super(key: key);
 
   const TextRich.color({
-    Key key,
+    Key? key,
     this.list,
     this.children,
     this.textAlign = TextAlign.start,
-    @required this.color,
-  })  : assert(list == null || children == null),
+    required this.color,
+  })   : assert(list == null || children == null),
         super(key: key);
 
-  final List<RichTextStyle> list;
-  final List<RichTextItem> children;
+  final List<RichTextStyle>? list;
+  final List<RichTextItem>? children;
 
   final TextAlign textAlign;
-  final Color color;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return _RichTextWidget(
       textAlign: textAlign,
-      children: children ?? consistent(list, color: color),
+      children: children ?? consistent(list!, color: color),
     );
   }
 }
@@ -83,8 +83,8 @@ class TextRich extends StatelessWidget {
 /// 富文本
 class _RichTextWidget extends StatelessWidget {
   const _RichTextWidget({
-    Key key,
-    @required this.children,
+    Key? key,
+    required this.children,
     this.textAlign = TextAlign.start,
   })  : assert(children.length > 1),
         super(key: key);

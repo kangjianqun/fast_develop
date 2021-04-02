@@ -33,7 +33,7 @@ dependencies:
   # 本地json对象存储 https://pub.flutter-io.cn/packages/localstorage
   localstorage: ^3.0.6+9
   #  https://pub.flutter-io.cn/packages/flutter_screenutil
-  flutter_screenutil: ^2.3.1
+  flutter_screenutil: ^5.0.0-nullsafety.11
 
   #  https://pub.flutter-io.cn/packages/flutter_easyrefresh
   flutter_easyrefresh: ^2.1.8

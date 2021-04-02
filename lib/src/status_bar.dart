@@ -13,7 +13,7 @@ statusBarReduction() {
 }
 
 ///  透明状态栏
-statusBarTransparent({Brightness brightness = Brightness.dark, Color color}) {
+statusBarTransparent({Brightness brightness = Brightness.dark, Color? color}) {
   bool light = brightness == Brightness.light;
   SystemUiOverlayStyle style = SystemUiOverlayStyle(
     systemNavigationBarColor: color ?? Color(0xFF000000),

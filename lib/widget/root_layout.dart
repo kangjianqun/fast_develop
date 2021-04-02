@@ -9,7 +9,7 @@ typedef ChildBuild<T> = T Function(BuildContext context);
 typedef SwitchThemeBrightness = ThemeData Function(
     Brightness brightness, ThemeData themeData);
 
-SwitchThemeBrightness _switchThemeBrightness;
+late SwitchThemeBrightness _switchThemeBrightness;
 
 initFastDevelopOfRootLayout(SwitchThemeBrightness? stb) {
   if (stb != null) _switchThemeBrightness = stb;
@@ -28,9 +28,9 @@ class SafePadding {
 
 class MyScaffold extends StatelessWidget {
   const MyScaffold.normal({
-    Key kye,
+    Key? kye,
     this.appBar,
-    @required this.body,
+    required this.body,
     this.actions,
     this.title,
     this.drawer,
@@ -55,10 +55,10 @@ class MyScaffold extends StatelessWidget {
         super(key: kye);
 
   const MyScaffold.center({
-    Key kye,
-    @required this.title,
+    Key? kye,
+    required this.title,
     this.appBar,
-    @required this.body,
+    required this.body,
     this.actions,
     this.drawer,
     this.drawerIsLeft = true,
@@ -83,10 +83,10 @@ class MyScaffold extends StatelessWidget {
 
   /// 沉浸式
   const MyScaffold.immerse({
-    Key kye,
+    Key? kye,
     this.appBar,
     this.title,
-    @required this.body,
+    required this.body,
     this.backgroundWidget,
     this.actions,
     this.drawer,
@@ -110,35 +110,35 @@ class MyScaffold extends StatelessWidget {
         super(key: kye);
 
   /// 状态页面   显示当前页面加载状态  优先度最高
-  final Widget stateWidget;
+  final Widget? stateWidget;
 
   final bool immerse;
-  final ChildBuild<Widget> appBar;
+  final ChildBuild<Widget>? appBar;
   final ChildBuild<Widget> body;
-  final ChildBuild<Widget> bottom;
-  final ChildBuild<Widget> drawer;
+  final ChildBuild<Widget>? bottom;
+  final ChildBuild<Widget>? drawer;
   final bool drawerIsLeft;
-  final Color titleBackgroundColor;
-  final Color bgColor;
-  final Color defaultTextColor;
+  final Color? titleBackgroundColor;
+  final Color? bgColor;
+  final Color? defaultTextColor;
   final bool isShowTitle;
-  final SafePadding isSafeArea;
+  final SafePadding? isSafeArea;
   final bool isMaterial;
   final bool isBottom;
-  final ChildBuild<Widget> backgroundWidget;
-  final String title;
-  final ChildBuild<Widget> titleWidget;
+  final ChildBuild<Widget>? backgroundWidget;
+  final String? title;
+  final ChildBuild<Widget>? titleWidget;
   final bool titleIsCenter;
-  final ChildBuild<Widget> nextWidget;
-  final ChildBuild<List<Widget>> actions;
+  final ChildBuild<Widget>? nextWidget;
+  final ChildBuild<List<Widget>>? actions;
 
-  final ThemeData themeData;
+  final ThemeData? themeData;
 
   /// 全局主题配置
-  final Brightness brightness;
+  final Brightness? brightness;
 
   /// 如果单独设置标题栏则使用 否则使用[brightness]设置全局
-  final Brightness appBarBrightness;
+  final Brightness? appBarBrightness;
 
   static void setTitle(String title, {BuildContext context}) {
     context ??= FastDevelopConfig.instance.context;
@@ -215,7 +215,6 @@ class MyScaffold extends StatelessWidget {
         appBar: top,
         body: bodyView,
         resizeToAvoidBottomInset: isBottom,
-        // resizeToAvoidBottomPadding: isBottom,
         drawer: drawerIsLeft && stateWidget == null ? _drawer : null,
         endDrawer: !drawerIsLeft && stateWidget == null ? _drawer : null,
         backgroundColor: !isTransparent ? _bgColor : CConfig.transparent,

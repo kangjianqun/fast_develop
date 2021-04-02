@@ -26,7 +26,7 @@ class CConfig {
     },
   );
 
-  static Brightness platformBrightness;
+  static Brightness? platformBrightness;
 
   /// 启用
   static bool enableDark = true;
@@ -40,12 +40,12 @@ class CConfig {
   static Color backgroundDarkColor = Colors.black;
   static Color scaffoldBackgroundDarkColor = Colors.black;
 
-  static Color cScaffoldBackgroundColor;
-  static Color cBackgroundColor;
-  static Color cMatchingColor;
-  static Color cTextColorOne;
-  static Color cTextColorTwo;
-  static Color cTextColorThree;
+  static Color? cScaffoldBackgroundColor;
+  static Color? cBackgroundColor;
+  static Color? cMatchingColor;
+  static Color? cTextColorOne;
+  static Color? cTextColorTwo;
+  static Color? cTextColorThree;
 
   /// 白色
   static Color white = Colors.white;
@@ -65,12 +65,12 @@ class CConfig {
 
   ///  [nullable] 可为空
   ///  [color] 默认颜色
-  static Color getColor({
-    @required Brightness brightness,
-    @required Color light,
-    @required Color dark,
-    BuildContext context,
-    Color color,
+  static Color? getColor({
+    required Brightness? brightness,
+    required Color light,
+    required Color dark,
+    BuildContext? context,
+    Color? color,
     bool nullable = false,
   }) {
     if (!enableDark) return light;
@@ -78,16 +78,16 @@ class CConfig {
     if (color != null) return color;
     if (brightness == null && nullable) return null;
     var _bright = brightness ??
-        (context == null ? platformBrightness : Theme.of(context)?.brightness);
+        (context == null ? platformBrightness : Theme.of(context).brightness);
     var isLight = _bright == Brightness.light;
     var _color = isLight ? light : dark;
     return _color;
   }
 
-  static Color getOne(
-      {Brightness brightness,
-      Color color,
-      BuildContext context,
+  static Color? getOne(
+      {Brightness? brightness,
+      Color? color,
+      BuildContext? context,
       bool nullable = false,
       bool modifyGlobal = false}) {
     var _color = getColor(
@@ -108,10 +108,10 @@ class CConfig {
     return _color;
   }
 
-  static Color getTwo(
-      {Brightness brightness,
-      Color color,
-      BuildContext context,
+  static Color? getTwo(
+      {Brightness? brightness,
+      Color? color,
+      BuildContext? context,
       bool nullable = false,
       bool modifyGlobal = false}) {
     var _color = getColor(
@@ -132,10 +132,10 @@ class CConfig {
     return _color;
   }
 
-  static Color getThree(
-      {Brightness brightness,
-      Color color,
-      BuildContext context,
+  static Color? getThree(
+      {Brightness? brightness,
+      Color? color,
+      BuildContext? context,
       bool nullable = false,
       bool modifyGlobal = false}) {
     var _color = getColor(
@@ -156,10 +156,10 @@ class CConfig {
     return _color;
   }
 
-  static Color getBackground(
-      {Brightness brightness,
-      Color color,
-      BuildContext context,
+  static Color? getBackground(
+      {Brightness? brightness,
+      Color? color,
+      BuildContext? context,
       bool nullable = false,
       bool modifyGlobal = false}) {
     var _color = getColor(
@@ -181,10 +181,10 @@ class CConfig {
     return _color;
   }
 
-  static Color getScaffoldBackground(
-      {Brightness brightness,
-      Color color,
-      BuildContext context,
+  static Color? getScaffoldBackground(
+      {Brightness? brightness,
+      Color? color,
+      BuildContext? context,
       bool nullable = false,
       bool modifyGlobal = false}) {
     var _color = getColor(
@@ -206,10 +206,10 @@ class CConfig {
   }
 
   /// 比对色
-  static Color getMatching(
-      {Brightness brightness,
-      Color color,
-      BuildContext context,
+  static Color? getMatching(
+      {Brightness? brightness,
+      Color? color,
+      BuildContext? context,
       bool nullable = false,
       bool modifyGlobal = false}) {
     var _color = getColor(
@@ -232,8 +232,8 @@ class CConfig {
 }
 
 class SConfig {
-  static num pageHeight;
-  static num pageWidth;
+  static num? pageHeight;
+  static num? pageWidth;
 
   static num listSpace = 26;
 
@@ -258,9 +258,9 @@ class SConfig {
 class StyleText {
   /// 忽略
   static TextStyle one({
-    Color color,
+    Color? color,
     FontWeight weight = FontWeight.normal,
-    Brightness brightness,
+    Brightness? brightness,
     bool ignoreColor = false,
   }) {
     return normal(
@@ -273,16 +273,16 @@ class StyleText {
 
   /// 采用默认 [DefaultTextStyle] 的颜色
   static TextStyle oneNoColor(
-      {Color color,
+      {Color? color,
       FontWeight weight = FontWeight.normal,
-      Brightness brightness}) {
+      Brightness? brightness}) {
     return one(color: null, weight: weight, ignoreColor: true);
   }
 
   static TextStyle oneB({
-    Color color,
+    Color? color,
     FontWeight weight = FontWeight.bold,
-    Brightness brightness,
+    Brightness? brightness,
     bool ignoreColor = false,
   }) {
     return normal(
@@ -294,10 +294,10 @@ class StyleText {
   }
 
   static TextStyle two({
-    Color color,
+    Color? color,
     FontWeight weight = FontWeight.normal,
-    TextDecoration decoration,
-    Brightness brightness,
+    TextDecoration? decoration,
+    Brightness? brightness,
     bool ignoreColor = false,
   }) {
     return normal(
@@ -311,17 +311,17 @@ class StyleText {
 
   /// 采用默认 [DefaultTextStyle] 的颜色
   static TextStyle twoNoColor(
-      {Color color,
+      {Color? color,
       FontWeight weight = FontWeight.normal,
-      Brightness brightness}) {
+      Brightness? brightness}) {
     return two(color: null, weight: weight, ignoreColor: true);
   }
 
   static TextStyle three({
-    Color color,
+    Color? color,
     FontWeight weight = FontWeight.normal,
-    TextDecoration decoration,
-    Brightness brightness,
+    TextDecoration? decoration,
+    Brightness? brightness,
     bool ignoreColor = false,
   }) {
     return normal(
@@ -335,22 +335,22 @@ class StyleText {
 
   /// 采用默认 [DefaultTextStyle] 的颜色
   static TextStyle threeNoColor(
-      {Color color,
+      {Color? color,
       FontWeight weight = FontWeight.normal,
-      Brightness brightness}) {
+      Brightness? brightness}) {
     return three(color: null, weight: weight, ignoreColor: true);
   }
 
   static TextStyle normal({
-    num size,
-    Color color,
-    Color backgroundColor,
-    Color decorationColor,
+    num? size,
+    Color? color,
+    Color? backgroundColor,
+    Color? decorationColor,
     FontWeight fontWeight = FontWeight.normal,
-    String fontFamily,
-    TextDecoration decoration = TextDecoration.none,
-    double decorationThickness,
-    Brightness brightness,
+    String? fontFamily,
+    TextDecoration? decoration = TextDecoration.none,
+    double? decorationThickness,
+    Brightness? brightness,
     bool ignoreColor = false,
   }) {
     return TextStyle(
@@ -367,11 +367,11 @@ class StyleText {
   }
 
   static TextStyle white({
-    num size,
-    Color color,
-    Color backgroundColor,
+    num? size,
+    Color? color,
+    Color? backgroundColor,
     FontWeight fontWeight = FontWeight.normal,
-    String fontFamily,
+    String? fontFamily,
     TextDecoration d = TextDecoration.none,
   }) {
     return normal(
@@ -385,13 +385,13 @@ class StyleText {
   }
 
   static TextStyle bold({
-    num size,
-    Color color,
-    Color backgroundColor,
+    num? size,
+    Color? color,
+    Color? backgroundColor,
     FontWeight fontWeight = FontWeight.normal,
-    String fontFamily,
+    String? fontFamily,
     TextDecoration decoration = TextDecoration.none,
-    double decorationThickness,
+    double? decorationThickness,
   }) {
     return normal(
       size: size,
@@ -405,12 +405,12 @@ class StyleText {
   }
 
   static TextStyle red({
-    num size,
-    Color color,
-    Color backgroundColor,
+    num? size,
+    Color? color,
+    Color? backgroundColor,
     FontWeight fontWeight = FontWeight.normal,
-    String fontFamily,
-    TextDecoration decoration,
+    String? fontFamily,
+    TextDecoration? decoration,
   }) {
     return normal(
       size: size,
@@ -423,11 +423,11 @@ class StyleText {
   }
 
   static TextStyle grey({
-    num size,
-    Color color,
-    Color backgroundColor,
+    num? size,
+    Color? color,
+    Color? backgroundColor,
     FontWeight fontWeight = FontWeight.normal,
-    String fontFamily,
+    String? fontFamily,
   }) {
     return normal(
       size: size,
@@ -440,63 +440,59 @@ class StyleText {
 }
 
 class SBorderRadius {
-  static BorderRadiusGeometry normal({num radius}) {
+  static BorderRadiusGeometry normal({num? radius}) {
     var _radius = radius ?? SConfig.radius;
-    return BorderRadius.all(Radius.circular(_radius.s));
+    return BorderRadius.all(Radius.circular(_radius.ww!));
   }
 
-  static BorderRadiusGeometry circle({num radius}) {
+  static BorderRadiusGeometry circle({num? radius}) {
     var _radius = radius ?? SConfig.radiusOfCircle;
-    return BorderRadius.circular(_radius.s);
+    return BorderRadius.circular(_radius.ww!);
   }
 
-  static BorderRadiusGeometry only({
-    num topLeft = 20,
-    num topRight = 20,
-    num bottomLeft = 20,
-    num bottomRight = 20,
-  }) {
+  static BorderRadiusGeometry only(
+      {num? topLeft, num? topRight, num? bottomLeft, num? bottomRight}) {
     var _topLeft = topLeft ?? SConfig.radius;
     var _topRight = topRight ?? SConfig.radius;
     var _bottomLeft = bottomLeft ?? SConfig.radius;
     var _bottomRight = bottomRight ?? SConfig.radius;
 
     return BorderRadius.only(
-      topLeft: Radius.circular(_topLeft.s),
-      topRight: Radius.circular(_topRight.s),
-      bottomLeft: Radius.circular(_bottomLeft.s),
-      bottomRight: Radius.circular(_bottomRight.s),
+      topLeft: Radius.circular(_topLeft.ww!),
+      topRight: Radius.circular(_topRight.ww!),
+      bottomLeft: Radius.circular(_bottomLeft.ww!),
+      bottomRight: Radius.circular(_bottomRight.ww!),
     );
   }
 
   static different({num top = 20, num bottom = 40, bool isTB = true}) {
     return isTB
         ? BorderRadius.only(
-            topLeft: Radius.circular(top.s),
-            topRight: Radius.circular(top.s),
-            bottomLeft: Radius.circular(bottom.s),
-            bottomRight: Radius.circular(bottom.s),
+            topLeft: Radius.circular(top.ww!),
+            topRight: Radius.circular(top.ww!),
+            bottomLeft: Radius.circular(bottom.ww!),
+            bottomRight: Radius.circular(bottom.ww!),
           )
         : BorderRadius.only(
-            topLeft: Radius.circular(top.s),
-            bottomLeft: Radius.circular(top.s),
-            topRight: Radius.circular(bottom.s),
-            bottomRight: Radius.circular(bottom.s),
+            topLeft: Radius.circular(top.ww!),
+            bottomLeft: Radius.circular(top.ww!),
+            topRight: Radius.circular(bottom.ww!),
+            bottomRight: Radius.circular(bottom.ww!),
           );
   }
 
-  static BorderRadiusGeometry leftRight({num radius, bool isH = true}) {
+  static BorderRadiusGeometry leftRight({num? radius, bool isH = true}) {
     var _radius = radius ?? SConfig.radiusOfCircle;
-    var value = Radius.circular(_radius.s);
+    var value = Radius.circular(_radius.ww!);
 
     return isH
         ? BorderRadius.horizontal(left: value, right: value)
         : BorderRadius.vertical(top: value, bottom: value);
   }
 
-  static BorderRadiusGeometry leftOrRight({num radius, bool isLeft = true}) {
+  static BorderRadiusGeometry leftOrRight({num? radius, bool isLeft = true}) {
     var _radius = radius ?? SConfig.radius;
-    var value = Radius.circular(_radius.s);
+    var value = Radius.circular(_radius.ww!);
     var nullValue = Radius.circular(0);
     return BorderRadius.only(
       topLeft: isLeft ? value : nullValue,
@@ -506,9 +502,9 @@ class SBorderRadius {
     );
   }
 
-  static BorderRadiusGeometry topOrButton({num radius, bool isTop = true}) {
+  static BorderRadiusGeometry topOrButton({num? radius, bool isTop = true}) {
     var _radius = radius ?? SConfig.radius;
-    var value = Radius.circular(_radius.s);
+    var value = Radius.circular(_radius.ww!);
     var nullValue = Radius.circular(0);
     return BorderRadius.only(
       topLeft: isTop ? value : nullValue,

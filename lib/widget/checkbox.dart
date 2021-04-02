@@ -5,14 +5,14 @@ import '../fast_develop.dart';
 
 class Checkbox extends StatelessWidget {
   const Checkbox({
-    Key key,
+    Key? key,
     this.size,
     this.description,
     this.spacing,
     this.padding,
     this.borderWidth,
-    @required this.value,
-    @required this.onChanged,
+    required this.value,
+    required this.onChanged,
     this.unselectedBGColor,
     this.unselectedBorderColor,
     this.selectedBGColor,
@@ -20,34 +20,34 @@ class Checkbox extends StatelessWidget {
     this.checkColor,
   }) : super(key: key);
 
-  final num size;
-  final num padding;
-  final Widget description;
-  final double spacing;
-  final double borderWidth;
+  final num? size;
+  final num? padding;
+  final Widget? description;
+  final double? spacing;
+  final double? borderWidth;
   final ValueChanged<bool> onChanged;
   final bool value;
 
   /// The color to use when this checkbox is checked.
   ///
   /// Defaults to [Colors.transparent].
-  final Color unselectedBGColor;
+  final Color? unselectedBGColor;
 
   /// Defaults to [ThemeData.unselectedWidgetColor].
-  final Color unselectedBorderColor;
+  final Color? unselectedBorderColor;
 
   /// The color to use when this checkbox is checked.
   ///
   /// Defaults to [ThemeData.toggleableActiveColor].
-  final Color selectedBGColor;
+  final Color? selectedBGColor;
 
   /// Defaults to [Colors.transparent].
-  final Color selectedBorderColor;
+  final Color? selectedBorderColor;
 
   /// The color to use for the check icon when this checkbox is checked.
   ///
   /// Defaults to [Colors.white]
-  final Color checkColor;
+  final Color? checkColor;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class Checkbox extends StatelessWidget {
     var _padding = padding ?? FastDevelopConfig.instance.checkboxOfPadding;
     var _borderWidth =
         borderWidth ?? FastDevelopConfig.instance.checkboxOfBorderWidth;
-    var _size = (__size + _padding).s;
+    var _size = (__size + _padding).ww;
 
     final ThemeData themeData = Theme.of(context);
     var borderColor = value

@@ -4,18 +4,18 @@ import '../fast_develop.dart';
 
 class Select<T> extends StatelessWidget {
   const Select({
-    Key key,
+    Key? key,
     this.onTap,
-    @required this.value,
-    @required this.valueNotifier,
-    @required this.selectedView,
-    @required this.unSelectedView,
+    required this.value,
+    required this.valueNotifier,
+    required this.selectedView,
+    required this.unSelectedView,
   }) : super(key: key);
 
   final Widget selectedView;
   final Widget unSelectedView;
   final T value;
-  final Function(T value) onTap;
+  final Function(T value)? onTap;
   final ValueNotifier<T> valueNotifier;
 
   @override
@@ -28,7 +28,7 @@ class Select<T> extends StatelessWidget {
             if (onTap == null)
               valueNotifier.value = value;
             else
-              onTap(value);
+              onTap!(value);
           },
           child: Container(
             padding: Spacing.all(topB: 8, leftR: 16),

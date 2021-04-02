@@ -29,7 +29,6 @@ Future<void> initConfig({BuildContext context}) async {
     CConfig.backgroundColor = Colors.white;
     CConfig.scaffoldBackgroundColor = Colors.grey.shade300;
   } else {
-    ScreenUtil.init(context);
     statusBarTransparent(brightness: Brightness.light);
     FastDevelopConfig.init(
       context: context,

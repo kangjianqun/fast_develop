@@ -94,8 +94,15 @@ double doubleOf(data) => valueByType(data, double);
 bool boolOf(data) => valueByType(data, bool);
 
 /// 值转换
-dynamic valueByType<T>(value, Type type,
-    {String stack: "", ItemBuild<T> itemBuild, bool nullable = false}) {
+/// [dValue] 默认值
+dynamic valueByType<T>(
+  value,
+  Type type, {
+  String stack: "",
+  ItemBuild<T>? itemBuild,
+  bool nullable = false,
+  T? dValue,
+}) {
   if (value == null) {
 //    debugPrint("valueByType  $stack : value is null");
     if (nullable) return null;
@@ -103,15 +110,15 @@ dynamic valueByType<T>(value, Type type,
     if (type == String) {
       return null;
     } else if (type == int) {
-      return 0;
+      return dValue ?? 0;
     } else if (type == double) {
-      return 0.00;
+      return dValue ?? 0.00;
     } else if (type == bool) {
-      return false;
+      return dValue ?? false;
     } else if (type == List) {
-      return [];
+      return dValue ?? [];
     } else if (type == Map) {
-      return {};
+      return dValue ?? {};
     }
     return null;
   } else {
@@ -143,7 +150,7 @@ dynamic valueByType<T>(value, Type type,
   }
 }
 
-void tryCatch(Function f) {
+void tryCatch(Function? f) {
   try {
     f?.call();
   } catch (e, stack) {
@@ -154,8 +161,8 @@ void tryCatch(Function f) {
 
 /// 判断数据
 class JudgeData<T> {
-  T value;
-  String toast;
+  T? value;
+  String? toast;
 
   JudgeData(this.value, {this.toast});
 }
@@ -166,7 +173,7 @@ extension StringUtil on String {
 
   bool get b => BoolUtil.parse(this);
 
-  static bool isNotEmpty(String value) {
+  static bool isNotEmpty(String? value) {
     return value != null &&
         value.isNotEmpty &&
         value != "" &&
@@ -174,7 +181,7 @@ extension StringUtil on String {
   }
 
   /// toast  提示，
-  static bool isEmpty(String value, {String toast}) {
+  static bool isEmpty(String? value, {String? toast}) {
     var result = value == null ||
         value.isEmpty ||
         value == "" ||
@@ -187,9 +194,9 @@ extension StringUtil on String {
   static bool isListEmpty(List<JudgeData<String>> lists) {
     var emptyData = lists.firstWhere(
       (item) => isEmpty(item.value, toast: item.toast),
-      orElse: () => null,
+      orElse: () => JudgeData<String>(null),
     );
-    return emptyData != null;
+    return emptyData.value != null;
   }
 
   static String parse(dynamic value) {
@@ -236,7 +243,7 @@ class IntUtil {
     return 0;
   }
 
-  static bool isEmpty(int imgPadding) {
+  static bool isEmpty(int? imgPadding) {
     return imgPadding == null;
   }
 
@@ -280,7 +287,7 @@ extension BoolUtil on bool {
     }
   }
 
-  static int convertInt(bool value) {
+  static int convertInt(bool? value) {
     if (value == null) return 0;
     return value ? 1 : 0;
   }
@@ -292,8 +299,8 @@ extension ListUtil on List {
 
   static List<String> parseS(dynamic value) => parse<String>(value);
 
-  static List<T> parse<T>(dynamic value, {ItemBuild<T> itemBuild}) {
-    List data;
+  static List<T> parse<T>(dynamic value, {ItemBuild<T>? itemBuild}) {
+    List? data;
 
     if (value is List) {
       data = value;
@@ -348,11 +355,11 @@ extension ListUtil on List {
     return content.substring(0, content.length - 1);
   }
 
-  static isEmpty(List list) {
+  static isEmpty(List? list) {
     return list == null || list.isEmpty;
   }
 
-  static isNotEmpty(List list) {
+  static isNotEmpty(List? list) {
     return list != null && list.isNotEmpty;
   }
 
@@ -385,11 +392,11 @@ extension ListUtil on List {
 }
 
 class MapUtil {
-  static bool isEmpty(Map map) {
+  static bool isEmpty(Map? map) {
     return map == null || map.isEmpty;
   }
 
-  static bool isNotEmpty(Map map) {
+  static bool isNotEmpty(Map? map) {
     return map != null && map.keys.length > 0;
   }
 }
