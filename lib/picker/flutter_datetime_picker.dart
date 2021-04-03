@@ -13,6 +13,9 @@ export 'src/i18n_model.dart';
 typedef void DateChangedCallback(CompleteData data);
 typedef List<Widget> CreateWidgetList();
 
+///
+///时间选择器
+///
 class DatePicker {
   ///
   /// Display date picker bottom sheet.

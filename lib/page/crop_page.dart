@@ -17,6 +17,7 @@ class CropVM extends BaseViewModel {
   }
 }
 
+/// 裁剪页面
 class CropPage extends StatelessWidget with BaseView<CropVM> {
   const CropPage({
     Key? key,
@@ -30,7 +31,8 @@ class CropPage extends StatelessWidget with BaseView<CropVM> {
       ViewConfig(vm: CropVM(), load: false);
 
   @override
-  Widget vmBuild(BuildContext context, CropVM vm, Widget? child, Widget state) {
+  Widget vmBuild(
+      BuildContext context, CropVM vm, Widget? child, Widget? state) {
     return MyScaffold.center(
       stateWidget: state,
       title: "裁剪",

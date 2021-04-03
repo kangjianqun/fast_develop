@@ -1,5 +1,8 @@
+## [2.0.2]
+Project optimization
+
 ## [2.0.1]
-新增Null safety
+add Null safety
 
 ## [1.1.6+3]
 新增 SingleLine => singleLineOfRadius 配置
