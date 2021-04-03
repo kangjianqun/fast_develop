@@ -44,32 +44,32 @@ class DecorationChanger {
 
   static Border defaultBorderStyle() {
     return Border.fromBorderSide(BorderSide(
-        color: CConfig.cMatchingColor, width: 1.0, style: BorderStyle.solid));
+        color: CConfig.cMatchingColor!, width: 1.0, style: BorderStyle.solid));
   }
 
-  Color fillColor;
-  Color focusColor;
-  BorderRadius defaultBorderRadius;
-  BorderRadius focusBorderRadius;
-  Border defaultBorder;
-  Border focusBorder;
+  Color? fillColor;
+  Color? focusColor;
+  BorderRadius? defaultBorderRadius;
+  BorderRadius? focusBorderRadius;
+  Border? defaultBorder;
+  Border? focusBorder;
 
-  Color getColor(bool isFocus) {
+  Color? getColor(bool isFocus) {
     return isFocus ? focusColor : fillColor;
   }
 
-  BorderRadius getBRadius(bool isFocus) {
+  BorderRadius? getBRadius(bool isFocus) {
     return isFocus ? focusBorderRadius : defaultBorderRadius;
   }
 
-  Border getBorder(bool isFocus) {
+  Border? getBorder(bool isFocus) {
     return isFocus ? focusBorder : defaultBorder;
   }
 }
 
 class EditText extends StatefulWidget {
   const EditText({
-    Key key,
+    Key? key,
     this.margin,
     this.padding,
     this.height,
@@ -89,7 +89,7 @@ class EditText extends StatefulWidget {
     this.name,
     this.focusNode,
     this.onChanged,
-    TextInputType inputType,
+    TextInputType? inputType,
     this.textDirection,
     this.decoration,
     this.decorationChanger,
@@ -105,7 +105,7 @@ class EditText extends StatefulWidget {
         super(key: key);
 
   const EditText.text({
-    Key key,
+    Key? key,
     this.margin,
     this.padding,
     this.height,
@@ -122,10 +122,10 @@ class EditText extends StatefulWidget {
     this.controller,
     this.icon,
     this.rightChild,
-    @required this.name,
+    required this.name,
     this.focusNode,
     this.onChanged,
-    TextInputType inputType,
+    TextInputType? inputType,
     this.textDirection,
     this.decoration,
     this.decorationChanger,
@@ -141,7 +141,7 @@ class EditText extends StatefulWidget {
         super(key: key);
 
   const EditText.right({
-    Key key,
+    Key? key,
     this.margin,
     this.padding,
     this.height,
@@ -158,10 +158,10 @@ class EditText extends StatefulWidget {
     this.controller,
     this.icon,
     this.rightChild,
-    @required this.name,
+    required this.name,
     this.focusNode,
     this.onChanged,
-    TextInputType inputType,
+    TextInputType? inputType,
     this.textDirection,
     this.textAlign = TextAlign.right,
     this.decoration,
@@ -176,51 +176,51 @@ class EditText extends StatefulWidget {
             (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
         super(key: key);
 
-  final double height;
-  final double width;
-  final num iconRightSpace;
-  final num signLeftPadding;
-  final String name;
-  final String hint;
-  final TextStyle hintStyle;
+  final double? height;
+  final double? width;
+  final num? iconRightSpace;
+  final num? signLeftPadding;
+  final String? name;
+  final String? hint;
+  final TextStyle? hintStyle;
   final bool enabled;
   final bool obscureText;
   final bool showCountHint;
-  final TextStyle style;
+  final TextStyle? style;
   final bool autoFocus;
 
   /// {@macro flutter.widgets.editableText.textDirection}
-  final TextDirection textDirection;
+  final TextDirection? textDirection;
   final TextAlign textAlign;
-  final TextInputAction textInputAction;
+  final TextInputAction? textInputAction;
 
-  final DecorationChanger decorationChanger;
-  final EdgeInsetsGeometry margin;
-  final EdgeInsetsGeometry padding;
+  final DecorationChanger? decorationChanger;
+  final EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? padding;
   final int maxLines;
-  final int maxLength;
-  final Color cursorColor;
-  final TextEditingController controller;
-  final Widget icon;
-  final Widget rightChild;
-  final FocusNode focusNode;
+  final int? maxLength;
+  final Color? cursorColor;
+  final TextEditingController? controller;
+  final Widget? icon;
+  final Widget? rightChild;
+  final FocusNode? focusNode;
   final TextInputType keyboardType;
-  final ValueChanged<String> onChanged;
-  final ValueChanged<String> onSubmitted;
-  final InputDecoration decoration;
-  final VoidCallback complete;
+  final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
+  final InputDecoration? decoration;
+  final VoidCallback? complete;
 
   @override
   _EditTextState createState() => _EditTextState();
 }
 
 class _EditTextState extends State<EditText> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
   TextEditingController get _effectiveController =>
       widget.controller ?? _controller;
-  DecorationChanger decorationChanger;
+  late DecorationChanger decorationChanger;
 
-  FocusNode _focusNode;
+  FocusNode? _focusNode;
   FocusNode get _effectiveFNode =>
       widget.focusNode ?? (_focusNode ??= FocusNode());
   var _iconRightSpace;
@@ -235,8 +235,10 @@ class _EditTextState extends State<EditText> {
   }
 
   Widget _leftSign(num nameLeftPadding) {
-    Widget view = widget.icon ??
-        (widget.name.e ? null : Text(widget.name, style: StyleText.normal()));
+    Widget? view = (widget.icon ??
+        (widget.name!.e
+            ? null
+            : Text(widget.name!, style: StyleText.normal()))) as Widget;
 
     if (view != null) {
       view = Container(
@@ -275,12 +277,12 @@ class _EditTextState extends State<EditText> {
         ? null
         : () {
             _effectiveFNode.unfocus();
-            widget.complete();
+            widget.complete!();
           };
 
     return Container(
-      width: widget.width == null ? null : widget.width.s,
-      height: widget.height == null ? null : widget.height.sh,
+      width: widget.width == null ? null : widget.width!.ww,
+      height: widget.height == null ? null : widget.height!.hh,
       alignment: Alignment.center,
       margin: widget.margin,
       padding: widget.padding ?? Spacing.all(leftR: _leftR, topB: _topB),

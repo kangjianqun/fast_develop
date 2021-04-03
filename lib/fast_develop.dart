@@ -29,7 +29,6 @@ export 'widget/unread_hint.dart';
 export 'widget/theme.dart';
 
 export 'picker/flutter_datetime_picker.dart';
-export 'scrollable_positioned/scrollable_positioned_list.dart';
 
 export 'src/convert/data.dart';
 export 'src/convert/date_time_util.dart';

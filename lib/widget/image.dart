@@ -11,7 +11,7 @@ class ImgHelp {
   String? key;
   String url;
   String? thumbnail;
-  late ValueNotifier<String> vnUrl;
+  late ValueNotifier<String?> vnUrl;
 
   /// 优先缩略图 然后 原图
   String img() => thumbnail ?? url;
@@ -21,8 +21,8 @@ class ImgHelp {
   }
 }
 
-void dialogImageSelect(BuildContext ctx, ValueNotifier<File> photo,
-    {void Function() next}) {
+void dialogImageSelect(BuildContext ctx, ValueNotifier<File?> photo,
+    {void Function()? next}) {
   showDialogCustom(
     context: ctx,
     location: Location.bottom,
@@ -32,12 +32,12 @@ void dialogImageSelect(BuildContext ctx, ValueNotifier<File> photo,
       children: [
         NameFunction("从相册选择", () async {
           var file = await ImagePicker().getImage(source: ImageSource.gallery);
-          photo.value = File(file.path);
+          if (file != null) photo.value = File(file.path);
           if (next != null) next();
         }),
         NameFunction("拍摄", () async {
           var file = await ImagePicker().getImage(source: ImageSource.camera);
-          photo.value = File(file.path);
+          if (file != null) photo.value = File(file.path);
           if (next != null) next();
         }),
       ],
@@ -49,7 +49,7 @@ void dialogImageSelect(BuildContext ctx, ValueNotifier<File> photo,
 class PhotoSelect extends StatelessWidget {
   const PhotoSelect(
     this.photo, {
-    Key key,
+    Key? key,
     this.imgHelp,
     this.color,
     this.brightness,
@@ -58,23 +58,22 @@ class PhotoSelect extends StatelessWidget {
 
   final ValueNotifier<File> photo;
 
-  final ImgHelp imgHelp;
+  final ImgHelp? imgHelp;
   final bool isUrl;
-  final Color color;
-  final Brightness brightness;
+  final Color? color;
+  final Brightness? brightness;
 
-  Widget _imgChild(File file, String url, Brightness brightness) {
-    if ((imgHelp == null || url.e) && file == null) {
+  Widget _imgChild(File? file, String? url, Brightness brightness) {
+    if ((imgHelp == null || url!.e) && file == null) {
       return Icon(IConfig.add, color: CConfig.getMatching());
     } else {
       return isUrl
           ? WrapperImage.max(
               photo: photo,
-              url: imgHelp.img(),
-              browseList: [imgHelp.url],
-              delete: () => imgHelp.vnUrl.value = null,
-            )
-          : Image.file(file, fit: BoxFit.fill);
+              url: imgHelp!.img(),
+              browseList: [imgHelp!.url],
+              delete: () => imgHelp!.vnUrl.value = null)
+          : Image.file(file!, fit: BoxFit.fill);
     }
   }
 
@@ -83,8 +82,8 @@ class PhotoSelect extends StatelessWidget {
       valueListenable: photo,
       builder: (_, file, __) {
         if (isUrl) {
-          return ValueListenableBuilder(
-            valueListenable: imgHelp.vnUrl,
+          return ValueListenableBuilder<String?>(
+            valueListenable: imgHelp!.vnUrl,
             builder: (_, url, __) {
               return _imgChild(file, url, brightness);
             },
@@ -92,7 +91,7 @@ class PhotoSelect extends StatelessWidget {
         } else {
           return _imgChild(
             file,
-            imgHelp == null ? null : imgHelp.img(),
+            imgHelp == null ? null : imgHelp!.img(),
             brightness,
           );
         }
@@ -105,15 +104,16 @@ class PhotoSelect extends StatelessWidget {
     var _brightness = brightness ?? Theme.of(context).brightness;
 
     return TouchWidget(
-      onTap: isUrl == null ? null : (_) => dialogImageSelect(context, photo),
+      // onTap: isUrl == null ? null : (_) => dialogImageSelect(context, photo),
+      onTap: (_) => dialogImageSelect(context, photo),
       child: Container(
-        width: 177.s,
-        height: 177.s,
+        width: 177.ww,
+        height: 177.ww,
         decoration: DecoUtil.border(
             color: color ?? CConfig.getBackground(),
             borderColor: CConfig.getMatching()),
         child: ClipRRect(
-          borderRadius: SBorderRadius.normal(),
+          borderRadius: SBorderRadius.normal() as BorderRadius,
           child: _child(_brightness),
         ),
       ),
@@ -124,10 +124,10 @@ class PhotoSelect extends StatelessWidget {
 /// 图片显示
 class WrapperImage extends StatelessWidget {
   WrapperImage({
-    Key key,
-    @required this.width,
-    @required this.height,
-    @required this.url,
+    Key? key,
+    required this.width,
+    required this.height,
+    required this.url,
     this.fit: BoxFit.contain,
     this.hold = false,
     this.circle = false,
@@ -140,10 +140,10 @@ class WrapperImage extends StatelessWidget {
 
   /// 图片的大小
   WrapperImage.max({
-    Key key,
+    Key? key,
     this.width,
     this.height,
-    @required this.url,
+    required this.url,
     this.fit: BoxFit.fill,
     this.hold = false,
     this.circle = false,
@@ -155,9 +155,9 @@ class WrapperImage extends StatelessWidget {
   }) : super(key: key);
 
   WrapperImage.size({
-    Key key,
-    @required this.url,
-    @required num size,
+    Key? key,
+    required this.url,
+    required num size,
     this.fit: BoxFit.contain,
     this.hold = false,
     this.circle = false,
@@ -166,18 +166,18 @@ class WrapperImage extends StatelessWidget {
     this.browseList,
     this.photo,
     this.delete,
-  })  : this.width = size,
-        this.height = size,
+  })  : this.width = size.toDouble(),
+        this.height = size.toDouble(),
         super(key: key);
 
   final String url;
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
   final BoxFit fit;
   final bool hold;
 
   /// 图片浏览
-  final List<String> browseList;
+  final List<String>? browseList;
 
   /// 圆
   final bool circle;
@@ -185,8 +185,8 @@ class WrapperImage extends StatelessWidget {
   /// 圆角
   final bool fillet;
   final num radius;
-  final ValueNotifier<File> photo;
-  final void Function() delete;
+  final ValueNotifier<File>? photo;
+  final void Function()? delete;
 
   @override
   Widget build(BuildContext context) {
@@ -209,24 +209,21 @@ class WrapperImage extends StatelessWidget {
       var _radius = fillet ? 20 : radius;
 
       widget = ClipRRect(
-        borderRadius: circle
+        borderRadius: (circle
             ? SBorderRadius.circle()
-            : SBorderRadius.normal(radius: _radius),
+            : SBorderRadius.normal(radius: _radius)) as BorderRadius,
         child: widget,
       );
     }
 
-    if (browseList.en)
+    if (browseList!.en)
       widget = TouchWidget(
         onTap: (ctx) {
           showDialogCustom(
             context: ctx,
-            builder: (BuildContext context) => DialogView(
+            builder: (context) => DialogView(
               child: ImageBrowse(
-                images: browseList,
-                photo: photo,
-                delete: delete,
-              ),
+                  images: browseList!, photo: photo, delete: delete),
             ),
           );
         },
@@ -239,15 +236,15 @@ class WrapperImage extends StatelessWidget {
 /// 图片浏览
 class ImageBrowse extends StatelessWidget {
   const ImageBrowse({
-    Key key,
-    this.images,
+    Key? key,
+    required this.images,
     this.photo,
     this.delete,
   }) : super(key: key);
 
   final List<String> images;
-  final ValueNotifier<File> photo;
-  final void Function() delete;
+  final ValueNotifier<File>? photo;
+  final void Function()? delete;
 
   /// 操作
   List<Widget> _operating() {
@@ -262,9 +259,9 @@ class ImageBrowse extends StatelessWidget {
             margin: Spacing.rootLR(),
             size: 120,
             paddingChild: 32,
-            onTap: (ctx) => dialogImageModify(ctx, photo, next: () {
+            onTap: (ctx) => dialogImageModify(ctx, photo!, next: () {
               FastRouter.popBackDialog(ctx);
-              delete();
+              if (delete != null) delete!();
             }),
           ),
         )
@@ -275,7 +272,7 @@ class ImageBrowse extends StatelessWidget {
         TouchWidget(
           onTap: (ctx) => FastRouter.popBackDialog(ctx),
           child: ClipRRect(
-            borderRadius: SBorderRadius.circle(),
+            borderRadius: SBorderRadius.circle() as BorderRadius,
             child: Container(
               color: Color(0x22000000),
               padding: Spacing.all(size: 10),
@@ -296,12 +293,12 @@ class ImageBrowse extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            height: 1028.s,
+            height: 1028.ww,
             child: Swiper(
               itemCount: images.length,
               loop: false,
-              containerWidth: 1028.s,
-              containerHeight: 1028.s,
+              containerWidth: 1028.ww,
+              containerHeight: 1028.ww,
               pagination: SwiperPagination(),
               itemBuilder: (_, index) => WrapperImage.max(url: images[index]),
             ),
@@ -312,8 +309,8 @@ class ImageBrowse extends StatelessWidget {
     );
   }
 
-  static void dialogImageModify(BuildContext ctx, ValueNotifier<File> photo,
-      {void Function() next}) {
+  static void dialogImageModify(BuildContext ctx, ValueNotifier<File?> photo,
+      {void Function()? next}) {
     showDialogCustom(
       context: ctx,
       location: Location.bottom,

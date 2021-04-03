@@ -95,8 +95,8 @@ class DialogListSelect extends StatelessWidget {
 
 class DialogView extends Dialog {
   const DialogView({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.isShowTitle = false,
     this.isConfirm = false,
     this.isLoad = false,
@@ -115,7 +115,7 @@ class DialogView extends Dialog {
 
   /// 显示确定与取消
   const DialogView.confirm({
-    Key key,
+    Key? key,
     this.child,
     this.isShowTitle = true,
     this.isConfirm = true,
@@ -124,8 +124,8 @@ class DialogView extends Dialog {
     this.title = "温馨提示",
     this.okHint = "确定",
     this.noHint = "取消",
-    @required this.content,
-    @required this.onOk,
+    required this.content,
+    required this.onOk,
     this.onNo,
     this.expanded = false,
     this.backgroundColor,
@@ -135,7 +135,7 @@ class DialogView extends Dialog {
 
   /// 显示标题 内容
   const DialogView.hint({
-    Key key,
+    Key? key,
     this.child,
     this.isShowTitle = true,
     this.isConfirm = false,
@@ -144,7 +144,7 @@ class DialogView extends Dialog {
     this.title = "温馨提示",
     this.okHint = "确定",
     this.noHint = "取消",
-    @required this.content,
+    required this.content,
     this.onOk,
     this.onNo,
     this.expanded = false,
@@ -155,7 +155,7 @@ class DialogView extends Dialog {
 
   ///
   const DialogView.load({
-    Key key,
+    Key? key,
     this.child = const CircularProgressIndicator(),
     this.isShowTitle = false,
     this.isConfirm = false,
@@ -178,15 +178,15 @@ class DialogView extends Dialog {
   final bool isLoad;
   final bool fullScreen;
   final bool expanded;
-  final Color backgroundColor;
-  final Widget child;
-  final String title;
-  final String content;
-  final String okHint;
-  final String noHint;
+  final Color? backgroundColor;
+  final Widget? child;
+  final String? title;
+  final String? content;
+  final String? okHint;
+  final String? noHint;
 
-  final TouchTap onOk;
-  final TouchTap onNo;
+  final TouchTap? onOk;
+  final TouchTap? onNo;
 
   /// The duration of the animation to show when the system keyboard intrudes
   /// into the space that the dialog is placed in.
@@ -202,13 +202,13 @@ class DialogView extends Dialog {
 
   Widget _confirm(BuildContext context) {
     return Container(
-      height: 140.s,
+      height: 140.ww,
       child: Row(children: <Widget>[
         Expanded(
           child: TouchWidget(
             onTap: (_) {
               FastRouter.popBack();
-              if (onOk != null) onOk(context);
+              if (onOk != null) onOk!(context);
             },
             child: Container(
               alignment: Alignment.center,
@@ -221,7 +221,7 @@ class DialogView extends Dialog {
           child: TouchWidget(
             onTap: (_) {
               FastRouter.popBack();
-              if (onNo != null) onNo(context);
+              if (onNo != null) onNo!(context);
             },
             child: Container(
               alignment: Alignment.center,
@@ -235,7 +235,7 @@ class DialogView extends Dialog {
 
   Widget _title() {
     return Container(
-      height: 96.s,
+      height: 96.ww,
       alignment: Alignment.center,
       child: Text(title ?? "", style: StyleText.normal(size: 60)),
     );
@@ -263,9 +263,7 @@ class DialogView extends Dialog {
   @override
   Widget build(BuildContext context) {
 //    LogUtil.printLog(onOk);
-    if (fullScreen) {
-      return child;
-    }
+    if (fullScreen) return child!;
 
     final DialogTheme dialogTheme = DialogTheme.of(context);
 
@@ -506,7 +504,7 @@ Future<T?> showDialogCustom<T>({
             }
           }
 
-          RenderBox renderBox = _targetContext.findRenderObject();
+          RenderBox renderBox = _targetContext.findRenderObject() as RenderBox;
           Offset _offset = renderBox.localToGlobal(Offset.zero);
           double left = 0;
           double top = 0;

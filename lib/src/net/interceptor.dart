@@ -53,7 +53,7 @@ class ApiInterceptor extends InterceptorsWrapper {
     if (dialog) {
 //      LogUtil.printLog("closeDialog");
       bool allClear =
-          BoolUtil.parse(response.requestOptions?.extra[keyDialogAllClear]);
+          BoolUtil.parse(response.requestOptions.extra[keyDialogAllClear]);
       DialogSimple.close(response.requestOptions.uri.toString(),
           clear: allClear);
     }
@@ -107,18 +107,18 @@ class ApiInterceptor extends InterceptorsWrapper {
         response.statusCode = respData.code;
         LogUtil.printLog('---api-response--->error---->$respData');
         if (BoolUtil.parse(response.requestOptions.extra[keyShowError]) &&
-            respData.error.en) {
+            respData.error!.en) {
           showToast(respData.error);
         }
 
         ///需要登录
-        if (respData.login.en && respData.login == "0") {
+        if (respData.login!.en && respData.login == "0") {
           throw const UnAuthorizedException();
         }
       }
 
       if (BoolUtil.parse(response.requestOptions.extra[keyShowHint]) &&
-          respData.hint.en) {
+          respData.hint!.en) {
         showToast(respData.error);
       }
       return handler.resolve(response);
@@ -135,38 +135,38 @@ class ApiInterceptor extends InterceptorsWrapper {
 }
 
 typedef ProcessingExtend = Map<String, dynamic> Function(
-    Map<String, dynamic> json);
+    Map<String, dynamic>? json);
 
 void initFastDevelopOfRespData(ProcessingExtend? processingExtend) {
   if (processingExtend != null) _RespData.processingExtend = processingExtend;
 }
 
 class _RespData {
-  _RespData({this.data, this.code});
+  _RespData({this.data});
 
-  Map<String, dynamic> json;
-  dynamic data;
+  Map<String, dynamic>? json;
+  dynamic? data;
   int code = 0;
-  String login;
+  String? login;
   bool isMore = false;
   int totalPageNum = 1;
-  String error;
-  String hint;
+  String? error;
+  String? hint;
 
   /// 处理扩展参数
-  static ProcessingExtend processingExtend;
+  static ProcessingExtend? processingExtend;
 
   /// 下一步路由路径
-  String next;
+  String? next;
 
-  /// 默认未空
-  String back;
+  /// 默认为空
+  String? back;
 
   bool get result => 200 == code;
 
   Map<String, dynamic> getExtend() {
     var data = Map<String, dynamic>();
-    if (processingExtend != null) data = processingExtend(json);
+    if (processingExtend != null) data = processingExtend!(json);
     return data;
   }
 

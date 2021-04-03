@@ -249,7 +249,7 @@ class IntUtil {
     return imgPadding == null;
   }
 
-  static bool isNotEmpty(int imgPadding) {
+  static bool isNotEmpty(int? imgPadding) {
     return imgPadding != null;
   }
 }

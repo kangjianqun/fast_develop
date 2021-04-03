@@ -23,26 +23,26 @@ dependencies:
   #  https://pub.flutter-io.cn/packages/image_picker
   image_picker: ^0.7.3
   # 图片缓存 https://pub.flutter-io.cn/packages/cached_network_image
-  cached_network_image: ^2.5.0
+  cached_network_image: ^3.0.0
   # https://pub.flutter-io.cn/packages/cropƒ
   crop: ^0.5.0
 
   # https://pub.flutter-io.cn/packages/url_launcher
-  url_launcher: ^5.5.0
+  url_launcher: ^6.0.3
 
   # 本地json对象存储 https://pub.flutter-io.cn/packages/localstorage
-  localstorage: ^3.0.6+9
+  localstorage: ^4.0.0+1
   #  https://pub.flutter-io.cn/packages/flutter_screenutil
   flutter_screenutil: ^5.0.0-nullsafety.11
 
   #  https://pub.flutter-io.cn/packages/flutter_easyrefresh
-  flutter_easyrefresh: ^2.1.8
+  flutter_easyrefresh: ^2.2.0
   # https://pub.flutter-io.cn/packages/universal_io
   universal_io: ^2.0.3
   # https://pub.flutter-io.cn/packages/device_info
-  device_info: ^0.4.2+4
+  device_info: ^2.0.0
   # https://pub.flutter-io.cn/packages/package_info
-  package_info: ^0.4.1
+  package_info: ^2.0.0
   # https://pub.flutter-io.cn/packages/dio
   dio: ^4.0.0-prev3
   dio_cookie_manager: ^2.0.0-prev1

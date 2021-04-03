@@ -4,26 +4,28 @@ import '../fast_develop.dart';
 
 class DecoUtil {
   static BoxDecoration img({
-    num radius,
+    num? radius,
     bool isCircle = false,
     bool isAsset = true,
-    @required String url,
+    required String url,
   }) {
     return normal(
       color: null,
       isCircle: isCircle,
       radius: radius,
-      image: isAsset ? AssetImage(url) : NetworkImage(url),
+      // image: isAsset ? AssetImage(url) : NetworkImage(url),
+      image: valueByType(
+          isAsset ? AssetImage(url) : NetworkImage(url), ImageProvider),
     );
   }
 
   static BoxDecoration normal({
-    Color color,
-    num radius,
+    Color? color,
+    num? radius,
     bool isCircle = false,
-    ImageProvider image,
-    Border border,
-    Gradient gradient,
+    ImageProvider? image,
+    Border? border,
+    Gradient? gradient,
   }) {
     return BoxDecoration(
       color: gradient != null ? null : (color ?? CConfig.cBackgroundColor),
@@ -58,23 +60,25 @@ class DecoUtil {
     );
   }
 
-  static BoxDecoration grey({Color color, num radius, bool isCircle = false}) {
+  static BoxDecoration grey(
+      {Color? color, num? radius, bool isCircle = false}) {
     return normal(
         color: color ?? CConfig.grey, radius: radius, isCircle: isCircle);
   }
 
-  static BoxDecoration white({Color color, num radius, bool isCircle = false}) {
+  static BoxDecoration white(
+      {Color? color, num? radius, bool isCircle = false}) {
     return normal(
         color: color ?? CConfig.white, radius: radius, isCircle: isCircle);
   }
 
-  static BoxDecoration red({Color color, num radius, bool isCircle = false}) {
+  static BoxDecoration red({Color? color, num? radius, bool isCircle = false}) {
     return normal(
         color: color ?? CConfig.redBright, radius: radius, isCircle: isCircle);
   }
 
   static BoxDecoration primary(
-      {Color color, num radius, bool isCircle = false}) {
+      {Color? color, num? radius, bool isCircle = false}) {
     return normal(
         color: color ?? CConfig.primaryColor,
         radius: radius,
@@ -82,7 +86,7 @@ class DecoUtil {
   }
 
   static BoxDecoration radius(
-      {Color color, BorderRadiusGeometry radius, bool isCircle = false}) {
+      {Color? color, BorderRadiusGeometry? radius, bool isCircle = false}) {
     return BoxDecoration(
         color: color ?? CConfig.cBackgroundColor, borderRadius: radius);
   }
@@ -116,7 +120,7 @@ class DecoUtil {
 
   /// 0 - 3 [topLeft]-[rightTop]-[rightBottom]-[leftBottom] 单
   static BoxDecoration only(int leftOrTopOrRightOrBottom,
-      {Color color = Colors.white, num radius, BoxBorder border}) {
+      {Color color = Colors.white, num? radius, BoxBorder? border}) {
     var _radius = radius ?? SConfig.radius;
     var topLeft = Radius.zero;
     var topRight = Radius.zero;
@@ -124,16 +128,16 @@ class DecoUtil {
     var bottomLeft = Radius.zero;
     switch (leftOrTopOrRightOrBottom) {
       case 0:
-        topLeft = Radius.circular(_radius.s);
+        topLeft = Radius.circular(_radius.ww!);
         break;
       case 1:
-        topRight = Radius.circular(_radius.s);
+        topRight = Radius.circular(_radius.ww!);
         break;
       case 2:
-        bottomRight = Radius.circular(_radius.s);
+        bottomRight = Radius.circular(_radius.ww!);
         break;
       case 3:
-        bottomLeft = Radius.circular(_radius.s);
+        bottomLeft = Radius.circular(_radius.ww!);
         break;
     }
 
@@ -150,11 +154,11 @@ class DecoUtil {
   }
 
   static BoxDecoration border(
-      {Color color, Color borderColor, num radius, bool isCircle = false}) {
+      {Color? color, Color? borderColor, num? radius, bool isCircle = false}) {
     return normal(
       color: color ?? CConfig.cBackgroundColor,
       border: Border.all(
-        color: CConfig.getMatching(color: borderColor ?? CConfig.black),
+        color: CConfig.getMatching(color: borderColor ?? CConfig.black)!,
       ),
       radius: radius,
       isCircle: isCircle,
@@ -163,8 +167,8 @@ class DecoUtil {
 
   static BoxDecoration borderUnilateral(
     int leftOrTopOrRightOrBottom, {
-    Color color,
-    Color borderColor,
+    Color? color,
+    Color? borderColor,
     bool isCircle = false,
     BorderStyle style = BorderStyle.solid,
     bool reverse = false,

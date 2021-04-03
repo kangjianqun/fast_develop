@@ -47,7 +47,7 @@ class _TouchWidgetState extends State<TouchWidget>
   late AnimationController? _animationController;
   late Animation<double> _opacityAnimation;
   late DateTime? _lastPressed;
-  late Duration _touchSp;
+  late Duration? _touchSp;
   var _pressedOpacity;
 
   @override
@@ -138,7 +138,7 @@ class _TouchWidgetState extends State<TouchWidget>
           } else {
             _touchSp ??= Duration(seconds: widget.touchSpaced);
             if (_lastPressed == null ||
-                DateTime.now().difference(_lastPressed!) > _touchSp) {
+                DateTime.now().difference(_lastPressed!) > _touchSp!) {
               _lastPressed = DateTime.now();
               widget.onTap!(context);
             }

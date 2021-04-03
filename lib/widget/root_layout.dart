@@ -212,7 +212,7 @@ class MyScaffold extends StatelessWidget {
 
     if (isMaterial) {
       bodyView = Scaffold(
-        appBar: top,
+        appBar: top as PreferredSizeWidget,
         body: bodyView,
         resizeToAvoidBottomInset: isBottom,
         drawer: drawerIsLeft && stateWidget == null ? _drawer : null,

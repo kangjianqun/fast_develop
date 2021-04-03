@@ -7,18 +7,16 @@ import '../fast_develop.dart';
 class PSDisplay extends StatelessWidget {
   const PSDisplay({
     Key? key,
-    required this.primary,
-    required this.secondary,
-  }) : super(key: key);
-  final Child primary;
-  final Child secondary;
+    this.primary,
+    this.secondary,
+  })  : assert(primary == null && secondary == null),
+        super(key: key);
+  final Child? primary;
+  final Child? secondary;
 
   @override
   Widget build(BuildContext context) {
-    if (primary == null)
-      return secondary();
-    else
-      return primary() ?? secondary();
+    return primary == null ? secondary!() : primary!();
   }
 }
 
@@ -85,7 +83,7 @@ class IconText extends StatelessWidget {
 
   const IconText.simple({
     Key? key,
-   required this.data,
+    required this.data,
     required this.iData,
     required this.color,
     required this.size,
@@ -127,30 +125,30 @@ class IconText extends StatelessWidget {
   final double? size;
   final double? textSize;
   final num? spacing;
-  final double iconBottom;
+  final double? iconBottom;
   final bool isV;
   final bool iconIsLeftOrTop;
   final bool adaptChildrenSize;
   final bool isExpanded;
   final CrossAxisAlignment? crossAxisAlignment;
 
-  Widget _text() {
-    var textView = text;
-    if (text == null && data.en) {
-      textView = Text(data,
+  Widget? _text() {
+    var view = text;
+    if (text == null && data!.en) {
+      view = Text(data!,
           style: StyleText.normal(size: textSize ?? size, color: color));
     }
-    return isExpanded ? Expanded(child: textView) : textView;
+    return isExpanded && view != null ? Expanded(child: view) : view;
   }
 
-  Widget _icon(num iconBottom) {
+  Widget? _icon(num iconBottom) {
     var _icon = Spacing.vView();
     if (icon != null || iData != null) {
       _icon = Container(
         padding: this.isV
             ? null
             : Spacing.topOrBottom(size: iconBottom, isTop: false),
-        child: icon ?? Icon(iData, size: (size - 2).ssp, color: color),
+        child: icon ?? Icon(iData, size: ((size ?? 2) - 2).ssp, color: color),
       );
     }
     return _icon;
@@ -158,8 +156,8 @@ class IconText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int w = 0;
-    int h = 0;
+    num w = 0;
+    num h = 0;
 //    ThemeData themeData = Theme.of(context);
     var _iconBottom =
         iconBottom ?? FastDevelopConfig.instance.iconTextOfIconBottom;
@@ -173,13 +171,13 @@ class IconText extends StatelessWidget {
     var icon = _icon(_iconBottom);
     var text = _text();
     if (this.iconIsLeftOrTop) {
-      childView.add(icon);
+      if (icon != null) childView.add(icon);
       if (text != null) {
         childView.add(Spacing.spacingView(width: w, height: h));
         childView.add(text);
       }
     } else {
-      childView.add(text);
+      if (text != null) childView.add(text);
       if (icon != null) {
         childView.add(Spacing.spacingView(width: w, height: h));
         childView.add(icon);
@@ -255,7 +253,7 @@ class Button extends StatelessWidget {
   final double radius;
   final int? touchSpaced;
   final String? text;
-  final TouchTap onTap;
+  final TouchTap? onTap;
   final EdgeInsets? paddingInside;
   final Decoration? decoration;
   final Widget? child;
@@ -270,7 +268,7 @@ class Button extends StatelessWidget {
   final double? size;
   final double? sizeH;
   final PrimarySecondary<Color>? color;
-  final TextStyle style;
+  final TextStyle? style;
   final double pressedOpacity;
 
   @override
@@ -281,12 +279,13 @@ class Button extends StatelessWidget {
     PrimarySecondary _color = color ??
         PrimarySecondary(themeData.iconTheme.color, CConfig.transparent);
 
-    Border border = borderColor == null ? null : Border.all(color: borderColor);
+    Border? border =
+        borderColor == null ? null : Border.all(color: borderColor!);
 
     if (icon != null) {
       view = Container(
-        height: size.s,
-        width: size.s,
+        height: size!.rr,
+        width: size!.rr,
         margin: margin,
         decoration: DecoUtil.normal(
           color: _color.secondary,
@@ -297,13 +296,13 @@ class Button extends StatelessWidget {
         child: Icon(
           icon,
           color: _color.primary,
-          size: (size - paddingChild).ssp,
+          size: (size! - paddingChild!).ssp,
         ),
       );
     } else {
       view = Container(
-        width: size == null ? null : size.s,
-        height: sizeH == null ? null : sizeH.s,
+        width: size == null ? null : size!.rr,
+        height: sizeH == null ? null : sizeH!.rr,
         margin: margin,
         padding: paddingInside ?? Spacing.all(leftR: 48, topB: 16),
         decoration: decoration ??
@@ -317,7 +316,7 @@ class Button extends StatelessWidget {
             Center(
               widthFactor: 1,
               heightFactor: 1,
-              child: Text(text,
+              child: Text(text!,
                   style: style ??
                       StyleText.normal(color: _color.primary, size: textSize)),
             ),
@@ -342,8 +341,8 @@ class Button extends StatelessWidget {
 /// 扩展[Card]
 class CardEx extends StatelessWidget {
   const CardEx({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.margin,
     this.padding,
     this.shadow = false,
@@ -364,7 +363,7 @@ class CardEx extends StatelessWidget {
     this.paddingSize,
     this.marginSize,
     this.shadowColor,
-    this.isChild,
+    required this.isChild,
     this.elevation,
     this.clipBehavior,
     this.semanticContainer = true,
@@ -372,39 +371,39 @@ class CardEx extends StatelessWidget {
     this.shape,
   }) : super(key: key);
 
-  final EdgeInsets margin;
-  final EdgeInsets padding;
+  final EdgeInsets? margin;
+  final EdgeInsets? padding;
   final Widget child;
-  final Widget center;
-  final Widget right;
-  final Widget left;
-  final num width;
-  final num height;
-  final num paddingSize;
-  final num marginSize;
+  final Widget? center;
+  final Widget? right;
+  final Widget? left;
+  final num? width;
+  final num? height;
+  final num? paddingSize;
+  final num? marginSize;
 
   /// 阴影 默认false
   final bool shadow;
   final bool isChild;
   final bool borderOnForeground;
-  final Clip clipBehavior;
+  final Clip? clipBehavior;
   final bool semanticContainer;
-  final ShapeBorder shape;
-  final String title;
+  final ShapeBorder? shape;
+  final String? title;
   final String subTitle;
-  final num space;
-  final num elevation;
-  final Color backgroundColor;
-  final Color shadowColor;
-  final Brightness brightness;
-  final Color textColor;
-  final Color titleColor;
-  final Color subTitleColor;
-  final Gradient gradient;
+  final num? space;
+  final num? elevation;
+  final Color? backgroundColor;
+  final Color? shadowColor;
+  final Brightness? brightness;
+  final Color? textColor;
+  final Color? titleColor;
+  final Color? subTitleColor;
+  final Gradient? gradient;
 
-  Widget _child(Color titleColor, Color subTitleColor) {
+  Widget _child(Color? titleColor, Color? subTitleColor) {
     var view;
-    if (title.en || subTitle.en || center != null) {
+    if (title!.en || subTitle.en || center != null) {
       Widget _center = TextRich(color: textColor, children: [
         RichTextItem(
           title ?? "",
@@ -414,11 +413,11 @@ class CardEx extends StatelessWidget {
             brightness: brightness,
           ),
         ),
-        RichTextItem(title.e ? "" : "  " + subTitle ?? "",
+        RichTextItem(title!.e ? "" : "  " + subTitle,
             StyleText.grey(size: 25, color: subTitleColor))
       ]);
 
-      if (center != null) _center = Row(children: <Widget>[_center, center]);
+      if (center != null) _center = Row(children: <Widget>[_center, center!]);
 
       Widget _space = Spacing.spacingView(height: space ?? SConfig.listSpace);
       view = Column(
@@ -426,11 +425,11 @@ class CardEx extends StatelessWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              Spacing.vView(isShow: left != null, child: () => left),
+              Spacing.vView(isShow: left != null, child: () => left!),
               Spacing.vView(isShow: left != null, child: () => _space),
               Expanded(child: _center),
               Spacing.vView(isShow: right != null, child: () => _space),
-              Spacing.vView(isShow: right != null, child: () => right),
+              Spacing.vView(isShow: right != null, child: () => right!),
             ],
           ),
           _space,
@@ -455,10 +454,10 @@ class CardEx extends StatelessWidget {
     var _margin = margin ?? Spacing.all(size: _marginSize);
     Brightness _brightness = brightness ?? themeData.brightness;
 
-    Color color =
+    Color? color =
         backgroundColor ?? CConfig.getBackground(brightness: _brightness);
-    Color _titleColor = textColor ?? titleColor;
-    Color _subTitleColor = textColor ?? subTitleColor;
+    Color? _titleColor = textColor ?? titleColor;
+    Color? _subTitleColor = textColor ?? subTitleColor;
 
     var _view = isChild ? child : _child(_titleColor, _subTitleColor);
     if (shadow) {
@@ -467,7 +466,7 @@ class CardEx extends StatelessWidget {
         margin: _margin,
         color: color,
         shadowColor: shadowColor,
-        elevation: elevation,
+        elevation: elevation?.toDouble(),
         shape: shape,
         borderOnForeground: borderOnForeground,
         clipBehavior: clipBehavior,
@@ -476,8 +475,8 @@ class CardEx extends StatelessWidget {
       );
     } else {
       return Container(
-        width: width,
-        height: height,
+        width: width?.toDouble(),
+        height: height?.toDouble(),
         decoration: DecoUtil.normal(color: color, gradient: gradient),
         margin: _margin,
         child: Padding(padding: _padding, child: _view),
@@ -489,7 +488,7 @@ class CardEx extends StatelessWidget {
 /// 扩展模式， 加入自动配置背景色
 class ContainerEx extends StatelessWidget {
   const ContainerEx({
-    Key key,
+    Key? key,
     this.color,
     this.child,
     this.alignment,
@@ -507,7 +506,7 @@ class ContainerEx extends StatelessWidget {
   }) : super(key: key);
 
   const ContainerEx.square({
-    Key key,
+    Key? key,
     this.color,
     this.child,
     this.alignment,
@@ -524,8 +523,8 @@ class ContainerEx extends StatelessWidget {
   })  : this.isSquare = true,
         super(key: key);
 
-  final double height;
-  final double width;
+  final double? height;
+  final double? width;
 
   /// The [child] contained by the container.
   ///
@@ -535,7 +534,7 @@ class ContainerEx extends StatelessWidget {
   /// will attempt to be as small as possible.
   ///
   /// {@macro flutter.widgets.child}
-  final Widget child;
+  final Widget? child;
 
   /// Align the [child] within the container.
   ///
@@ -551,14 +550,14 @@ class ContainerEx extends StatelessWidget {
   ///    specify an [AlignmentGeometry].
   ///  * [AlignmentDirectional], like [Alignment] for specifying alignments
   ///    relative to text direction.
-  final AlignmentGeometry alignment;
+  final AlignmentGeometry? alignment;
 
   /// Empty space to inscribe inside the [decoration]. The [child], if any, is
   /// placed inside this padding.
   ///
   /// This padding is in addition to any padding inherent in the [decoration];
   /// see [Decoration.padding].
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
 
   /// The color to paint behind the [child].
   ///
@@ -569,7 +568,7 @@ class ContainerEx extends StatelessWidget {
   /// If the [decoration] is used, this property must be null. A background
   /// color may still be painted by the [decoration] even if this property is
   /// null.
-  final Color color;
+  final Color? color;
 
   /// The decoration to paint behind the [child].
   ///
@@ -577,10 +576,10 @@ class ContainerEx extends StatelessWidget {
   ///
   /// The [child] is not clipped to the decoration. To clip a child to the shape
   /// of a particular [ShapeDecoration], consider using a [ClipPath] widget.
-  final Decoration decoration;
+  final Decoration? decoration;
 
   /// The decoration to paint in front of the [child].
-  final Decoration foregroundDecoration;
+  final Decoration? foregroundDecoration;
 
   /// Additional constraints to apply to the child.
   ///
@@ -588,19 +587,19 @@ class ContainerEx extends StatelessWidget {
   /// `constraints` argument to set this property.
   ///
   /// The [padding] goes inside the constraints.
-  final BoxConstraints constraints;
+  final BoxConstraints? constraints;
 
   /// Empty space to surround the [decoration] and [child].
-  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry? margin;
 
   /// The transformation matrix to apply before painting the container.
-  final Matrix4 transform;
+  final Matrix4? transform;
 
   /// The clip behavior when [Container.decoration] has a clipPath.
   ///
   /// Defaults to [Clip.none].
   final Clip clipBehavior;
-  final Brightness brightness;
+  final Brightness? brightness;
 
   /// 宽高适配一致 适合方形
   final bool isSquare;
@@ -608,14 +607,14 @@ class ContainerEx extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Brightness _brightness = brightness ?? Theme.of(context).brightness;
-    Color _color = decoration != null
+    Color? _color = decoration != null
         ? null
         : (color ?? CConfig.getBackground(brightness: _brightness));
 
     return Container(
       color: _color,
-      width: width.s,
-      height: isSquare ? height.s : height.sh,
+      width: width?.ww,
+      height: isSquare ? height?.ww : height?.hh,
       child: child,
       padding: padding,
       decoration: decoration,
@@ -632,31 +631,31 @@ class ContainerEx extends StatelessWidget {
 /// 描述 左边标题  右边内容
 class Describe extends StatelessWidget {
   const Describe({
-    Key key,
-    @required this.title,
-    @required this.data,
-  })  : child = null,
+    Key? key,
+    required this.title,
+    required this.data,
+  })   : child = null,
         super(key: key);
 
   /// 自定义
   const Describe.custom({
-    Key key,
-    @required this.title,
-    @required this.child,
-  })  : data = null,
+    Key? key,
+    required this.title,
+    required this.child,
+  })   : data = null,
         super(key: key);
 
   final String title;
-  final String data;
-  final Widget child;
+  final String? data;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
     Widget _child = Spacing.vView();
 
-    if (data.en) _child = Text(data);
+    if (data!.en) _child = Text(data!);
 
-    if (child != null) _child = child;
+    if (child != null) _child = child!;
 
     return DefaultTextStyle(
       style: StyleText.normal(),
@@ -668,7 +667,7 @@ class Describe extends StatelessWidget {
 /// list 间距
 class ListIntervalView extends StatelessWidget {
   const ListIntervalView({
-    Key key,
+    Key? key,
     this.direction = Axis.vertical,
     this.space = 16,
     this.separator,
@@ -679,8 +678,8 @@ class ListIntervalView extends StatelessWidget {
     this.fullLine = true,
     this.primary = true,
     this.shrinkWrap = true,
-    @required this.itemCount,
-    @required this.itemBuilder,
+    required this.itemCount,
+    required this.itemBuilder,
     this.mainPadding = 32,
     this.crossPadding = 32,
     this.cacheExtent,
@@ -690,7 +689,7 @@ class ListIntervalView extends StatelessWidget {
         super(key: key);
 
   const ListIntervalView.children({
-    Key key,
+    Key? key,
     this.direction = Axis.vertical,
     this.space = 16,
     this.separator,
@@ -701,18 +700,18 @@ class ListIntervalView extends StatelessWidget {
     this.fullLine = true,
     this.primary = true,
     this.shrinkWrap = true,
-    @required this.children,
+    required this.children,
     this.mainPadding = 32,
     this.crossPadding = 32,
     this.cacheExtent,
     this.controller,
     this.fullLineIgnoreOfIndex,
-  })  : this.itemCount = children.length,
+  })  : this.itemCount = children?.length,
         this.itemBuilder = null,
         super(key: key);
 
   const ListIntervalView.nested({
-    Key key,
+    Key? key,
     this.direction = Axis.vertical,
     this.space = 16,
     this.separator,
@@ -723,8 +722,8 @@ class ListIntervalView extends StatelessWidget {
     this.fullLine = true,
     this.primary = false,
     this.shrinkWrap = true,
-    @required this.itemCount,
-    @required this.itemBuilder,
+    required this.itemCount,
+    required this.itemBuilder,
     this.mainPadding = 0,
     this.crossPadding = 0,
     this.cacheExtent,
@@ -733,44 +732,44 @@ class ListIntervalView extends StatelessWidget {
   })  : this.children = null,
         super(key: key);
 
-  final List<Widget> children;
+  final List<Widget>? children;
   final Axis direction;
-  final Widget separator;
+  final Widget? separator;
   final num space;
   final num mainPadding;
   final num crossPadding;
 
   final bool shrinkWrap;
   final num height;
-  final num cacheExtent;
-  final EdgeInsets margin;
-  final int itemCount;
-  final IndexedWidgetBuilder itemBuilder;
+  final num? cacheExtent;
+  final EdgeInsets? margin;
+  final int? itemCount;
+  final IndexedWidgetBuilder? itemBuilder;
 
-  final ScrollPhysics physics;
-  final Color color;
+  final ScrollPhysics? physics;
+  final Color? color;
 
   /// 整行 item 填充宽度
   final bool fullLine;
 
   /// 忽略的index  适用于 item 带[Expanded]
-  final List<int> fullLineIgnoreOfIndex;
+  final List<int>? fullLineIgnoreOfIndex;
   final bool primary;
-  final ScrollController controller;
+  final ScrollController? controller;
 
   Widget _getSeparator() {
     return separator ?? Spacing.spacingView(width: space, height: space);
   }
 
   Widget _getItem(BuildContext ctx, int index) {
-    bool isChild = children.en;
+    bool isChild = children!.en;
     if (fullLine &&
         (fullLineIgnoreOfIndex == null ||
-            fullLineIgnoreOfIndex.indexOf(index) == -1))
-      return isChild ? children[index] : itemBuilder(ctx, index);
+            fullLineIgnoreOfIndex!.indexOf(index) == -1))
+      return isChild ? children![index] : itemBuilder!(ctx, index);
     else
       return Row(
-          children: [isChild ? children[index] : itemBuilder(ctx, index)]);
+          children: [isChild ? children![index] : itemBuilder!(ctx, index)]);
   }
 
   @override
@@ -789,15 +788,15 @@ class ListIntervalView extends StatelessWidget {
       ),
       physics: physics ?? NeverScrollableScrollPhysics(),
       scrollDirection: direction,
-      itemCount: itemCount,
+      itemCount: itemCount!,
       itemBuilder: _getItem,
       controller: controller,
       separatorBuilder: (_, __) => _separator,
-      cacheExtent: _cacheExtent,
+      cacheExtent: _cacheExtent?.toDouble(),
     );
 
     if (isH || color != null) {
-      var _height = isH ? height.s : null;
+      var _height = isH ? height.ww : null;
       view = Container(height: _height, color: color, child: view);
     }
     return view;
@@ -806,7 +805,7 @@ class ListIntervalView extends StatelessWidget {
 
 class GridIntervalView extends StatelessWidget {
   const GridIntervalView({
-    Key key,
+    Key? key,
     this.direction,
     this.separator,
     this.mainSpace = 16,
@@ -819,17 +818,17 @@ class GridIntervalView extends StatelessWidget {
     this.shrinkWrap = false,
     this.primary = false,
     this.physics = const BouncingScrollPhysics(),
-    @required this.itemBuilder,
+    required this.itemBuilder,
     this.ratio,
-    @required this.crossAxisCount,
-    @required this.itemCount,
+    required this.crossAxisCount,
+    required this.itemCount,
     this.cacheExtent,
   })  : children = null,
         super(key: key);
 
   /// 嵌套的 不能滑动
   const GridIntervalView.nested({
-    Key key,
+    Key? key,
     this.direction,
     this.separator,
     this.mainSpace = 16,
@@ -843,16 +842,16 @@ class GridIntervalView extends StatelessWidget {
     this.shrinkWrap = true,
     this.primary = false,
     this.physics = const NeverScrollableScrollPhysics(),
-    @required this.crossAxisCount,
-    @required this.itemCount,
-    @required this.itemBuilder,
+    required this.crossAxisCount,
+    required this.itemCount,
+    required this.itemBuilder,
     this.cacheExtent,
   })  : children = null,
         super(key: key);
 
   /// 嵌套的 不能滑动
   const GridIntervalView.nestedChildren({
-    Key key,
+    Key? key,
     this.direction,
     this.separator,
     this.mainSpace = 16,
@@ -866,34 +865,34 @@ class GridIntervalView extends StatelessWidget {
     this.shrinkWrap = true,
     this.primary = false,
     this.physics = const NeverScrollableScrollPhysics(),
-    @required this.crossAxisCount,
-    @required this.children,
-  })  : itemCount = children.length,
+    required this.crossAxisCount,
+    required this.children,
+  })   : itemCount = children?.length,
         itemBuilder = null,
         this.cacheExtent = null,
         super(key: key);
 
-  final IndexedWidgetBuilder itemBuilder;
-  final Axis direction;
-  final Widget separator;
+  final IndexedWidgetBuilder? itemBuilder;
+  final Axis? direction;
+  final Widget? separator;
   final num mainSpace;
   final num crossSpace;
-  final num height;
-  final double width;
+  final num? height;
+  final num? width;
 
   /// padding top  bottom
   final num mainPadding;
   final num crossPadding;
-  final num cacheExtent;
+  final num? cacheExtent;
 
-  final int itemCount;
+  final int? itemCount;
   final crossAxisCount;
-  final double ratio;
+  final num? ratio;
   final bool shrinkWrap;
   final bool primary;
-  final Color color;
+  final Color? color;
   final ScrollPhysics physics;
-  final List<Widget> children;
+  final List<Widget>? children;
 
   @override
   Widget build(BuildContext context) {
@@ -905,8 +904,8 @@ class GridIntervalView extends StatelessWidget {
     var _cacheExtent =
         cacheExtent ?? FastDevelopConfig.instance.gridIntervalViewOfCacheExtent;
     return Container(
-      height: isH || height != null ? height.s : null,
-      width: width != null ? width.s : null,
+      height: isH || height != null ? height!.ww : null,
+      width: width != null ? width!.ww : null,
       color: color,
       alignment: Alignment.topCenter,
       child: GridView.builder(
@@ -915,13 +914,13 @@ class GridIntervalView extends StatelessWidget {
         itemCount: itemCount,
         physics: physics,
         padding: _padding,
-        itemBuilder: itemBuilder ?? (_, index) => children[index],
-        cacheExtent: _cacheExtent,
+        itemBuilder: itemBuilder ?? (_, index) => children![index],
+        cacheExtent: _cacheExtent?.toDouble(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,
-          childAspectRatio: ratio ?? 1.0,
-          mainAxisSpacing: mainSpace.s,
-          crossAxisSpacing: crossSpace.s,
+          childAspectRatio: ratio?.toDouble() ?? 1.0,
+          mainAxisSpacing: mainSpace.ww!,
+          crossAxisSpacing: crossSpace.ww!,
         ),
       ),
     );
@@ -931,9 +930,9 @@ class GridIntervalView extends StatelessWidget {
 /// 单行 多用于单行item显示
 class SingleLine<T> extends StatelessWidget {
   const SingleLine({
-    Key key,
+    Key? key,
     this.padding,
-    @required this.iconData,
+    required this.iconData,
     this.iconUrl,
     this.onDropdownChanged,
     this.dropdownItems,
@@ -968,9 +967,9 @@ class SingleLine<T> extends StatelessWidget {
         super(key: key);
 
   const SingleLine.normal({
-    Key key,
+    Key? key,
     this.padding,
-    @required this.name,
+    required this.name,
     this.nameTxtStyle,
     this.nameWidget,
     this.leftView,
@@ -1005,9 +1004,9 @@ class SingleLine<T> extends StatelessWidget {
         super(key: key);
 
   const SingleLine.custom({
-    Key key,
+    Key? key,
     this.padding,
-    @required this.name,
+    required this.name,
     this.leftView,
     this.nameWidget,
     this.onDropdownChanged,
@@ -1016,7 +1015,7 @@ class SingleLine<T> extends StatelessWidget {
     this.nameTxtStyle,
     this.centerTxt,
     this.centerTxtStyle,
-    @required this.centerWidget,
+    required this.centerWidget,
     this.iconData,
     this.iconUrl,
     this.onTap,
@@ -1042,11 +1041,11 @@ class SingleLine<T> extends StatelessWidget {
         super(key: key);
 
   const SingleLine.dropdown({
-    Key key,
+    Key? key,
     this.padding,
-    @required this.name,
-    @required this.onDropdownChanged,
-    @required this.dropdownItems,
+    required this.name,
+    required this.onDropdownChanged,
+    required this.dropdownItems,
     this.dropdownValue,
     this.nameTxtStyle,
     this.centerTxt,
@@ -1078,45 +1077,45 @@ class SingleLine<T> extends StatelessWidget {
         this.rightWidget = null,
         super(key: key);
 
-  final String name;
-  final TextStyle nameTxtStyle;
-  final Widget nameWidget;
-  final Widget leftView;
-  final String iconUrl;
-  final IconData iconData;
-  final TouchTap onTap;
-  final Color backgroundColor;
-  final bool isPrimary;
+  final String? name;
+  final TextStyle? nameTxtStyle;
+  final Widget? nameWidget;
+  final Widget? leftView;
+  final String? iconUrl;
+  final IconData? iconData;
+  final TouchTap? onTap;
+  final Color? backgroundColor;
+  final bool? isPrimary;
   final bool rightShow;
-  final IconData rightIconData;
-  final num minHeight;
-  final num iconHeight;
-  final num leftRight;
-  final num radius;
-  final num topBottom;
-  final num nameLeftPadding;
-  final num nameRightPadding;
-  final String centerTxt;
-  final TextStyle centerTxtStyle;
-  final Widget centerWidget;
-  final Widget rightWidget;
-  final String rightTxt;
-  final TextStyle rightTxtStyle;
-  final String url;
-  final num urlSize;
-  final EdgeInsets padding;
-  final Decoration decoration;
-  final List<DropdownMenuItem<T>> dropdownItems;
-  final ValueChanged<T> onDropdownChanged;
-  final T dropdownValue;
+  final IconData? rightIconData;
+  final num? minHeight;
+  final num? iconHeight;
+  final num? leftRight;
+  final num? radius;
+  final num? topBottom;
+  final num? nameLeftPadding;
+  final num? nameRightPadding;
+  final String? centerTxt;
+  final TextStyle? centerTxtStyle;
+  final Widget? centerWidget;
+  final Widget? rightWidget;
+  final String? rightTxt;
+  final TextStyle? rightTxtStyle;
+  final String? url;
+  final num? urlSize;
+  final EdgeInsets? padding;
+  final Decoration? decoration;
+  final List<DropdownMenuItem<T>>? dropdownItems;
+  final ValueChanged<T>? onDropdownChanged;
+  final T? dropdownValue;
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final IconThemeData iconThemeData = IconTheme.of(context);
-    Color bg =
-        backgroundColor ?? theme.backgroundColor ?? CConfig.cBackgroundColor;
-    Color iconColor = iconThemeData.color;
+    Color? bg =
+        backgroundColor ?? CConfig.cBackgroundColor ?? theme.backgroundColor;
+    Color iconColor = iconThemeData.color!;
     var _minHeight =
         minHeight ?? FastDevelopConfig.instance.singleLineOfMinHeight;
     var _iconHeight =
@@ -1134,16 +1133,14 @@ class SingleLine<T> extends StatelessWidget {
     var _leftR = leftRight ?? FastDevelopConfig.instance.singleLineOfLeftRight;
     var _topB = leftRight ?? FastDevelopConfig.instance.singleLineOfTopBottom;
     var _urlSize = urlSize ?? FastDevelopConfig.instance.singleLineOfUrlSize;
-    var _radius = radius ??
-        FastDevelopConfig.instance.singleLineOfRadius ??
-        SConfig.radius;
+    var _radius = radius ?? FastDevelopConfig.instance.singleLineOfRadius;
     var _width = SConfig.pageWidth;
     var _decoration = decoration ?? DecoUtil.normal(color: bg, radius: _radius);
     return TouchWidget(
       onTap: onTap,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-            minHeight: _minHeight.sh, maxWidth: (_width - _leftR * 2).s),
+            minHeight: _minHeight.hh!, maxWidth: (_width! - _leftR * 2).ww!),
         child: Container(
           padding: padding ?? Spacing.all(leftR: _leftR, topB: _topB),
           decoration: _decoration,
@@ -1160,12 +1157,12 @@ class SingleLine<T> extends StatelessWidget {
   }
 
   Widget _icon(Color iconColor, num iconHeight, num nameLeftPadding) {
-    Widget view = leftView;
+    Widget? view = leftView;
 
     if (view == null) {
-      if (iconUrl.en) {
+      if (iconUrl!.en) {
         view = WrapperImage.size(
-            size: iconHeight.s, url: iconUrl, fit: BoxFit.contain);
+            size: iconHeight.ww!, url: iconUrl!, fit: BoxFit.contain);
       } else {
         view = Spacing.vView(
           isShow: iconData != null,
@@ -1182,7 +1179,7 @@ class SingleLine<T> extends StatelessWidget {
 
   Widget _name(num nameRightPadding) {
     var leftChild =
-        nameWidget ?? Text(name, style: nameTxtStyle ?? StyleText.normal());
+        nameWidget ?? Text(name!, style: nameTxtStyle ?? StyleText.normal());
     return Container(
       margin: Spacing.leftOrRight(size: nameRightPadding, isLeft: false),
       child: leftChild,
@@ -1191,13 +1188,14 @@ class SingleLine<T> extends StatelessWidget {
 
   Widget _center() {
     if (centerWidget != null) {
-      return Expanded(child: centerWidget);
-    } else if (centerTxt.e && ListUtil.isEmpty(dropdownItems)) {
+      return Expanded(child: centerWidget!);
+    } else if (centerTxt!.e && ListUtil.isEmpty(dropdownItems)) {
       return Expanded(child: Spacing.vView());
     } else {
       return Spacing.vView(
-        isShow: centerTxt.en,
-        child: () => Text(centerTxt, style: centerTxtStyle ?? StyleText.grey()),
+        isShow: centerTxt!.en,
+        child: () =>
+            Text(centerTxt!, style: centerTxtStyle ?? StyleText.grey()),
       );
     }
   }
@@ -1206,14 +1204,14 @@ class SingleLine<T> extends StatelessWidget {
     return Spacing.vView(
       isShow: ListUtil.isNotEmpty(dropdownItems),
       child: () {
-        ValueNotifier<T> cause = ValueNotifier(dropdownValue);
+        ValueNotifier<T> cause = ValueNotifier(dropdownValue!);
         return Expanded(
-          child: ValueListenableBuilder(
+          child: ValueListenableBuilder<T>(
             valueListenable: cause,
             builder: (_, value, __) {
               return Material(
                 color: bg,
-                child: DropdownButton(
+                child: DropdownButton<T>(
                   value: value,
                   isExpanded: true,
                   isDense: true,
@@ -1221,8 +1219,8 @@ class SingleLine<T> extends StatelessWidget {
                   items: dropdownItems,
                   underline: SizedBox(),
                   onChanged: (value) {
-                    cause.value = value;
-                    onDropdownChanged(value);
+                    cause.value = value!;
+                    onDropdownChanged!(value);
                   },
                 ),
               );
@@ -1236,20 +1234,20 @@ class SingleLine<T> extends StatelessWidget {
   List<Widget> _right(num urlSize, Color rightColor, IconData rightIconData) {
     return [
       Spacing.vView(
-        isShow: url.en,
+        isShow: url!.en,
         child: () => ClipRRect(
-          borderRadius: SBorderRadius.circle(),
-          child: WrapperImage.size(size: urlSize.s, url: url),
+          borderRadius: SBorderRadius.circle() as BorderRadius,
+          child: WrapperImage.size(size: urlSize.ww!, url: url!),
         ),
       ),
       Spacing.vView(
-        isShow: rightTxt.en,
-        child: () => Text(rightTxt, style: rightTxtStyle ?? StyleText.grey()),
+        isShow: rightTxt!.en,
+        child: () => Text(rightTxt!, style: rightTxtStyle ?? StyleText.grey()),
       ),
       Spacing.vView(
         isShow: rightShow,
         child: () => PSDisplay(
-            primary: () => rightWidget,
+            primary: () => rightWidget!,
             secondary: () => Icon(rightIconData, color: rightColor)),
       ),
     ];

@@ -22,7 +22,7 @@ class OssUtil {
   factory OssUtil() => _getInstance();
 
   static OssUtil get instance => _getInstance();
-  static OssUtil _instance;
+  static late OssUtil? _instance;
 
   OssUtil._internal();
 
@@ -30,7 +30,7 @@ class OssUtil {
     if (_instance == null) {
       _instance = OssUtil._internal();
     }
-    return _instance;
+    return _instance!;
   }
 
   /*
@@ -53,15 +53,15 @@ class OssUtil {
   /// 可以定义上传的路径uploadPath(Oss中保存文件夹的名称)
   /// @param uploadPath 上传的路径 如：/photo
   /// @return photo/20171027175940_oCiobK
-  String getImageUploadName(String uploadPath, String filePath) {
+  String getImageUploadName(String? uploadPath, String filePath) {
     String imageMame = "";
     var timestamp = DateTime.now().millisecondsSinceEpoch;
     imageMame = timestamp.toString() + "_" + getRandom(6);
     if (uploadPath != null && uploadPath.isNotEmpty) {
       imageMame = uploadPath + "/" + imageMame;
     }
-    String imageType =
-        filePath?.substring(filePath?.lastIndexOf("."), filePath?.length);
+    var imageType =
+        filePath.substring(filePath.lastIndexOf("."), filePath.length);
     return imageMame + imageType;
   }
 

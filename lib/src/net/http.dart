@@ -47,7 +47,7 @@ DioInit _dioInit = (Dio dio, String baseUrl) {
 };
 
 class Http extends DioForNative {
-  static Http instance;
+  static late Http? instance;
 
   factory Http(String baseUrl, {bool isInstance = true}) {
     if (!isInstance) {
@@ -57,13 +57,13 @@ class Http extends DioForNative {
     if (instance == null) {
       instance = Http._(_baseOptions).._init(baseUrl);
     }
-    return instance;
+    return instance!;
   }
 
-  Http._([BaseOptions options]) : super(options);
+  Http._([BaseOptions? options]) : super(options);
 
   /// 初始化 加入app通用处理
-  _init(String baseUrl, [BaseOptions options]) {
+  _init(String baseUrl, [BaseOptions? options]) {
     (transformer as DefaultTransformer).jsonDecodeCallback = _parseJson;
     _dioInit(this, baseUrl);
   }
@@ -78,15 +78,15 @@ Future<void> requestHttp(
   RequestType type,
   Http dio,
   String url, {
-  Map<String, dynamic> p,
+  Map<String, dynamic>? p,
   bool isShowDialog = false,
   bool dialogAllClear = false,
   bool isShowError = true,
   bool isShowHint = true,
   bool disposeJson = false,
-  Function notLogin,
-  @required RequestSucceed succeed,
-  RequestFailure failure,
+  Function? notLogin,
+  required RequestSucceed succeed,
+  RequestFailure? failure,
 }) async {
   Response response;
   dio.options.extra.update(keyShowDialog, (item) => isShowDialog,

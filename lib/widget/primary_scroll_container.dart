@@ -200,32 +200,19 @@ class ScrollControllerWrapper implements ScrollController {
   }
 }
 
-ScrollablePositionedList scrollOptimize(
-  ItemScrollController itemController,
-  List<Widget> children, {
-  ScrollableNotifier scrollableNotifier,
-}) {
-  return ScrollablePositionedList.builder(
-    itemCount: children.length,
-    itemScrollController: itemController,
-    scrollableNotifier: scrollableNotifier,
-    itemBuilder: (ctx, index) => children[index],
-  );
-}
-
 class ScrollSwitchWidget extends StatelessWidget {
   const ScrollSwitchWidget({
-    Key key,
+    Key? key,
     this.unfoldChild,
-    this.child,
-    this.scrollableNotifier,
-    this.maxOfExtent,
-    this.minOfExtent,
-  })  : this.heightRatio = 1 - (minOfExtent / maxOfExtent),
+    required this.child,
+    required this.scrollableNotifier,
+    required this.maxOfExtent,
+    required this.minOfExtent,
+  })   : this.heightRatio = 1 - (minOfExtent / maxOfExtent),
         super(key: key);
 
   final Widget child;
-  final Widget unfoldChild;
+  final Widget? unfoldChild;
   final ValueNotifier<double> scrollableNotifier;
   final double maxOfExtent;
   final double minOfExtent;
@@ -235,7 +222,7 @@ class ScrollSwitchWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Stack(children: <Widget>[
-        ValueListenableBuilder(
+        ValueListenableBuilder<double>(
           valueListenable: scrollableNotifier,
           builder: (_, shrinkOffset, ___) {
             var opacity = shrinkOffset / maxOfExtent;
@@ -255,7 +242,7 @@ class ScrollSwitchWidget extends StatelessWidget {
         ),
         Spacing.vView(
           isShow: unfoldChild != null,
-          child: () => ValueListenableBuilder(
+          child: () => ValueListenableBuilder<double>(
             valueListenable: scrollableNotifier,
             builder: (_, shrinkOffset, ___) {
               if (shrinkOffset < 0) {

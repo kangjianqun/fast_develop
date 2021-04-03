@@ -11,7 +11,7 @@ const bool inProduction = bool.fromEnvironment("dart.vm.product");
 class PlatformUtils {
   static String getPlatform() => Platform.operatingSystem;
 
-  static String version;
+  static late String? version;
 
   static bool isAndroid() => Platform.isAndroid;
 
@@ -21,13 +21,13 @@ class PlatformUtils {
     return Platform.operatingSystem == "web";
   }
 
-  static String _type;
+  static late String? _type;
 
   static String type() {
     if (StringUtil.isEmpty(_type)) {
       init();
     }
-    return _type;
+    return _type!;
   }
 
   static init() {
@@ -45,10 +45,10 @@ class PlatformUtils {
   }
 
   static Future<String> getAppVersion() async {
-    if (version.en) return version;
+    if (version!.en) return version!;
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     version = packageInfo.version;
-    return version;
+    return version!;
   }
 
   static Future getDeviceInfo() async {

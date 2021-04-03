@@ -2,7 +2,6 @@ import 'package:fast_develop/fast_develop.dart';
 import 'package:fast_develop/widget/title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
