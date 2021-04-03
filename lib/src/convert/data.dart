@@ -361,7 +361,7 @@ extension ListUtil on List {
     return list == null || list.isEmpty;
   }
 
-  static isNotEmpty(List? list) {
+  static bool isNotEmpty(List? list) {
     return list != null && list.isNotEmpty;
   }
 

@@ -762,7 +762,7 @@ class ListIntervalView extends StatelessWidget {
   }
 
   Widget _getItem(BuildContext ctx, int index) {
-    bool isChild = children!.en;
+    bool isChild = children != null && children!.en;
     if (fullLine &&
         (fullLineIgnoreOfIndex == null ||
             fullLineIgnoreOfIndex!.indexOf(index) == -1))

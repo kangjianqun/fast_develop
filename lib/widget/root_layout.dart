@@ -146,7 +146,7 @@ class MyScaffold extends StatelessWidget {
   }
 
   /// 生成top
-  Widget _resultTop(BuildContext? ctx) {
+  Widget? _resultTop(BuildContext? ctx) {
     var _brightness = appBarBrightness ?? brightness;
     Widget? top = appBar == null ? null : appBar!(ctx);
 
@@ -176,7 +176,7 @@ class MyScaffold extends StatelessWidget {
         actions: stateWidget != null ? null : _actions,
       );
     }
-    return top!;
+    return top;
   }
 
   Widget _resultView(BuildContext context, Widget? top) {
