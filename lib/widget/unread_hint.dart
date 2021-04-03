@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../fast_develop.dart';
-import '../fast_develop.dart';
 
 /// 未读提示
 class UnreadHintWidget extends StatelessWidget {

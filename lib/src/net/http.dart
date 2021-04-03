@@ -63,6 +63,7 @@ class Http extends DioForNative {
   Http._([BaseOptions? options]) : super(options);
 
   /// 初始化 加入app通用处理
+  // ignore: unused_element
   _init(String baseUrl, [BaseOptions? options]) {
     (transformer as DefaultTransformer).jsonDecodeCallback = _parseJson;
     _dioInit(this, baseUrl);

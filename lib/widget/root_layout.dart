@@ -142,7 +142,7 @@ class MyScaffold extends StatelessWidget {
 
   static void setTitle(String title, {BuildContext? context}) {
     context ??= FastDevelopConfig.instance.context;
-    delayed(() => getVM<TitleVM>(context).setTitle(title));
+    delayed(() => getVM<TitleVM>(context!).setTitle(title));
   }
 
   /// 生成top

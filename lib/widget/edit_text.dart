@@ -235,10 +235,8 @@ class _EditTextState extends State<EditText> {
   }
 
   Widget _leftSign(num nameLeftPadding) {
-    Widget? view = (widget.icon ??
-        (widget.name!.e
-            ? null
-            : Text(widget.name!, style: StyleText.normal()))) as Widget;
+    Widget? view = widget.icon ??
+        (widget.name!.e ? null : Text(widget.name!, style: StyleText.normal()));
 
     if (view != null) {
       view = Container(

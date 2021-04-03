@@ -25,9 +25,9 @@ dependencies:
   # State https://pub.flutter-io.cn/packages/provider
   provider: ^5.0.0
 
-  fast_mvvm: 2.0.0
+  fast_mvvm: ^2.0.1
 
-  fast_router: ^1.0.5+2
+  fast_router: ^2.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

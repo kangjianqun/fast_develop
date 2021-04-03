@@ -1,3 +1,6 @@
+## [2.0.1]
+新增Null safety
+
 ## [1.1.6+3]
 新增 SingleLine => singleLineOfRadius 配置
 

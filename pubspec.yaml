@@ -1,6 +1,6 @@
 name: fast_develop
 description: A new fast develop package.
-version: 2.0.0+2
+version: 2.0.1
 author: kang_1994@outlook.com
 homepage: https://github.com/StrangerKjq/fast_develop
 
@@ -13,46 +13,43 @@ dependencies:
     sdk: flutter
 
   # https://pub.flutter-io.cn/packages/fast_mvvm
-  fast_mvvm: ^2.0.0
-
-  fast_router: ^1.0.5+2
+  fast_mvvm: ^2.0.1
+  fast_router: ^2.0.0
 
   # Flutter 轮播图 https://pub.flutter-io.cn/packages/flutter_swiper
   flutter_swiper: ^1.1.6
   #  一个适用于iOS和Android的Flutter插件，用于从图像库中拾取图像，并使用相机拍摄新照片。
   #  https://pub.flutter-io.cn/packages/image_picker
-  image_picker: ^0.7.3
+  image_picker: ^0.7.4
   # 图片缓存 https://pub.flutter-io.cn/packages/cached_network_image
   cached_network_image: ^3.0.0
-  # https://pub.flutter-io.cn/packages/cropƒ
-  crop: ^0.5.0
-
   # https://pub.flutter-io.cn/packages/url_launcher
   url_launcher: ^6.0.3
-
   # 本地json对象存储 https://pub.flutter-io.cn/packages/localstorage
   localstorage: ^4.0.0+1
   #  https://pub.flutter-io.cn/packages/flutter_screenutil
   flutter_screenutil: ^5.0.0-nullsafety.11
-
   #  https://pub.flutter-io.cn/packages/flutter_easyrefresh
   flutter_easyrefresh: ^2.2.0
+  # https://pub.flutter-io.cn/packages/package_info
+  package_info: ^2.0.0
+  # https://pub.flutter-io.cn/packages/dio
+  dio: ^4.0.0
+  dio_cookie_manager: ^2.0.0
+  dio_http2_adapter: ^2.0.0
+
   # https://pub.flutter-io.cn/packages/universal_io
   universal_io: ^2.0.3
   # https://pub.flutter-io.cn/packages/device_info
   device_info: ^2.0.0
-  # https://pub.flutter-io.cn/packages/package_info
-  package_info: ^2.0.0
-  # https://pub.flutter-io.cn/packages/dio
-  dio: ^4.0.0-prev3
-  dio_cookie_manager: ^2.0.0-prev1
-  dio_http2_adapter: ^2.0.0-prev1
-
-
-  convert: ^3.0.0
-  crypto: ^3.0.0
   # State https://pub.flutter-io.cn/packages/provider
   provider: ^5.0.0
+  #https://pub.flutter-io.cn/packages/convert
+  convert: ^3.0.0
+  #https://pub.flutter-io.cn/packages/crypto
+  crypto: ^3.0.1
+  # https://pub.flutter-io.cn/packages/cropƒ
+  crop: ^0.5.0
 
 
 dev_dependencies:

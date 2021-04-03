@@ -49,7 +49,7 @@ class CountDown extends StatefulWidget {
   final Duration duration;
   final Color? backgroundColor;
   final Widget? space;
-  final Future<bool> Function()? onTap;
+  final Future<bool?> Function()? onTap;
   final void Function()? timeOver;
   final TextStyle textStyle;
   final BorderRadius borderRadius;
