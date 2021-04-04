@@ -3,7 +3,7 @@ import 'package:localstorage/localstorage.dart';
 
 class StorageManager {
   /// 初始化必备操作 eg:user数据
-  static late LocalStorage? _localStorage;
+  static LocalStorage? _localStorage;
 
   /// 必备数据的初始化操作
   ///

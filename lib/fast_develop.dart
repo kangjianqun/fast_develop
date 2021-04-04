@@ -67,8 +67,6 @@ class FastDevelopConfig {
 
   BuildContext? context;
 
-  num? gridIntervalViewOfCacheExtent;
-  num? listIntervalViewOfCacheExtent;
   num singleLineOfMinHeight;
   num singleLineOfIconHeight;
   num singleLineOfNameLeftPadding;
@@ -85,6 +83,14 @@ class FastDevelopConfig {
 
   num iconTextOfSpacing;
   num iconTextOfIconBottom;
+
+  num? listIntervalViewOfCacheExtent;
+
+  num? gridIntervalViewOfCacheExtent;
+
+  num space;
+  num mainPadding;
+  num crossPadding;
 
   num editTextOfIconRightSpace;
   num editTextOfLeftRight;
@@ -104,6 +110,14 @@ class FastDevelopConfig {
 
   num titleWidgetOfHeight;
   num titleWidgetOfActionSpacing;
+
+  num textOne;
+  num textTwo;
+  num textThree;
+  num textFour;
+
+  /// lv Five
+  num textFive;
 
   /// 默认 1920*1080
   FastDevelopConfig.init({
@@ -149,6 +163,14 @@ class FastDevelopConfig {
     this.editTextOfLeftRight = 32,
     this.editTextOfTopBottom = 16,
     this.editTextOfSignLeftPadding = 20,
+    this.space = 16,
+    this.mainPadding = 32,
+    this.crossPadding = 32,
+    this.textOne = 40,
+    this.textTwo = 35,
+    this.textThree = 30,
+    this.textFour = 25,
+    this.textFive = 20,
     this.listIntervalViewOfCacheExtent,
     this.gridIntervalViewOfCacheExtent,
   }) {

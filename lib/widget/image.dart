@@ -216,7 +216,7 @@ class WrapperImage extends StatelessWidget {
       );
     }
 
-    if (browseList!.en)
+    if (browseList?.en ?? false)
       widget = TouchWidget(
         onTap: (ctx) {
           showDialogCustom(

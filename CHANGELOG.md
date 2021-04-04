@@ -1,3 +1,6 @@
+## [2.0.3]
+Project optimization
+
 ## [2.0.2]
 Project optimization
 

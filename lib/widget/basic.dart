@@ -669,7 +669,7 @@ class ListIntervalView extends StatelessWidget {
   const ListIntervalView({
     Key? key,
     this.direction = Axis.vertical,
-    this.space = 16,
+    this.space,
     this.separator,
     this.height = 0,
     this.margin,
@@ -680,8 +680,8 @@ class ListIntervalView extends StatelessWidget {
     this.shrinkWrap = true,
     required this.itemCount,
     required this.itemBuilder,
-    this.mainPadding = 32,
-    this.crossPadding = 32,
+    this.mainPadding,
+    this.crossPadding,
     this.cacheExtent,
     this.controller,
     this.fullLineIgnoreOfIndex,
@@ -691,7 +691,7 @@ class ListIntervalView extends StatelessWidget {
   const ListIntervalView.children({
     Key? key,
     this.direction = Axis.vertical,
-    this.space = 16,
+    this.space,
     this.separator,
     this.height = 0,
     this.margin,
@@ -701,8 +701,8 @@ class ListIntervalView extends StatelessWidget {
     this.primary = true,
     this.shrinkWrap = true,
     required this.children,
-    this.mainPadding = 32,
-    this.crossPadding = 32,
+    this.mainPadding,
+    this.crossPadding,
     this.cacheExtent,
     this.controller,
     this.fullLineIgnoreOfIndex,
@@ -713,7 +713,7 @@ class ListIntervalView extends StatelessWidget {
   const ListIntervalView.nested({
     Key? key,
     this.direction = Axis.vertical,
-    this.space = 16,
+    this.space,
     this.separator,
     this.height = 0,
     this.margin,
@@ -735,9 +735,15 @@ class ListIntervalView extends StatelessWidget {
   final List<Widget>? children;
   final Axis direction;
   final Widget? separator;
-  final num space;
-  final num mainPadding;
-  final num crossPadding;
+
+  /// 配置在[FastDevelopConfig]
+  final num? space;
+
+  /// 配置在[FastDevelopConfig]
+  final num? mainPadding;
+
+  /// 配置在[FastDevelopConfig]
+  final num? crossPadding;
 
   final bool shrinkWrap;
   final num height;
@@ -758,11 +764,12 @@ class ListIntervalView extends StatelessWidget {
   final ScrollController? controller;
 
   Widget _getSeparator() {
-    return separator ?? Spacing.spacingView(width: space, height: space);
+    var _spcae = space ?? FastDevelopConfig.instance.space;
+    return separator ?? Spacing.spacingView(width: _spcae, height: _spcae);
   }
 
   Widget _getItem(BuildContext ctx, int index) {
-    bool isChild = children != null && children!.en;
+    bool isChild = children?.en ?? false;
     if (fullLine &&
         (fullLineIgnoreOfIndex == null ||
             fullLineIgnoreOfIndex!.indexOf(index) == -1))
@@ -779,12 +786,15 @@ class ListIntervalView extends StatelessWidget {
     var _cacheExtent =
         cacheExtent ?? FastDevelopConfig.instance.listIntervalViewOfCacheExtent;
 
+    var _mP = mainPadding ?? FastDevelopConfig.instance.mainPadding;
+    var _cP = crossPadding ?? FastDevelopConfig.instance.crossPadding;
+
     Widget view = ListView.separated(
       shrinkWrap: shrinkWrap,
       primary: primary,
       padding: Spacing.all(
-        leftR: isH ? mainPadding : crossPadding,
-        topB: isH ? crossPadding : mainPadding,
+        leftR: isH ? _mP : _cP,
+        topB: isH ? _cP : _mP,
       ),
       physics: physics ?? NeverScrollableScrollPhysics(),
       scrollDirection: direction,
@@ -808,10 +818,10 @@ class GridIntervalView extends StatelessWidget {
     Key? key,
     this.direction,
     this.separator,
-    this.mainSpace = 16,
-    this.crossSpace = 16,
-    this.mainPadding = 32,
-    this.crossPadding = 32,
+    this.mainSpace,
+    this.crossSpace,
+    this.mainPadding,
+    this.crossPadding,
     this.height,
     this.width,
     this.color,
@@ -831,11 +841,11 @@ class GridIntervalView extends StatelessWidget {
     Key? key,
     this.direction,
     this.separator,
-    this.mainSpace = 16,
-    this.crossSpace = 16,
+    this.mainSpace,
+    this.crossSpace,
     this.ratio,
-    this.mainPadding = 32,
-    this.crossPadding = 32,
+    this.mainPadding,
+    this.crossPadding,
     this.height,
     this.width,
     this.color,
@@ -854,11 +864,11 @@ class GridIntervalView extends StatelessWidget {
     Key? key,
     this.direction,
     this.separator,
-    this.mainSpace = 16,
-    this.crossSpace = 16,
+    this.mainSpace,
+    this.crossSpace,
     this.ratio,
-    this.mainPadding = 32,
-    this.crossPadding = 32,
+    this.mainPadding,
+    this.crossPadding,
     this.height,
     this.width,
     this.color,
@@ -875,14 +885,16 @@ class GridIntervalView extends StatelessWidget {
   final IndexedWidgetBuilder? itemBuilder;
   final Axis? direction;
   final Widget? separator;
-  final num mainSpace;
-  final num crossSpace;
+  final num? mainSpace;
+  final num? crossSpace;
   final num? height;
   final num? width;
 
-  /// padding top  bottom
-  final num mainPadding;
-  final num crossPadding;
+  /// padding top  bottom 配置在[FastDevelopConfig]
+  final num? mainPadding;
+
+  /// padding  配置在[FastDevelopConfig]
+  final num? crossPadding;
   final num? cacheExtent;
 
   final int? itemCount;
@@ -897,10 +909,13 @@ class GridIntervalView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isH = direction == Axis.horizontal;
-    var _padding = Spacing.all(
-      leftR: isH ? mainPadding : crossPadding,
-      topB: isH ? crossPadding : mainPadding,
-    );
+
+    var _mP = mainPadding ?? FastDevelopConfig.instance.mainPadding;
+    var _cP = crossPadding ?? FastDevelopConfig.instance.crossPadding;
+    var _mS = mainSpace ?? FastDevelopConfig.instance.space;
+    var _cS = crossSpace ?? FastDevelopConfig.instance.space;
+
+    var _padding = Spacing.all(leftR: isH ? _mP : _cP, topB: isH ? _cP : _mP);
     var _cacheExtent =
         cacheExtent ?? FastDevelopConfig.instance.gridIntervalViewOfCacheExtent;
     return Container(
@@ -919,8 +934,8 @@ class GridIntervalView extends StatelessWidget {
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,
           childAspectRatio: ratio?.toDouble() ?? 1.0,
-          mainAxisSpacing: mainSpace.ww!,
-          crossAxisSpacing: crossSpace.ww!,
+          mainAxisSpacing: _mS.ww!,
+          crossAxisSpacing: _cS.ww!,
         ),
       ),
     );
