@@ -245,7 +245,6 @@ class SConfig {
 
   static num space = 8;
 
-  static num textOne = 45;
   static num textTwoUp = 40;
   static num textTwo = 35;
   static num textThree = 30;
@@ -264,7 +263,7 @@ class StyleText {
     bool ignoreColor = false,
   }) {
     return normal(
-      size: SConfig.textOne,
+      size: FastDevelopConfig.instance.textOne,
       color: color ?? CConfig.cTextColorOne,
       fontWeight: weight,
       ignoreColor: ignoreColor,
@@ -286,7 +285,7 @@ class StyleText {
     bool ignoreColor = false,
   }) {
     return normal(
-      size: SConfig.textOne,
+      size: FastDevelopConfig.instance.textOne,
       color: color ?? CConfig.cTextColorOne,
       fontWeight: weight,
       ignoreColor: ignoreColor,

@@ -11,7 +11,7 @@ main() => runApp(MyApp(future: initConfig()));
 
 class MyApp extends StatelessWidget {
   final Future future;
-  MyApp({this.future}) {
+  MyApp({required this.future}) {
     FastRouter.configureRouters(FastRouter(), []);
   }
 
