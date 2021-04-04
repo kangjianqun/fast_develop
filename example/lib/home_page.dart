@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget with BaseView<HomePageVM> {
 
   @override
   Widget vmBuild(
-      BuildContext context, HomePageVM vm, Widget child, Widget state) {
+      BuildContext context, HomePageVM vm, Widget? child, Widget? state) {
     return MyScaffold.center(
       title: "菜单页",
       body: (_) => MyBody(children: [
@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget with BaseView<HomePageVM> {
         ),
         SingleLine.normal(
           name: "选择",
-          rightWidget: ValueListenableBuilder(
+          rightWidget: ValueListenableBuilder<bool>(
             valueListenable: vm.vnCheck,
             builder: (_, check, __) => Checkbox(
               value: check,

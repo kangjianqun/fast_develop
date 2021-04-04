@@ -23,7 +23,7 @@ List<SingleChildWidget> dependentServices = [];
 List<SingleChildWidget> uiConsumableProviders = [];
 
 /// 需要context  分批初始化  可以一个方法或者多个方法
-Future<void> initConfig({BuildContext context}) async {
+Future<void> initConfig({BuildContext? context}) async {
   if (context == null) {
     CConfig.backgroundColor = Colors.white;
     CConfig.scaffoldBackgroundColor = Colors.grey.shade300;
