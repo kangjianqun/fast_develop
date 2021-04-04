@@ -46,8 +46,8 @@ class _TouchWidgetState extends State<TouchWidget>
 
   late AnimationController? _animationController;
   late Animation<double> _opacityAnimation;
-  late DateTime? _lastPressed;
-  late Duration? _touchSp;
+  DateTime? _lastPressed;
+  Duration? _touchSp;
   var _pressedOpacity;
 
   @override
