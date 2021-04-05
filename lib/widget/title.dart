@@ -180,10 +180,10 @@ class TitleWidget extends StatelessWidget implements PreferredSizeWidget {
         actionSpacing ?? FastDevelopConfig.instance.titleWidgetOfActionSpacing;
     getVM<TitleVM>(context)
         .setTitle(title, notify: false, allowNull: tWidget != null);
-    var iconTheme = brightness == null
+    var iconTheme = brightness == null || _iconThemeGenerate == null
         ? null
         : _iconThemeGenerate!(brightness: brightness!);
-    var textTheme = brightness == null
+    var textTheme = brightness == null || _textThemeGenerate == null
         ? null
         : _textThemeGenerate!(brightness: brightness!);
     return Consumer<TitleVM>(

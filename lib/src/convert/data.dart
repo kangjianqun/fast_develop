@@ -169,6 +169,40 @@ class JudgeData<T> {
   JudgeData(this.value, {this.toast});
 }
 
+class DataUtil {
+  static bool isE(data) {
+    bool result = true;
+    if (data != null) {
+      if (data is String) {
+        result = StringUtil.isEmpty(data);
+      } else if (data is int) {
+        result = IntUtil.isEmpty(data);
+      } else if (data is List) {
+        result = ListUtil.isEmpty(data);
+      } else if (data is Map) {
+        result = MapUtil.isEmpty(data);
+      }
+    }
+    return result;
+  }
+
+  static bool isNotE(data) {
+    bool result = false;
+    if (data != null) {
+      if (data is String) {
+        result = StringUtil.isNotEmpty(data);
+      } else if (data is int) {
+        result = IntUtil.isNotEmpty(data);
+      } else if (data is List) {
+        result = ListUtil.isNotEmpty(data);
+      } else if (data is Map) {
+        result = MapUtil.isNotEmpty(data);
+      }
+    }
+    return result;
+  }
+}
+
 extension StringUtil on String {
   bool get e => isEmpty(this);
   bool get en => isNotEmpty(this);

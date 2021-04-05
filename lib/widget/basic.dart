@@ -9,14 +9,13 @@ class PSDisplay extends StatelessWidget {
     Key? key,
     this.primary,
     this.secondary,
-  })  : assert(primary == null && secondary == null),
-        super(key: key);
+  }) : super(key: key);
   final Child? primary;
   final Child? secondary;
 
   @override
   Widget build(BuildContext context) {
-    return primary == null ? secondary!() : primary!();
+    return primary == null || primary!() == null ? secondary!()! : primary!()!;
   }
 }
 
@@ -669,7 +668,7 @@ class ListIntervalView extends StatelessWidget {
   const ListIntervalView({
     Key? key,
     this.direction = Axis.vertical,
-    this.space,
+    this.space = 16,
     this.separator,
     this.height = 0,
     this.margin,
@@ -680,8 +679,8 @@ class ListIntervalView extends StatelessWidget {
     this.shrinkWrap = true,
     required this.itemCount,
     required this.itemBuilder,
-    this.mainPadding,
-    this.crossPadding,
+    this.mainPadding = 32,
+    this.crossPadding = 32,
     this.cacheExtent,
     this.controller,
     this.fullLineIgnoreOfIndex,
@@ -691,7 +690,7 @@ class ListIntervalView extends StatelessWidget {
   const ListIntervalView.children({
     Key? key,
     this.direction = Axis.vertical,
-    this.space,
+    this.space = 16,
     this.separator,
     this.height = 0,
     this.margin,
@@ -701,8 +700,8 @@ class ListIntervalView extends StatelessWidget {
     this.primary = true,
     this.shrinkWrap = true,
     required this.children,
-    this.mainPadding,
-    this.crossPadding,
+    this.mainPadding = 32,
+    this.crossPadding = 32,
     this.cacheExtent,
     this.controller,
     this.fullLineIgnoreOfIndex,
@@ -713,7 +712,7 @@ class ListIntervalView extends StatelessWidget {
   const ListIntervalView.nested({
     Key? key,
     this.direction = Axis.vertical,
-    this.space,
+    this.space = 16,
     this.separator,
     this.height = 0,
     this.margin,
@@ -735,15 +734,9 @@ class ListIntervalView extends StatelessWidget {
   final List<Widget>? children;
   final Axis direction;
   final Widget? separator;
-
-  /// 配置在[FastDevelopConfig]
-  final num? space;
-
-  /// 配置在[FastDevelopConfig]
-  final num? mainPadding;
-
-  /// 配置在[FastDevelopConfig]
-  final num? crossPadding;
+  final num space;
+  final num mainPadding;
+  final num crossPadding;
 
   final bool shrinkWrap;
   final num height;
@@ -764,12 +757,11 @@ class ListIntervalView extends StatelessWidget {
   final ScrollController? controller;
 
   Widget _getSeparator() {
-    var _spcae = space ?? FastDevelopConfig.instance.space;
-    return separator ?? Spacing.spacingView(width: _spcae, height: _spcae);
+    return separator ?? Spacing.spacingView(width: space, height: space);
   }
 
   Widget _getItem(BuildContext ctx, int index) {
-    bool isChild = children?.en ?? false;
+    bool isChild = ListUtil.isNotEmpty(children);
     if (fullLine &&
         (fullLineIgnoreOfIndex == null ||
             fullLineIgnoreOfIndex!.indexOf(index) == -1))
@@ -786,15 +778,12 @@ class ListIntervalView extends StatelessWidget {
     var _cacheExtent =
         cacheExtent ?? FastDevelopConfig.instance.listIntervalViewOfCacheExtent;
 
-    var _mP = mainPadding ?? FastDevelopConfig.instance.mainPadding;
-    var _cP = crossPadding ?? FastDevelopConfig.instance.crossPadding;
-
     Widget view = ListView.separated(
       shrinkWrap: shrinkWrap,
       primary: primary,
       padding: Spacing.all(
-        leftR: isH ? _mP : _cP,
-        topB: isH ? _cP : _mP,
+        leftR: isH ? mainPadding : crossPadding,
+        topB: isH ? crossPadding : mainPadding,
       ),
       physics: physics ?? NeverScrollableScrollPhysics(),
       scrollDirection: direction,
@@ -818,10 +807,10 @@ class GridIntervalView extends StatelessWidget {
     Key? key,
     this.direction,
     this.separator,
-    this.mainSpace,
-    this.crossSpace,
-    this.mainPadding,
-    this.crossPadding,
+    this.mainSpace = 16,
+    this.crossSpace = 16,
+    this.mainPadding = 32,
+    this.crossPadding = 32,
     this.height,
     this.width,
     this.color,
@@ -841,11 +830,11 @@ class GridIntervalView extends StatelessWidget {
     Key? key,
     this.direction,
     this.separator,
-    this.mainSpace,
-    this.crossSpace,
+    this.mainSpace = 16,
+    this.crossSpace = 16,
     this.ratio,
-    this.mainPadding,
-    this.crossPadding,
+    this.mainPadding = 32,
+    this.crossPadding = 32,
     this.height,
     this.width,
     this.color,
@@ -864,11 +853,11 @@ class GridIntervalView extends StatelessWidget {
     Key? key,
     this.direction,
     this.separator,
-    this.mainSpace,
-    this.crossSpace,
+    this.mainSpace = 16,
+    this.crossSpace = 16,
     this.ratio,
-    this.mainPadding,
-    this.crossPadding,
+    this.mainPadding = 32,
+    this.crossPadding = 32,
     this.height,
     this.width,
     this.color,
@@ -885,16 +874,14 @@ class GridIntervalView extends StatelessWidget {
   final IndexedWidgetBuilder? itemBuilder;
   final Axis? direction;
   final Widget? separator;
-  final num? mainSpace;
-  final num? crossSpace;
+  final num mainSpace;
+  final num crossSpace;
   final num? height;
   final num? width;
 
-  /// padding top  bottom 配置在[FastDevelopConfig]
-  final num? mainPadding;
-
-  /// padding  配置在[FastDevelopConfig]
-  final num? crossPadding;
+  /// padding top  bottom
+  final num mainPadding;
+  final num crossPadding;
   final num? cacheExtent;
 
   final int? itemCount;
@@ -909,13 +896,10 @@ class GridIntervalView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isH = direction == Axis.horizontal;
-
-    var _mP = mainPadding ?? FastDevelopConfig.instance.mainPadding;
-    var _cP = crossPadding ?? FastDevelopConfig.instance.crossPadding;
-    var _mS = mainSpace ?? FastDevelopConfig.instance.space;
-    var _cS = crossSpace ?? FastDevelopConfig.instance.space;
-
-    var _padding = Spacing.all(leftR: isH ? _mP : _cP, topB: isH ? _cP : _mP);
+    var _padding = Spacing.all(
+      leftR: isH ? mainPadding : crossPadding,
+      topB: isH ? crossPadding : mainPadding,
+    );
     var _cacheExtent =
         cacheExtent ?? FastDevelopConfig.instance.gridIntervalViewOfCacheExtent;
     return Container(
@@ -934,8 +918,8 @@ class GridIntervalView extends StatelessWidget {
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,
           childAspectRatio: ratio?.toDouble() ?? 1.0,
-          mainAxisSpacing: _mS.ww!,
-          crossAxisSpacing: _cS.ww!,
+          mainAxisSpacing: mainSpace.ww!,
+          crossAxisSpacing: crossSpace.ww!,
         ),
       ),
     );
@@ -1146,7 +1130,7 @@ class SingleLine<T> extends StatelessWidget {
     var _rightColor = _isPrimary ? theme.primaryColor : iconColor;
 
     var _leftR = leftRight ?? FastDevelopConfig.instance.singleLineOfLeftRight;
-    var _topB = leftRight ?? FastDevelopConfig.instance.singleLineOfTopBottom;
+    var _topB = topBottom ?? FastDevelopConfig.instance.singleLineOfTopBottom;
     var _urlSize = urlSize ?? FastDevelopConfig.instance.singleLineOfUrlSize;
     var _radius = radius ?? FastDevelopConfig.instance.singleLineOfRadius;
     var _width = SConfig.pageWidth;
@@ -1175,7 +1159,7 @@ class SingleLine<T> extends StatelessWidget {
     Widget? view = leftView;
 
     if (view == null) {
-      if (iconUrl!.en) {
+      if (DataUtil.isNotE(iconUrl)) {
         view = WrapperImage.size(
             size: iconHeight.ww!, url: iconUrl!, fit: BoxFit.contain);
       } else {
@@ -1204,11 +1188,11 @@ class SingleLine<T> extends StatelessWidget {
   Widget _center() {
     if (centerWidget != null) {
       return Expanded(child: centerWidget!);
-    } else if (centerTxt!.e && ListUtil.isEmpty(dropdownItems)) {
+    } else if (DataUtil.isE(centerTxt) && ListUtil.isEmpty(dropdownItems)) {
       return Expanded(child: Spacing.vView());
     } else {
       return Spacing.vView(
-        isShow: centerTxt!.en,
+        isShow: DataUtil.isNotE(centerTxt),
         child: () =>
             Text(centerTxt!, style: centerTxtStyle ?? StyleText.grey()),
       );
@@ -1249,20 +1233,20 @@ class SingleLine<T> extends StatelessWidget {
   List<Widget> _right(num urlSize, Color rightColor, IconData rightIconData) {
     return [
       Spacing.vView(
-        isShow: url!.en,
+        isShow: DataUtil.isNotE(url),
         child: () => ClipRRect(
           borderRadius: SBorderRadius.circle() as BorderRadius,
           child: WrapperImage.size(size: urlSize.ww!, url: url!),
         ),
       ),
       Spacing.vView(
-        isShow: rightTxt!.en,
+        isShow: DataUtil.isNotE(rightTxt),
         child: () => Text(rightTxt!, style: rightTxtStyle ?? StyleText.grey()),
       ),
       Spacing.vView(
         isShow: rightShow,
         child: () => PSDisplay(
-            primary: () => rightWidget!,
+            primary: () => rightWidget,
             secondary: () => Icon(rightIconData, color: rightColor)),
       ),
     ];

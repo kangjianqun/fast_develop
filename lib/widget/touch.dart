@@ -44,10 +44,10 @@ class _TouchWidgetState extends State<TouchWidget>
   static const Duration kFadeInDuration = Duration(milliseconds: 100);
   final Tween<double> _opacityTween = Tween<double>(begin: 1.0);
 
-  late AnimationController? _animationController;
+  AnimationController? _animationController;
   late Animation<double> _opacityAnimation;
-  late DateTime? _lastPressed;
-  late Duration? _touchSp;
+  DateTime? _lastPressed;
+  Duration? _touchSp;
   var _pressedOpacity;
 
   @override

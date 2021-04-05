@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 
 import '../fast_develop.dart';
 
-typedef Child = Widget Function();
+typedef Child = Widget? Function();
 
 class Spacing {
   static EdgeInsets rootLR({num? size}) {
@@ -101,7 +101,7 @@ class Spacing {
     if (vn == null && !isShow) {
       return SizedBox();
     } else if (noVLB && isShow) {
-      return child!();
+      return child!()!;
     }
 
     vn ??= ValueNotifier<bool>(isShow);
@@ -109,7 +109,7 @@ class Spacing {
       valueListenable: vn,
       builder: (_, show, __) {
         var _show = reverse ? !show : show;
-        return Visibility(visible: _show, child: _show ? child!() : SizedBox());
+        return Visibility(visible: _show, child: _show ? child!()! : SizedBox());
       },
     );
   }

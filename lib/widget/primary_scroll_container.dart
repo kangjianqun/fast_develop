@@ -81,8 +81,8 @@ class ScrollControllerWrapper implements ScrollController {
 
   int code = a++;
 
-  late ScrollPosition? interceptedAttachPosition; //拦截的position
-  late ScrollPosition? lastPosition;
+  ScrollPosition? interceptedAttachPosition; //拦截的position
+  ScrollPosition? lastPosition;
 
   bool showing = true;
 
