@@ -27,10 +27,10 @@ ScrollController? getNestedScrollViewInner(BuildContext context) {
 }
 
 class PrimaryScrollContainerState extends State<PrimaryScrollContainer> {
-  late ScrollControllerWrapper _scrollController;
+  ScrollControllerWrapper? _scrollController;
 
   get scrollController {
-    _scrollController.inner = getNestedScrollViewInner(context)!;
+    _scrollController?.inner = getNestedScrollViewInner(context)!;
     return _scrollController;
   }
 
@@ -50,7 +50,7 @@ class PrimaryScrollContainerState extends State<PrimaryScrollContainer> {
   }
 
   void onPageChange(bool show) {
-    _scrollController.onAttachChange(show);
+    _scrollController?.onAttachChange(show);
   }
 }
 
