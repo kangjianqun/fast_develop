@@ -52,21 +52,22 @@ export 'src/decoration.dart';
 export 'src/globalValue.dart';
 export 'src/types.dart';
 
-class FastDevelopConfig {
-  factory FastDevelopConfig() => _getInstance();
-  static FastDevelopConfig instance = _getInstance();
-  static FastDevelopConfig? _instance;
+class FConfig {
+  factory FConfig() => _getInstance();
+  static FConfig ins = _getInstance();
+  static FConfig? _instance;
 
-  static FastDevelopConfig _getInstance() {
+  static FConfig _getInstance() {
     if (_instance == null) {
-      _instance = FastDevelopConfig.init();
+      _instance = FConfig.init();
     }
 
     return _instance!;
   }
 
   BuildContext? context;
-
+  num pageHeight;
+  num pageWidth;
   num singleLineOfMinHeight;
   num singleLineOfIconHeight;
   num singleLineOfNameLeftPadding;
@@ -83,6 +84,12 @@ class FastDevelopConfig {
 
   num iconTextOfSpacing;
   num iconTextOfIconBottom;
+
+  num themeSelectedIconSize;
+  num themeUnselectedIconSize;
+  num themeSelectedLabelSize;
+  num themeUnselectedLabelSize;
+  num themeFontSize;
 
   num? listIntervalViewOfCacheExtent;
 
@@ -119,8 +126,11 @@ class FastDevelopConfig {
   /// lv Five
   num textFive;
 
+  num radius;
+  num radiusOfCircle;
+
   /// 默认 1920*1080
-  FastDevelopConfig.init({
+  FConfig.init({
     ToastShow? toast,
     SwitchThemeBrightness? switchTB,
     IconThemeGenerate? iconTheme,
@@ -133,8 +143,15 @@ class FastDevelopConfig {
     ApiInterceptorOnRequest? onRequest,
     bool extraSaveJson = true,
     this.context,
-    num pageWidth = 1080,
-    num pageHeight = 1920,
+    this.pageWidth = 1080,
+    this.pageHeight = 1920,
+    this.themeFontSize = 22,
+    this.themeSelectedIconSize = 46,
+    this.themeUnselectedIconSize = 46,
+    this.themeSelectedLabelSize = 25,
+    this.themeUnselectedLabelSize = 25,
+    this.radius = 20,
+    this.radiusOfCircle = 100,
     this.titleWidgetOfHeight = 144,
     this.titleWidgetOfActionSpacing = 32,
     this.singleLineOfMinHeight = 144,
@@ -182,7 +199,5 @@ class FastDevelopConfig {
     initFastDevelopOfTitle(iconTheme, textTheme);
     ScreenUtils.enable = screenEnable;
     _instance = this;
-    SConfig.pageWidth = pageWidth;
-    SConfig.pageHeight = pageHeight;
   }
 }

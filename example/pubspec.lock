@@ -140,28 +140,28 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.0.3"
+    version: "2.0.3+1"
   fast_event_bus:
     dependency: transitive
     description:
       name: fast_event_bus
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   fast_mvvm:
     dependency: "direct main"
     description:
       name: fast_mvvm
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.4"
   fast_router:
     dependency: "direct main"
     description:
       name: fast_router
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.1+1"
   ffi:
     dependency: transitive
     description:

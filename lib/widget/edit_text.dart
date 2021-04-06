@@ -230,8 +230,8 @@ class _EditTextState extends State<EditText> {
     super.initState();
     if (widget.controller == null) _controller = TextEditingController();
     decorationChanger = widget.decorationChanger ?? DecorationChanger();
-    _iconRightSpace = widget.iconRightSpace ??
-        FastDevelopConfig.instance.editTextOfIconRightSpace;
+    _iconRightSpace =
+        widget.iconRightSpace ?? FConfig.ins.editTextOfIconRightSpace;
   }
 
   Widget _leftSign(num nameLeftPadding) {
@@ -254,10 +254,10 @@ class _EditTextState extends State<EditText> {
 
   @override
   Widget build(BuildContext context) {
-    var _leftR = FastDevelopConfig.instance.editTextOfLeftRight;
-    var _topB = FastDevelopConfig.instance.editTextOfTopBottom;
-    var _signLeftPadding = widget.signLeftPadding ??
-        FastDevelopConfig.instance.singleLineOfNameLeftPadding;
+    var _leftR = FConfig.ins.editTextOfLeftRight;
+    var _topB = FConfig.ins.editTextOfTopBottom;
+    var _signLeftPadding =
+        widget.signLeftPadding ?? FConfig.ins.singleLineOfNameLeftPadding;
 
     Widget leftSign = _leftSign(_signLeftPadding);
     Widget right = widget.rightChild ?? Spacing.vView();
@@ -265,7 +265,8 @@ class _EditTextState extends State<EditText> {
         InputDecoration(
           hintText: widget.hint ?? "",
           counterText: widget.showCountHint ? null : "",
-          hintStyle: widget.hintStyle ?? StyleText.grey(size: SConfig.textTwo),
+          hintStyle:
+              widget.hintStyle ?? StyleText.grey(size: FConfig.ins.textTwo),
           disabledBorder: InputBorder.none,
           enabledBorder: InputBorder.none,
           focusedBorder: InputBorder.none,
@@ -298,7 +299,8 @@ class _EditTextState extends State<EditText> {
               autofocus: widget.autoFocus,
               enabled: widget.enabled,
               obscureText: widget.obscureText,
-              style: widget.style ?? StyleText.normal(size: SConfig.textTwo),
+              style:
+                  widget.style ?? StyleText.normal(size: FConfig.ins.textTwo),
               controller: _effectiveController,
               focusNode: _effectiveFNode,
               decoration: _decoration,

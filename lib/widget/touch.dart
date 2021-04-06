@@ -54,7 +54,7 @@ class _TouchWidgetState extends State<TouchWidget>
   void initState() {
     super.initState();
     _pressedOpacity = widget.pressedOpacity ??
-        FastDevelopConfig.instance.touchWidgetOfPressedOpacity;
+        FConfig.ins.touchWidgetOfPressedOpacity;
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 200),
       value: 0.0,
@@ -122,7 +122,7 @@ class _TouchWidgetState extends State<TouchWidget>
   Widget build(BuildContext context) {
     bool enabled = widget.onTap != null && _pressedOpacity > 0;
     var _padding =
-        widget.padding ?? FastDevelopConfig.instance.touchWidgetOfPadding;
+        widget.padding ?? FConfig.ins.touchWidgetOfPadding;
     return Padding(
       padding: Spacing.all(size: _padding),
       child: GestureDetector(

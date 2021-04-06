@@ -32,7 +32,7 @@ class DecoUtil {
       border: border,
       borderRadius: isCircle
           ? SBorderRadius.leftRight()
-          : SBorderRadius.normal(radius: radius ?? SConfig.radius),
+          : SBorderRadius.normal(radius: radius ?? FConfig.ins.radius),
       image: image == null ? null : DecorationImage(image: image),
       gradient: gradient,
     );
@@ -95,7 +95,7 @@ class DecoUtil {
   static BoxDecoration unilateral(int leftOrTopOrRightOrBottom,
       {Color? color, num? radius, bool isCircle = false}) {
     var borderRadius;
-    var _radius = isCircle ? 200 : (radius ?? SConfig.radius);
+    var _radius = isCircle ? 200 : (radius ?? FConfig.ins.radius);
     switch (leftOrTopOrRightOrBottom) {
       case 0:
         borderRadius = SBorderRadius.leftOrRight(radius: _radius);
@@ -121,7 +121,7 @@ class DecoUtil {
   /// 0 - 3 [topLeft]-[rightTop]-[rightBottom]-[leftBottom] 单
   static BoxDecoration only(int leftOrTopOrRightOrBottom,
       {Color color = Colors.white, num? radius, BoxBorder? border}) {
-    var _radius = radius ?? SConfig.radius;
+    var _radius = radius ?? FConfig.ins.radius;
     var topLeft = Radius.zero;
     var topRight = Radius.zero;
     var bottomRight = Radius.zero;

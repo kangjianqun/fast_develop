@@ -158,12 +158,11 @@ class IconText extends StatelessWidget {
     num w = 0;
     num h = 0;
 //    ThemeData themeData = Theme.of(context);
-    var _iconBottom =
-        iconBottom ?? FastDevelopConfig.instance.iconTextOfIconBottom;
+    var _iconBottom = iconBottom ?? FConfig.ins.iconTextOfIconBottom;
     if (isV) {
-      h = spacing ?? FastDevelopConfig.instance.iconTextOfSpacing;
+      h = spacing ?? FConfig.ins.iconTextOfSpacing;
     } else {
-      w = spacing ?? FastDevelopConfig.instance.iconTextOfSpacing;
+      w = spacing ?? FConfig.ins.iconTextOfSpacing;
     }
     List<Widget> childView = [];
     var view;
@@ -444,10 +443,8 @@ class CardEx extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
-    var _paddingSize =
-        paddingSize ?? FastDevelopConfig.instance.cardExOfPaddingSize;
-    var _marginSize =
-        marginSize ?? FastDevelopConfig.instance.cardExOfMarginSize;
+    var _paddingSize = paddingSize ?? FConfig.ins.cardExOfPaddingSize;
+    var _marginSize = marginSize ?? FConfig.ins.cardExOfMarginSize;
 
     var _padding = padding ?? Spacing.all(size: _paddingSize);
     var _margin = margin ?? Spacing.all(size: _marginSize);
@@ -668,7 +665,7 @@ class ListIntervalView extends StatelessWidget {
   const ListIntervalView({
     Key? key,
     this.direction = Axis.vertical,
-    this.space = 16,
+    this.space,
     this.separator,
     this.height = 0,
     this.margin,
@@ -679,8 +676,8 @@ class ListIntervalView extends StatelessWidget {
     this.shrinkWrap = true,
     required this.itemCount,
     required this.itemBuilder,
-    this.mainPadding = 32,
-    this.crossPadding = 32,
+    this.mainPadding,
+    this.crossPadding,
     this.cacheExtent,
     this.controller,
     this.fullLineIgnoreOfIndex,
@@ -690,7 +687,7 @@ class ListIntervalView extends StatelessWidget {
   const ListIntervalView.children({
     Key? key,
     this.direction = Axis.vertical,
-    this.space = 16,
+    this.space,
     this.separator,
     this.height = 0,
     this.margin,
@@ -700,8 +697,8 @@ class ListIntervalView extends StatelessWidget {
     this.primary = true,
     this.shrinkWrap = true,
     required this.children,
-    this.mainPadding = 32,
-    this.crossPadding = 32,
+    this.mainPadding,
+    this.crossPadding,
     this.cacheExtent,
     this.controller,
     this.fullLineIgnoreOfIndex,
@@ -712,7 +709,7 @@ class ListIntervalView extends StatelessWidget {
   const ListIntervalView.nested({
     Key? key,
     this.direction = Axis.vertical,
-    this.space = 16,
+    this.space,
     this.separator,
     this.height = 0,
     this.margin,
@@ -734,9 +731,9 @@ class ListIntervalView extends StatelessWidget {
   final List<Widget>? children;
   final Axis direction;
   final Widget? separator;
-  final num space;
-  final num mainPadding;
-  final num crossPadding;
+  final num? space;
+  final num? mainPadding;
+  final num? crossPadding;
 
   final bool shrinkWrap;
   final num height;
@@ -756,8 +753,8 @@ class ListIntervalView extends StatelessWidget {
   final bool primary;
   final ScrollController? controller;
 
-  Widget _getSeparator() {
-    return separator ?? Spacing.spacingView(width: space, height: space);
+  Widget _getSeparator(num size) {
+    return separator ?? Spacing.spacingView(width: size, height: size);
   }
 
   Widget _getItem(BuildContext ctx, int index) {
@@ -773,18 +770,17 @@ class ListIntervalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget _separator = _getSeparator();
     bool isH = direction == Axis.horizontal;
-    var _cacheExtent =
-        cacheExtent ?? FastDevelopConfig.instance.listIntervalViewOfCacheExtent;
+    var _cacheExtent = cacheExtent ?? FConfig.ins.listIntervalViewOfCacheExtent;
 
+    var _mp = mainPadding ?? FConfig.ins.mainPadding;
+    var _cp = crossPadding ?? FConfig.ins.crossPadding;
+    var _space = space ?? FConfig.ins.space;
+    Widget _separator = _getSeparator(_space);
     Widget view = ListView.separated(
       shrinkWrap: shrinkWrap,
       primary: primary,
-      padding: Spacing.all(
-        leftR: isH ? mainPadding : crossPadding,
-        topB: isH ? crossPadding : mainPadding,
-      ),
+      padding: Spacing.all(leftR: isH ? _mp : _cp, topB: isH ? _cp : _mp),
       physics: physics ?? NeverScrollableScrollPhysics(),
       scrollDirection: direction,
       itemCount: itemCount!,
@@ -807,10 +803,10 @@ class GridIntervalView extends StatelessWidget {
     Key? key,
     this.direction,
     this.separator,
-    this.mainSpace = 16,
-    this.crossSpace = 16,
-    this.mainPadding = 32,
-    this.crossPadding = 32,
+    this.mainSpace,
+    this.crossSpace,
+    this.mainPadding,
+    this.crossPadding,
     this.height,
     this.width,
     this.color,
@@ -830,11 +826,11 @@ class GridIntervalView extends StatelessWidget {
     Key? key,
     this.direction,
     this.separator,
-    this.mainSpace = 16,
-    this.crossSpace = 16,
+    this.mainSpace,
+    this.crossSpace,
     this.ratio,
-    this.mainPadding = 32,
-    this.crossPadding = 32,
+    this.mainPadding,
+    this.crossPadding,
     this.height,
     this.width,
     this.color,
@@ -853,11 +849,11 @@ class GridIntervalView extends StatelessWidget {
     Key? key,
     this.direction,
     this.separator,
-    this.mainSpace = 16,
-    this.crossSpace = 16,
+    this.mainSpace,
+    this.crossSpace,
     this.ratio,
-    this.mainPadding = 32,
-    this.crossPadding = 32,
+    this.mainPadding,
+    this.crossPadding,
     this.height,
     this.width,
     this.color,
@@ -874,14 +870,14 @@ class GridIntervalView extends StatelessWidget {
   final IndexedWidgetBuilder? itemBuilder;
   final Axis? direction;
   final Widget? separator;
-  final num mainSpace;
-  final num crossSpace;
+  final num? mainSpace;
+  final num? crossSpace;
   final num? height;
   final num? width;
 
   /// padding top  bottom
-  final num mainPadding;
-  final num crossPadding;
+  final num? mainPadding;
+  final num? crossPadding;
   final num? cacheExtent;
 
   final int? itemCount;
@@ -896,12 +892,14 @@ class GridIntervalView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isH = direction == Axis.horizontal;
-    var _padding = Spacing.all(
-      leftR: isH ? mainPadding : crossPadding,
-      topB: isH ? crossPadding : mainPadding,
-    );
-    var _cacheExtent =
-        cacheExtent ?? FastDevelopConfig.instance.gridIntervalViewOfCacheExtent;
+
+    var _mp = mainPadding ?? FConfig.ins.mainPadding;
+    var _cp = crossPadding ?? FConfig.ins.crossPadding;
+    var _mSpace = mainSpace ?? FConfig.ins.space;
+    var _cSpace = crossSpace ?? FConfig.ins.space;
+
+    var _padding = Spacing.all(leftR: isH ? _mp : _cp, topB: isH ? _cp : _mp);
+    var _cacheExtent = cacheExtent ?? FConfig.ins.gridIntervalViewOfCacheExtent;
     return Container(
       height: isH || height != null ? height!.ww : null,
       width: width != null ? width!.ww : null,
@@ -918,8 +916,8 @@ class GridIntervalView extends StatelessWidget {
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,
           childAspectRatio: ratio?.toDouble() ?? 1.0,
-          mainAxisSpacing: mainSpace.ww!,
-          crossAxisSpacing: crossSpace.ww!,
+          mainAxisSpacing: _mSpace.ww!,
+          crossAxisSpacing: _cSpace.ww!,
         ),
       ),
     );
@@ -1115,31 +1113,27 @@ class SingleLine<T> extends StatelessWidget {
     Color? bg =
         backgroundColor ?? CConfig.cBackgroundColor ?? theme.backgroundColor;
     Color iconColor = iconThemeData.color!;
-    var _minHeight =
-        minHeight ?? FastDevelopConfig.instance.singleLineOfMinHeight;
-    var _iconHeight =
-        iconHeight ?? FastDevelopConfig.instance.singleLineOfIconHeight;
-    var _nameLeftPadding = nameLeftPadding ??
-        FastDevelopConfig.instance.singleLineOfNameLeftPadding;
-    var _nameRightPadding = nameRightPadding ??
-        FastDevelopConfig.instance.singleLineOfNameRightPadding;
-    var _isPrimary =
-        isPrimary ?? FastDevelopConfig.instance.singleLineOfIsPrimary;
-    var _rightIconData =
-        rightIconData ?? FastDevelopConfig.instance.singleLineOfRightIconData;
+    var _minHeight = minHeight ?? FConfig.ins.singleLineOfMinHeight;
+    var _iconHeight = iconHeight ?? FConfig.ins.singleLineOfIconHeight;
+    var _nameLeftPadding =
+        nameLeftPadding ?? FConfig.ins.singleLineOfNameLeftPadding;
+    var _nameRightPadding =
+        nameRightPadding ?? FConfig.ins.singleLineOfNameRightPadding;
+    var _isPrimary = isPrimary ?? FConfig.ins.singleLineOfIsPrimary;
+    var _rightIconData = rightIconData ?? FConfig.ins.singleLineOfRightIconData;
     var _rightColor = _isPrimary ? theme.primaryColor : iconColor;
 
-    var _leftR = leftRight ?? FastDevelopConfig.instance.singleLineOfLeftRight;
-    var _topB = topBottom ?? FastDevelopConfig.instance.singleLineOfTopBottom;
-    var _urlSize = urlSize ?? FastDevelopConfig.instance.singleLineOfUrlSize;
-    var _radius = radius ?? FastDevelopConfig.instance.singleLineOfRadius;
-    var _width = SConfig.pageWidth;
+    var _leftR = leftRight ?? FConfig.ins.singleLineOfLeftRight;
+    var _topB = topBottom ?? FConfig.ins.singleLineOfTopBottom;
+    var _urlSize = urlSize ?? FConfig.ins.singleLineOfUrlSize;
+    var _radius = radius ?? FConfig.ins.singleLineOfRadius;
+    var _width = FConfig.ins.pageWidth;
     var _decoration = decoration ?? DecoUtil.normal(color: bg, radius: _radius);
     return TouchWidget(
       onTap: onTap,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-            minHeight: _minHeight.hh!, maxWidth: (_width! - _leftR * 2).ww!),
+            minHeight: _minHeight.hh!, maxWidth: (_width - _leftR * 2).ww!),
         child: Container(
           padding: padding ?? Spacing.all(leftR: _leftR, topB: _topB),
           decoration: _decoration,

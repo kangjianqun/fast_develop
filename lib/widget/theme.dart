@@ -72,6 +72,11 @@ class ThemeVM with ChangeNotifier {
         CConfig.getTwo(brightness: _brightness, modifyGlobal: modifyGlobal);
     var focus = CConfig.focusColor;
 
+    var sIconSize = FConfig.ins.themeSelectedLabelSize;
+    var unSIconSize = FConfig.ins.themeUnselectedLabelSize;
+    var sLabelSize = FConfig.ins.themeSelectedLabelSize;
+    var unSLabelSize = FConfig.ins.themeUnselectedLabelSize;
+
     var iconColor = one;
 
     var _themeD = themeData ?? ThemeData();
@@ -114,10 +119,10 @@ class ThemeVM with ChangeNotifier {
     _themeData = _themeData.copyWith(
       bottomNavigationBarTheme: _themeData.bottomNavigationBarTheme.copyWith(
         backgroundColor: background,
-        selectedLabelStyle: StyleText.normal(size: 25, color: pColor),
-        unselectedLabelStyle: StyleText.normal(size: 25, color: two),
-        selectedIconTheme: IconThemeData(size: 46.ssp, color: pColor),
-        unselectedIconTheme: IconThemeData(size: 46.ssp, color: two),
+        selectedLabelStyle: StyleText.normal(size: sLabelSize, color: pColor),
+        unselectedLabelStyle: StyleText.normal(size: unSLabelSize, color: two),
+        selectedIconTheme: IconThemeData(size: sIconSize.ssp, color: pColor),
+        unselectedIconTheme: IconThemeData(size: unSIconSize.ssp, color: two),
       ),
       appBarTheme: _themeData.appBarTheme.copyWith(elevation: 0),
       accentIconTheme: _themeData.accentIconTheme.copyWith(color: Colors.white),
@@ -143,7 +148,7 @@ class ThemeVM with ChangeNotifier {
       bodyText2: StyleText.two(color: _color),
       headline6: TextStyle(
         color: _color,
-        fontSize: 22,
+        fontSize: FConfig.ins.themeFontSize.toDouble(),
         fontWeight: FontWeight.bold,
       ),
     );

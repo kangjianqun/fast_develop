@@ -51,11 +51,11 @@ class Checkbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _spacing = spacing ?? FastDevelopConfig.instance.checkboxOfSpacing;
-    var __size = size ?? FastDevelopConfig.instance.checkboxOfSize;
-    var _padding = padding ?? FastDevelopConfig.instance.checkboxOfPadding;
+    var _spacing = spacing ?? FConfig.ins.checkboxOfSpacing;
+    var __size = size ?? FConfig.ins.checkboxOfSize;
+    var _padding = padding ?? FConfig.ins.checkboxOfPadding;
     var _borderWidth =
-        borderWidth ?? FastDevelopConfig.instance.checkboxOfBorderWidth;
+        borderWidth ?? FConfig.ins.checkboxOfBorderWidth;
     var _size = (__size + _padding).ww;
 
     final ThemeData themeData = Theme.of(context);

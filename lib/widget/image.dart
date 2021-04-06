@@ -22,12 +22,12 @@ class ImgHelp {
 }
 
 void dialogImageSelect(BuildContext ctx, ValueNotifier<File?> photo,
-    {void Function()? next}) {
+    {void Function()? next, num size = 40}) {
   showDialogCustom(
     context: ctx,
     location: Location.bottom,
     offsetHandle: fromBottom,
-    style: StyleText.normal(size: 40),
+    style: StyleText.normal(size: size),
     builder: (_) => DialogListSelect(
       children: [
         NameFunction("从相册选择", () async {

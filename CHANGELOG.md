@@ -1,5 +1,8 @@
+## [2.0.3+1]
+Optimize theme configuration Repair empty security
+
 ## [2.0.3]
-Project optimization
+Optimize theme configuration Repair empty security
 
 ## [2.0.2]
 Project optimization

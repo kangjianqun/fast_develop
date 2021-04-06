@@ -232,8 +232,6 @@ class CConfig {
 }
 
 class SConfig {
-  static num? pageHeight;
-  static num? pageWidth;
 
   static num listSpace = 26;
 
@@ -244,14 +242,6 @@ class SConfig {
   static num padding = 20;
 
   static num space = 8;
-
-  static num textTwoUp = 40;
-  static num textTwo = 35;
-  static num textThree = 30;
-  static num textFour = 25;
-
-  static num radius = 20;
-  static num radiusOfCircle = 100;
 }
 
 class StyleText {
@@ -263,7 +253,7 @@ class StyleText {
     bool ignoreColor = false,
   }) {
     return normal(
-      size: FastDevelopConfig.instance.textOne,
+      size: FConfig.ins.textOne,
       color: color ?? CConfig.cTextColorOne,
       fontWeight: weight,
       ignoreColor: ignoreColor,
@@ -285,7 +275,7 @@ class StyleText {
     bool ignoreColor = false,
   }) {
     return normal(
-      size: FastDevelopConfig.instance.textOne,
+      size: FConfig.ins.textOne,
       color: color ?? CConfig.cTextColorOne,
       fontWeight: weight,
       ignoreColor: ignoreColor,
@@ -300,7 +290,7 @@ class StyleText {
     bool ignoreColor = false,
   }) {
     return normal(
-      size: SConfig.textTwo,
+      size: FConfig.ins.textTwo,
       color: color ?? CConfig.cTextColorTwo,
       fontWeight: weight,
       decoration: decoration,
@@ -324,7 +314,7 @@ class StyleText {
     bool ignoreColor = false,
   }) {
     return normal(
-      size: SConfig.textThree,
+      size: FConfig.ins.textThree,
       color: color ?? CConfig.cTextColorThree,
       fontWeight: weight,
       decoration: decoration,
@@ -353,7 +343,7 @@ class StyleText {
     bool ignoreColor = false,
   }) {
     return TextStyle(
-      fontSize: (size ?? SConfig.textThree).ssp,
+      fontSize: (size ?? FConfig.ins.textThree).ssp,
       color: ignoreColor ? null : (color ?? CConfig.cTextColorTwo),
       backgroundColor: backgroundColor,
       fontWeight: fontWeight,
@@ -440,21 +430,21 @@ class StyleText {
 
 class SBorderRadius {
   static BorderRadiusGeometry normal({num? radius}) {
-    var _radius = radius ?? SConfig.radius;
+    var _radius = radius ?? FConfig.ins.radius;
     return BorderRadius.all(Radius.circular(_radius.ww!));
   }
 
   static BorderRadiusGeometry circle({num? radius}) {
-    var _radius = radius ?? SConfig.radiusOfCircle;
+    var _radius = radius ?? FConfig.ins.radiusOfCircle;
     return BorderRadius.circular(_radius.ww!);
   }
 
   static BorderRadiusGeometry only(
       {num? topLeft, num? topRight, num? bottomLeft, num? bottomRight}) {
-    var _topLeft = topLeft ?? SConfig.radius;
-    var _topRight = topRight ?? SConfig.radius;
-    var _bottomLeft = bottomLeft ?? SConfig.radius;
-    var _bottomRight = bottomRight ?? SConfig.radius;
+    var _topLeft = topLeft ?? FConfig.ins.radius;
+    var _topRight = topRight ?? FConfig.ins.radius;
+    var _bottomLeft = bottomLeft ?? FConfig.ins.radius;
+    var _bottomRight = bottomRight ?? FConfig.ins.radius;
 
     return BorderRadius.only(
       topLeft: Radius.circular(_topLeft.ww!),
@@ -481,7 +471,7 @@ class SBorderRadius {
   }
 
   static BorderRadiusGeometry leftRight({num? radius, bool isH = true}) {
-    var _radius = radius ?? SConfig.radiusOfCircle;
+    var _radius = radius ?? FConfig.ins.radiusOfCircle;
     var value = Radius.circular(_radius.ww!);
 
     return isH
@@ -490,7 +480,7 @@ class SBorderRadius {
   }
 
   static BorderRadiusGeometry leftOrRight({num? radius, bool isLeft = true}) {
-    var _radius = radius ?? SConfig.radius;
+    var _radius = radius ?? FConfig.ins.radius;
     var value = Radius.circular(_radius.ww!);
     var nullValue = Radius.circular(0);
     return BorderRadius.only(
@@ -502,7 +492,7 @@ class SBorderRadius {
   }
 
   static BorderRadiusGeometry topOrButton({num? radius, bool isTop = true}) {
-    var _radius = radius ?? SConfig.radius;
+    var _radius = radius ?? FConfig.ins.radius;
     var value = Radius.circular(_radius.ww!);
     var nullValue = Radius.circular(0);
     return BorderRadius.only(
