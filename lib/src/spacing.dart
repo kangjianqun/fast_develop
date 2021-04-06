@@ -10,18 +10,18 @@ typedef Child = Widget? Function();
 
 class Spacing {
   static EdgeInsets rootLR({num? size}) {
-    var _size = size ?? SConfig.rootSpace;
+    var _size = size ?? FConfig.ins.rootLR;
     return leftAndRight(size: _size);
   }
 
   static EdgeInsets leftAndRight({num? size, num? right}) {
-    var _size = size ?? SConfig.padding;
+    var _size = size ?? FConfig.ins.rootLR;
     var _right = right ?? _size;
     return EdgeInsets.only(left: _size.ww!, right: _right.ww!);
   }
 
   static EdgeInsets leftOrRight({num? size, bool isLeft = true}) {
-    var _size = size ?? SConfig.padding;
+    var _size = size ?? FConfig.ins.rootLR;
     var left = isLeft ? _size : 0;
     var right = !isLeft ? _size : 0;
 
@@ -29,13 +29,13 @@ class Spacing {
   }
 
   static EdgeInsets topAndBottom({num? size, num? bottom}) {
-    var _size = size ?? SConfig.padding;
+    var _size = size ?? FConfig.ins.rootTB;
     var _bottom = bottom ?? _size;
     return EdgeInsets.only(top: _size.hh!, bottom: _bottom.hh!);
   }
 
   static EdgeInsets topOrBottom({num? size, bool isTop = true}) {
-    var _size = size ?? SConfig.padding;
+    var _size = size ?? FConfig.ins.rootTB;
     var top = isTop ? _size : 0;
     var bottom = !isTop ? _size : 0;
 
@@ -43,7 +43,7 @@ class Spacing {
   }
 
   static EdgeInsets all({num? size, num? leftR = -1, num? topB = -1}) {
-    var _size = size ?? SConfig.padding;
+    var _size = size ?? FConfig.ins.padding;
 
     if (leftR != -1 || topB != -1) _size = 0;
     var w = (leftR != -1 ? leftR : _size)!.ww!;
@@ -52,8 +52,8 @@ class Spacing {
   }
 
   static EdgeInsets allNo({num? leftR, num? topB}) {
-    leftR ??= SConfig.padding;
-    topB ??= SConfig.listSpace;
+    leftR ??= FConfig.ins.padding;
+    topB ??= FConfig.ins.listSpace;
 
     var w = leftR.ww!;
     var h = topB.hh!;
@@ -65,19 +65,19 @@ class Spacing {
   }
 
   static Widget spaceList({num? height}) {
-    var _h = height ?? SConfig.listSpace;
+    var _h = height ?? FConfig.ins.listSpace;
     return spacingView(height: _h);
   }
 
   static Widget spacePadding({num? size}) {
-    var _size = size ?? SConfig.padding;
+    var _size = size ?? FConfig.ins.padding;
     return spacingView(height: _size, width: _size);
   }
 
   /// 用来做间距
   static Widget spacingView({num? width, num? height}) {
-    var _w = width ?? SConfig.space;
-    var _h = height ?? SConfig.space;
+    var _w = width ?? FConfig.ins.space;
+    var _h = height ?? FConfig.ins.space;
     return SizedBox(width: _w.ww, height: _h.hh);
   }
 
@@ -109,7 +109,8 @@ class Spacing {
       valueListenable: vn,
       builder: (_, show, __) {
         var _show = reverse ? !show : show;
-        return Visibility(visible: _show, child: _show ? child!()! : SizedBox());
+        return Visibility(
+            visible: _show, child: _show ? child!()! : SizedBox());
       },
     );
   }

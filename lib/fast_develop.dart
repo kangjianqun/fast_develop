@@ -68,6 +68,29 @@ class FConfig {
   BuildContext? context;
   num pageHeight;
   num pageWidth;
+
+  num listSpace;
+
+  /// 根布局 左右间隔
+  num rootLR;
+  num rootTB;
+
+  num space;
+  num padding;
+  num mainPadding;
+  num crossPadding;
+
+  num textOne;
+  num textTwo;
+  num textThree;
+  num textFour;
+
+  /// lv Five
+  num textFive;
+
+  num radius;
+  num radiusOfCircle;
+
   num singleLineOfMinHeight;
   num singleLineOfIconHeight;
   num singleLineOfNameLeftPadding;
@@ -92,12 +115,14 @@ class FConfig {
   num themeFontSize;
 
   num? listIntervalViewOfCacheExtent;
-
   num? gridIntervalViewOfCacheExtent;
 
-  num space;
-  num mainPadding;
-  num crossPadding;
+  num buttonOfLeftR;
+  num buttonOfTopB;
+  num buttonOfSize;
+  num buttonOfTextSize;
+  num? buttonOfSizeH;
+  num buttonOfPressedOpacity;
 
   num editTextOfIconRightSpace;
   num editTextOfLeftRight;
@@ -118,17 +143,6 @@ class FConfig {
   num titleWidgetOfHeight;
   num titleWidgetOfActionSpacing;
 
-  num textOne;
-  num textTwo;
-  num textThree;
-  num textFour;
-
-  /// lv Five
-  num textFive;
-
-  num radius;
-  num radiusOfCircle;
-
   /// 默认 1920*1080
   FConfig.init({
     ToastShow? toast,
@@ -145,7 +159,17 @@ class FConfig {
     this.context,
     this.pageWidth = 1080,
     this.pageHeight = 1920,
+    this.rootLR = 26,
+    this.rootTB = 26,
+    this.padding = 20,
+    this.listSpace = 26,
     this.themeFontSize = 22,
+    this.buttonOfLeftR = 48,
+    this.buttonOfTopB = 16,
+    this.buttonOfSize = 72,
+    this.buttonOfTextSize = 40,
+    this.buttonOfSizeH,
+    this.buttonOfPressedOpacity = 0.4,
     this.themeSelectedIconSize = 46,
     this.themeUnselectedIconSize = 46,
     this.themeSelectedLabelSize = 25,
@@ -180,7 +204,7 @@ class FConfig {
     this.editTextOfLeftRight = 32,
     this.editTextOfTopBottom = 16,
     this.editTextOfSignLeftPadding = 20,
-    this.space = 16,
+    this.space = 8,
     this.mainPadding = 32,
     this.crossPadding = 32,
     this.textOne = 40,

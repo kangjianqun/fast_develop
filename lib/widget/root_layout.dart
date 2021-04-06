@@ -160,12 +160,12 @@ class MyScaffold extends StatelessWidget {
       bgColor ??= backgroundWidget != null
           ? CConfig.transparent
           : (themeData?.appBarTheme.color ??
-          CConfig.getBackground(
-              brightness: _brightness,
-              context: ctx,
-              color: (bgIsTr || backgroundWidget != null)
-                  ? CConfig.transparent
-                  : null));
+              CConfig.getBackground(
+                  brightness: _brightness,
+                  context: ctx,
+                  color: (bgIsTr || backgroundWidget != null)
+                      ? CConfig.transparent
+                      : null));
 
       top = TitleWidget(
         titleIsCenter: titleIsCenter,
@@ -185,7 +185,7 @@ class MyScaffold extends StatelessWidget {
         color: defaultTextColor ??
             CConfig.getTwo(brightness: brightness, context: context));
     Widget bodyView =
-    DefaultTextStyle(style: style, child: stateWidget ?? body(context));
+        DefaultTextStyle(style: style, child: stateWidget ?? body(context));
 
     Widget? _bottom = bottom == null ? null : bottom!(context);
     if (_bottom != null) {
@@ -233,10 +233,10 @@ class MyScaffold extends StatelessWidget {
 
       Widget center = bottom != null && stateWidget == null
           ? Container(
-          height: ScreenUtils.height,
-          decoration: BoxDecoration(),
-          child: Column(
-              children: [Expanded(child: bodyView), bottom!(context)]))
+              height: ScreenUtils.height,
+              decoration: BoxDecoration(),
+              child: Column(
+                  children: [Expanded(child: bodyView), bottom!(context)]))
           : bodyView;
 
       var _top = top;
@@ -449,8 +449,7 @@ class MyBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _padding = padding ?? FConfig.ins.myBodyOfPadding;
-    var _space =
-        space ?? FConfig.ins.myBodyOfSpace ?? SConfig.listSpace;
+    var _space = space ?? FConfig.ins.myBodyOfSpace ?? FConfig.ins.listSpace;
     Widget view = _content(_padding, _space);
     if (topWidget != null) {
       Widget _topWidget = topWidget!;
@@ -615,23 +614,23 @@ class BodyE extends StatelessWidget {
     } else {
       view = slide
           ? easyRefreshList(
-        children: _children,
-        controller: controller,
-        refresh: refresh,
-        mainPadding: padding,
-        crossPadding: padding,
-        load: load,
-        isInterval: space != 0,
-        space: space,
-      )
+              children: _children,
+              controller: controller,
+              refresh: refresh,
+              mainPadding: padding,
+              crossPadding: padding,
+              load: load,
+              isInterval: space != 0,
+              space: space,
+            )
           : ListIntervalView(
-        space: space,
-        mainPadding: padding,
-        crossPadding: padding,
-        fullLine: fullLine,
-        itemCount: _children.length,
-        itemBuilder: (_, index) => _children[index],
-      );
+              space: space,
+              mainPadding: padding,
+              crossPadding: padding,
+              fullLine: fullLine,
+              itemCount: _children.length,
+              itemBuilder: (_, index) => _children[index],
+            );
     }
 
     return Container(

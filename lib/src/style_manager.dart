@@ -231,19 +231,6 @@ class CConfig {
   }
 }
 
-class SConfig {
-
-  static num listSpace = 26;
-
-  /// 根布局 左右间隔
-  static num rootSpace = 26;
-
-  /// [Widget]内部间隔
-  static num padding = 20;
-
-  static num space = 8;
-}
-
 class StyleText {
   /// 忽略
   static TextStyle one({

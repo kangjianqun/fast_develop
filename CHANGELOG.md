@@ -1,12 +1,11 @@
+## [2.0.3+2]
+Optimize theme configuration Repair empty security
 ## [2.0.3+1]
 Optimize theme configuration Repair empty security
-
 ## [2.0.3]
 Optimize theme configuration Repair empty security
-
 ## [2.0.2]
 Project optimization
-
 ## [2.0.1]
 add Null safety
 

@@ -206,20 +206,22 @@ class Button extends StatelessWidget {
     required this.onTap,
     this.isCircle = true,
     this.paddingInside,
-    this.radius = 20,
+    this.radius,
     this.decoration,
     this.paddingChild,
     this.size,
     this.sizeH,
     this.icon,
     this.color,
-    this.textSize = 40,
+    this.textSize,
     this.paddingOuter,
     this.margin,
-    this.pressedOpacity = 0.4,
+    this.pressedOpacity,
     this.borderColor,
     this.style,
     this.touchSpaced,
+    this.leftR,
+    this.topB,
   }) : super(key: key);
 
   /// 图标按钮
@@ -231,24 +233,26 @@ class Button extends StatelessWidget {
     required this.onTap,
     this.isCircle = true,
     this.paddingInside,
-    this.radius = 20,
+    this.radius,
     this.decoration,
     this.paddingChild = 8,
-    this.size = 72,
+    this.size,
     this.sizeH,
     this.color,
     this.textSize,
     this.paddingOuter,
     this.margin,
-    this.pressedOpacity = 0.4,
+    this.pressedOpacity,
     this.borderColor,
     this.touchSpaced,
+    this.leftR,
+    this.topB,
   })  : this.style = null,
         super(key: key);
 
   final bool isCircle;
   final Color? borderColor;
-  final double radius;
+  final double? radius;
   final int? touchSpaced;
   final String? text;
   final TouchTap? onTap;
@@ -256,6 +260,8 @@ class Button extends StatelessWidget {
   final Decoration? decoration;
   final Widget? child;
 
+  final num? leftR;
+  final num? topB;
   final num? textSize;
   final int? paddingChild;
   final EdgeInsets? paddingOuter;
@@ -267,7 +273,7 @@ class Button extends StatelessWidget {
   final double? sizeH;
   final PrimarySecondary<Color>? color;
   final TextStyle? style;
-  final double pressedOpacity;
+  final double? pressedOpacity;
 
   @override
   Widget build(BuildContext context) {
@@ -280,15 +286,29 @@ class Button extends StatelessWidget {
     Border? border =
         borderColor == null ? null : Border.all(color: borderColor!);
 
+    var _r = radius ?? FConfig.ins.radius;
+    var _leftR = leftR ?? FConfig.ins.buttonOfLeftR;
+    var _topB = topB ?? FConfig.ins.buttonOfTopB;
+    var padding = paddingInside ?? Spacing.all(leftR: _leftR, topB: _topB);
+    var _ts = textSize ?? FConfig.ins.buttonOfTextSize;
+    var _deco = decoration ??
+        DecoUtil.normal(
+            color: _color.secondary,
+            isCircle: isCircle,
+            radius: _r,
+            border: border);
+    var _style = style ?? StyleText.normal(color: _color.primary, size: _ts);
+    var _sH = sizeH ?? FConfig.ins.buttonOfSizeH;
     if (icon != null) {
+      var _size = size ?? FConfig.ins.buttonOfSize;
       view = Container(
-        height: size!.rr,
-        width: size!.rr,
+        height: _size.rr,
+        width: _size.rr,
         margin: margin,
         decoration: DecoUtil.normal(
           color: _color.secondary,
           isCircle: isCircle,
-          radius: radius,
+          radius: _r,
           border: border,
         ),
         child: Icon(
@@ -299,24 +319,16 @@ class Button extends StatelessWidget {
       );
     } else {
       view = Container(
-        width: size == null ? null : size!.rr,
-        height: sizeH == null ? null : sizeH!.rr,
+        width: size?.rr,
+        height: _sH?.rr,
         margin: margin,
-        padding: paddingInside ?? Spacing.all(leftR: 48, topB: 16),
-        decoration: decoration ??
-            DecoUtil.normal(
-              color: _color.secondary,
-              isCircle: isCircle,
-              radius: radius,
-              border: border,
-            ),
+        padding: padding,
+        decoration: _deco,
         child: child ??
             Center(
               widthFactor: 1,
               heightFactor: 1,
-              child: Text(text!,
-                  style: style ??
-                      StyleText.normal(color: _color.primary, size: textSize)),
+              child: Text(text!, style: _style),
             ),
       );
 
@@ -417,7 +429,7 @@ class CardEx extends StatelessWidget {
 
       if (center != null) _center = Row(children: <Widget>[_center, center!]);
 
-      Widget _space = Spacing.spacingView(height: space ?? SConfig.listSpace);
+      Widget _space = Spacing.spacingView(height: space ?? FConfig.ins.listSpace);
       view = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
