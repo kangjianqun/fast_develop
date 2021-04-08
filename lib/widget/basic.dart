@@ -319,8 +319,8 @@ class Button extends StatelessWidget {
       );
     } else {
       view = Container(
-        width: size?.rr,
-        height: _sH?.rr,
+        width: size.rr,
+        height: _sH.rr,
         margin: margin,
         padding: padding,
         decoration: _deco,
@@ -621,8 +621,8 @@ class ContainerEx extends StatelessWidget {
 
     return Container(
       color: _color,
-      width: width?.ww,
-      height: isSquare ? height?.ww : height?.hh,
+      width: width.ww,
+      height: isSquare ? height.ww : height.hh,
       child: child,
       padding: padding,
       decoration: decoration,

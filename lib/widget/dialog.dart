@@ -401,7 +401,7 @@ class DialogCustom extends StatelessWidget {
     }
 
     return Container(
-      height: height?.ww,
+      height: height.ww,
       margin: rootMargin,
       decoration: decoration ??
           DecoUtil.unilateral(1,

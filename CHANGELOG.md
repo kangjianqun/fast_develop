@@ -1,8 +1,4 @@
-## [2.0.3+3]
-Optimize theme configuration Repair empty security
-## [2.0.3+2]
-Optimize theme configuration Repair empty security
-## [2.0.3+1]
+## [2.0.4]
 Optimize theme configuration Repair empty security
 ## [2.0.3]
 Optimize theme configuration Repair empty security

@@ -416,17 +416,17 @@ class StyleText {
 }
 
 class SBorderRadius {
-  static BorderRadiusGeometry normal({num? radius}) {
+  static BorderRadius normal({num? radius}) {
     var _radius = radius ?? FConfig.ins.radius;
     return BorderRadius.all(Radius.circular(_radius.ww!));
   }
 
-  static BorderRadiusGeometry circle({num? radius}) {
+  static BorderRadius circle({num? radius}) {
     var _radius = radius ?? FConfig.ins.radiusOfCircle;
     return BorderRadius.circular(_radius.ww!);
   }
 
-  static BorderRadiusGeometry only(
+  static BorderRadius only(
       {num? topLeft, num? topRight, num? bottomLeft, num? bottomRight}) {
     var _topLeft = topLeft ?? FConfig.ins.radius;
     var _topRight = topRight ?? FConfig.ins.radius;
@@ -457,7 +457,7 @@ class SBorderRadius {
           );
   }
 
-  static BorderRadiusGeometry leftRight({num? radius, bool isH = true}) {
+  static BorderRadius leftRight({num? radius, bool isH = true}) {
     var _radius = radius ?? FConfig.ins.radiusOfCircle;
     var value = Radius.circular(_radius.ww!);
 
@@ -466,7 +466,7 @@ class SBorderRadius {
         : BorderRadius.vertical(top: value, bottom: value);
   }
 
-  static BorderRadiusGeometry leftOrRight({num? radius, bool isLeft = true}) {
+  static BorderRadius leftOrRight({num? radius, bool isLeft = true}) {
     var _radius = radius ?? FConfig.ins.radius;
     var value = Radius.circular(_radius.ww!);
     var nullValue = Radius.circular(0);
@@ -478,7 +478,7 @@ class SBorderRadius {
     );
   }
 
-  static BorderRadiusGeometry topOrButton({num? radius, bool isTop = true}) {
+  static BorderRadius topOrButton({num? radius, bool isTop = true}) {
     var _radius = radius ?? FConfig.ins.radius;
     var value = Radius.circular(_radius.ww!);
     var nullValue = Radius.circular(0);
