@@ -133,7 +133,7 @@ class IconText extends StatelessWidget {
 
   Widget? _text() {
     var view = text;
-    if (text == null && data!.en) {
+    if (text == null && data.en) {
       view = Text(data!,
           style: StyleText.normal(size: textSize ?? size, color: color));
     }
@@ -413,7 +413,7 @@ class CardEx extends StatelessWidget {
 
   Widget _child(Color? titleColor, Color? subTitleColor) {
     var view;
-    if (title!.en || subTitle.en || center != null) {
+    if (title.en || subTitle.en || center != null) {
       Widget _center = TextRich(color: textColor, children: [
         RichTextItem(
           title ?? "",
@@ -423,7 +423,7 @@ class CardEx extends StatelessWidget {
             brightness: brightness,
           ),
         ),
-        RichTextItem(title!.e ? "" : "  " + subTitle,
+        RichTextItem(title.e ? "" : "  " + subTitle,
             StyleText.grey(size: 25, color: subTitleColor))
       ]);
 
@@ -661,7 +661,7 @@ class Describe extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget _child = Spacing.vView();
 
-    if (data!.en) _child = Text(data!);
+    if (data.en) _child = Text(data!);
 
     if (child != null) _child = child!;
 
@@ -913,8 +913,8 @@ class GridIntervalView extends StatelessWidget {
     var _padding = Spacing.all(leftR: isH ? _mp : _cp, topB: isH ? _cp : _mp);
     var _cacheExtent = cacheExtent ?? FConfig.ins.gridIntervalViewOfCacheExtent;
     return Container(
-      height: isH || height != null ? height!.ww : null,
-      width: width != null ? width!.ww : null,
+      height: isH || height != null ? height.ww : null,
+      width: width != null ? width.ww : null,
       color: color,
       alignment: Alignment.topCenter,
       child: GridView.builder(
@@ -1165,7 +1165,7 @@ class SingleLine<T> extends StatelessWidget {
     Widget? view = leftView;
 
     if (view == null) {
-      if (DataUtil.isNotE(iconUrl)) {
+      if (iconUrl.en) {
         view = WrapperImage.size(
             size: iconHeight.ww!, url: iconUrl!, fit: BoxFit.contain);
       } else {
@@ -1194,11 +1194,11 @@ class SingleLine<T> extends StatelessWidget {
   Widget _center() {
     if (centerWidget != null) {
       return Expanded(child: centerWidget!);
-    } else if (DataUtil.isE(centerTxt) && ListUtil.isEmpty(dropdownItems)) {
+    } else if (centerTxt.e && ListUtil.isEmpty(dropdownItems)) {
       return Expanded(child: Spacing.vView());
     } else {
       return Spacing.vView(
-        isShow: DataUtil.isNotE(centerTxt),
+        isShow: centerTxt.en,
         child: () =>
             Text(centerTxt!, style: centerTxtStyle ?? StyleText.grey()),
       );
@@ -1239,14 +1239,14 @@ class SingleLine<T> extends StatelessWidget {
   List<Widget> _right(num urlSize, Color rightColor, IconData rightIconData) {
     return [
       Spacing.vView(
-        isShow: DataUtil.isNotE(url),
+        isShow: url.en,
         child: () => ClipRRect(
           borderRadius: SBorderRadius.circle() as BorderRadius,
           child: WrapperImage.size(size: urlSize.ww!, url: url!),
         ),
       ),
       Spacing.vView(
-        isShow: DataUtil.isNotE(rightTxt),
+        isShow: rightTxt.en,
         child: () => Text(rightTxt!, style: rightTxtStyle ?? StyleText.grey()),
       ),
       Spacing.vView(

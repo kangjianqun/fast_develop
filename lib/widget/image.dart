@@ -64,7 +64,7 @@ class PhotoSelect extends StatelessWidget {
   final Brightness? brightness;
 
   Widget _imgChild(File? file, String? url, Brightness brightness) {
-    if ((imgHelp == null || url!.e) && file == null) {
+    if ((imgHelp == null || url.e) && file == null) {
       return Icon(IConfig.add, color: CConfig.getMatching());
     } else {
       return isUrl

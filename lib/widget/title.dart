@@ -92,7 +92,7 @@ class TitleAction extends StatelessWidget {
   }
 
   Widget _child(BuildContext context) {
-    if (iconData != null && txt!.en) {
+    if (iconData != null && txt.en) {
       return IconText.simple(
         iData: iconData,
         size: 72,
@@ -109,7 +109,7 @@ class TitleAction extends StatelessWidget {
       );
     }
 
-    if (txt!.en) {
+    if (txt.en) {
       bool _stress = negative != null && !negative!;
       var _color = color ??
           (_stress ? Theme.of(context).primaryColor : CConfig.negativeColor);
@@ -138,7 +138,7 @@ class TitleVM extends BaseViewModel {
   get title => _title;
 
   setTitle(String? title, {notify = true, bool allowNull = false}) {
-    if (!allowNull && title!.e || title == _title) {
+    if (!allowNull && title.e || title == _title) {
       return;
     }
     _title = title ?? "";

@@ -45,7 +45,7 @@ class PlatformUtils {
   }
 
   static Future<String> getAppVersion() async {
-    if (version!.en) return version!;
+    if (version.en) return version!;
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     version = packageInfo.version;
     return version!;

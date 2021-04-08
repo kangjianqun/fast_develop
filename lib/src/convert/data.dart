@@ -7,6 +7,7 @@ typedef ItemBuild<T> = T Function(dynamic data);
 
 class ListKV {
   late List<KeyValue> list;
+
   ListKV();
 
   factory ListKV.fromJson(Map<String, dynamic> json) {
@@ -39,6 +40,7 @@ class KeyValue<T> {
 
   String key;
   T value;
+
   KeyValue(this.key, this.value);
 }
 
@@ -90,9 +92,13 @@ List<T> listOf<T>(value, ItemBuild<T> itemBuild) =>
     valueByType<T>(value, List, itemBuild: itemBuild);
 
 List<String> listStrOf(data) => listOf<String>(data, (data) => data);
+
 String strOf(data) => valueByType(data, String);
+
 int intOf(data) => valueByType(data, int);
+
 double doubleOf(data) => valueByType(data, double);
+
 bool boolOf(data) => valueByType(data, bool);
 
 /// 值转换
@@ -169,42 +175,9 @@ class JudgeData<T> {
   JudgeData(this.value, {this.toast});
 }
 
-class DataUtil {
-  static bool isE(data) {
-    bool result = true;
-    if (data != null) {
-      if (data is String) {
-        result = StringUtil.isEmpty(data);
-      } else if (data is int) {
-        result = IntUtil.isEmpty(data);
-      } else if (data is List) {
-        result = ListUtil.isEmpty(data);
-      } else if (data is Map) {
-        result = MapUtil.isEmpty(data);
-      }
-    }
-    return result;
-  }
-
-  static bool isNotE(data) {
-    bool result = false;
-    if (data != null) {
-      if (data is String) {
-        result = StringUtil.isNotEmpty(data);
-      } else if (data is int) {
-        result = IntUtil.isNotEmpty(data);
-      } else if (data is List) {
-        result = ListUtil.isNotEmpty(data);
-      } else if (data is Map) {
-        result = MapUtil.isNotEmpty(data);
-      }
-    }
-    return result;
-  }
-}
-
-extension StringUtil on String {
+extension StringUtil on String? {
   bool get e => isEmpty(this);
+
   bool get en => isNotEmpty(this);
 
   bool get b => BoolUtil.parse(this);
@@ -304,7 +277,7 @@ class NumUtil {
   }
 }
 
-extension BoolUtil on bool {
+extension BoolUtil on bool? {
   /// 转换 int
   int get toInt => convertInt(this);
 
@@ -329,8 +302,9 @@ extension BoolUtil on bool {
   }
 }
 
-extension ListUtil on List {
+extension ListUtil on List? {
   bool get e => isEmpty(this);
+
   bool get en => isNotEmpty(this);
 
   static List<String> parseS(dynamic value) => parse<String>(value);
@@ -427,7 +401,11 @@ extension ListUtil on List {
   }
 }
 
-class MapUtil {
+extension MapUtil on Map? {
+  bool get e => isEmpty(this);
+
+  bool get en => isNotEmpty(this);
+
   static bool isEmpty(Map? map) {
     return map == null || map.isEmpty;
   }

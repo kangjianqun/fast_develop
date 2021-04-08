@@ -46,8 +46,8 @@ class Spacing {
     var _size = size ?? FConfig.ins.padding;
 
     if (leftR != -1 || topB != -1) _size = 0;
-    var w = (leftR != -1 ? leftR : _size)!.ww!;
-    var h = (topB != -1 ? topB : _size)!.ww!;
+    var w = (leftR != -1 ? leftR : _size).ww!;
+    var h = (topB != -1 ? topB : _size).ww!;
     return EdgeInsets.fromLTRB(w, h, w, h);
   }
 
@@ -61,7 +61,7 @@ class Spacing {
   }
 
   static EdgeInsets fromLTRB(num? left, num? top, num? right, num? bottom) {
-    return EdgeInsets.fromLTRB(left!.ww!, top!.ww!, right!.ww!, bottom!.ww!);
+    return EdgeInsets.fromLTRB(left.ww!, top.ww!, right.ww!, bottom.ww!);
   }
 
   static Widget spaceList({num? height}) {

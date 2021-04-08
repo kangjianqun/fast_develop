@@ -388,7 +388,7 @@ class DialogCustom extends StatelessWidget {
     } else {
       body = Column(
         children: <Widget>[
-          Spacing.vView(isShow: name!.en, child: () => _title()),
+          Spacing.vView(isShow: name.en, child: () => _title()),
           Expanded(
             child: Container(
               margin: Spacing.all(size: margin),

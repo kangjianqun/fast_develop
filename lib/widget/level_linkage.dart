@@ -210,8 +210,8 @@ class _CityPickerState<T extends BaseItem> extends State<_CityPickerWidget> {
                   var areaList =
                       cityList.e ? null : cityList[cityIndex].lists();
                   Map<String, dynamic> areaMap = {
-                    "code": areaList!.e ? "" : areaList[areaIndex].value(),
-                    "name": areaList.e ? "" : areaList[areaIndex].hint(),
+                    "code": areaList.e ? "" : areaList![areaIndex].value(),
+                    "name": areaList.e ? "" : areaList![areaIndex].hint(),
                   };
                   if (widget.selectProvince != null)
                     widget.selectProvince!(provinceMap);

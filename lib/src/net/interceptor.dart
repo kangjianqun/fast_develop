@@ -107,18 +107,18 @@ class ApiInterceptor extends InterceptorsWrapper {
         response.statusCode = respData.code;
         LogUtil.printLog('---api-response--->error---->$respData');
         if (BoolUtil.parse(response.requestOptions.extra[keyShowError]) &&
-            respData.error!.en) {
+            respData.error.en) {
           showToast(respData.error);
         }
 
         ///需要登录
-        if (respData.login!.en && respData.login == "0") {
+        if (respData.login.en && respData.login == "0") {
           throw const UnAuthorizedException();
         }
       }
 
       if (BoolUtil.parse(response.requestOptions.extra[keyShowHint]) &&
-          respData.hint!.en) {
+          respData.hint.en) {
         showToast(respData.error);
       }
       return handler.resolve(response);

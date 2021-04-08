@@ -15,7 +15,7 @@ void setPixelMatching(bool? isPixelMatching) {
 //  LogUtil.printLog("-----------" + pixelMatching.toString());
 }
 
-extension ScreenUtils on num {
+extension ScreenUtils on num? {
   static get max => double.infinity;
 
   /// 是否启用屏幕适配

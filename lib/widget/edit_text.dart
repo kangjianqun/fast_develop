@@ -236,7 +236,7 @@ class _EditTextState extends State<EditText> {
 
   Widget _leftSign(num nameLeftPadding) {
     Widget? view = widget.icon ??
-        (widget.name!.e ? null : Text(widget.name!, style: StyleText.normal()));
+        (widget.name.e ? null : Text(widget.name!, style: StyleText.normal()));
 
     if (view != null) {
       view = Container(
@@ -280,8 +280,8 @@ class _EditTextState extends State<EditText> {
           };
 
     return Container(
-      width: widget.width == null ? null : widget.width!.ww,
-      height: widget.height == null ? null : widget.height!.hh,
+      width: widget.width == null ? null : widget.width.ww,
+      height: widget.height == null ? null : widget.height.hh,
       alignment: Alignment.center,
       margin: widget.margin,
       padding: widget.padding ?? Spacing.all(leftR: _leftR, topB: _topB),
