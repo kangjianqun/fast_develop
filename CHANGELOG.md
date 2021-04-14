@@ -1,3 +1,5 @@
+## [2.0.4+1]
+optimization root_layout
 ## [2.0.4]
 Optimize theme configuration Repair empty security
 ## [2.0.3]

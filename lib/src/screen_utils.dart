@@ -22,12 +22,17 @@ extension ScreenUtils on num? {
   static bool enable = true;
 
   double? get ww => _width(this);
+
   double? get hh => _height(this);
+
   double? get rr => _rr(this);
+
   double? get ssp => _fontSize(this, null);
+
   double? get sspA => _fontSize(this, true);
 
   static double get statusBarH => ScreenUtil().statusBarHeight;
+
   static double get height => ScreenUtil().screenHeight;
 
   static Offset? widgetOffset(BuildContext context) {
@@ -86,8 +91,7 @@ extension ScreenUtils on num? {
     num = valueByType(num, double);
     if (enable)
       try {
-        return ScreenUtil()
-            .setSp(num!, allowFontScalingSelf: allowFontScalingSelf);
+        return ScreenUtil().setSp(num!);
       } catch (e) {
         return num!.toDouble();
       }

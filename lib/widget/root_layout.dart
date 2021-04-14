@@ -7,9 +7,9 @@ import '../fast_develop.dart';
 typedef ChildBuild<T> = T Function(BuildContext? context);
 
 typedef SwitchThemeBrightness = ThemeData Function(
-    Brightness? brightness, ThemeData? themeData);
+    Brightness brightness, ThemeData themeData);
 
-late SwitchThemeBrightness _switchThemeBrightness;
+SwitchThemeBrightness? _switchThemeBrightness;
 
 initFastDevelopOfRootLayout(SwitchThemeBrightness? stb) {
   if (stb != null) _switchThemeBrightness = stb;
@@ -281,7 +281,8 @@ class MyScaffold extends StatelessWidget {
     var _themeData = themeData;
     if (_themeData == null && brightness != null) {
       _themeData = Theme.of(context);
-      _themeData = _switchThemeBrightness(brightness, _themeData);
+      if (_switchThemeBrightness != null)
+        _themeData = _switchThemeBrightness!(brightness!, _themeData);
     }
 
     if (_themeData != null) {
@@ -413,7 +414,7 @@ class MyBody extends StatelessWidget {
   final Footer? footer;
 
   Widget _content(num padding, space) {
-    List<Widget> _children = children ?? [child!];
+    List<Widget>? _children = children ?? (child == null ? [] : [child!]);
 
     Widget? view;
     if (noList) {
