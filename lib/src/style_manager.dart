@@ -235,12 +235,13 @@ class StyleText {
   /// 忽略
   static TextStyle one({
     Color? color,
+    num? size,
     FontWeight weight = FontWeight.normal,
     Brightness? brightness,
     bool ignoreColor = false,
   }) {
     return normal(
-      size: FConfig.ins.textOne,
+      size: size ?? FConfig.ins.textOne,
       color: color ?? CConfig.cTextColorOne,
       fontWeight: weight,
       ignoreColor: ignoreColor,
@@ -250,19 +251,21 @@ class StyleText {
   /// 采用默认 [DefaultTextStyle] 的颜色
   static TextStyle oneNoColor(
       {Color? color,
+      num? size,
       FontWeight weight = FontWeight.normal,
       Brightness? brightness}) {
-    return one(color: null, weight: weight, ignoreColor: true);
+    return one(color: null, size: size, weight: weight, ignoreColor: true);
   }
 
   static TextStyle oneB({
     Color? color,
+    num? size,
     FontWeight weight = FontWeight.bold,
     Brightness? brightness,
     bool ignoreColor = false,
   }) {
     return normal(
-      size: FConfig.ins.textOne,
+      size: size ?? FConfig.ins.textOne,
       color: color ?? CConfig.cTextColorOne,
       fontWeight: weight,
       ignoreColor: ignoreColor,
@@ -271,13 +274,14 @@ class StyleText {
 
   static TextStyle two({
     Color? color,
+    num? size,
     FontWeight weight = FontWeight.normal,
     TextDecoration? decoration,
     Brightness? brightness,
     bool ignoreColor = false,
   }) {
     return normal(
-      size: FConfig.ins.textTwo,
+      size: size ?? FConfig.ins.textTwo,
       color: color ?? CConfig.cTextColorTwo,
       fontWeight: weight,
       decoration: decoration,
@@ -288,20 +292,22 @@ class StyleText {
   /// 采用默认 [DefaultTextStyle] 的颜色
   static TextStyle twoNoColor(
       {Color? color,
+      num? size,
       FontWeight weight = FontWeight.normal,
       Brightness? brightness}) {
-    return two(color: null, weight: weight, ignoreColor: true);
+    return two(color: null, size: size, weight: weight, ignoreColor: true);
   }
 
   static TextStyle three({
     Color? color,
+    num? size,
     FontWeight weight = FontWeight.normal,
     TextDecoration? decoration,
     Brightness? brightness,
     bool ignoreColor = false,
   }) {
     return normal(
-      size: FConfig.ins.textThree,
+      size: size ?? FConfig.ins.textThree,
       color: color ?? CConfig.cTextColorThree,
       fontWeight: weight,
       decoration: decoration,
@@ -312,9 +318,10 @@ class StyleText {
   /// 采用默认 [DefaultTextStyle] 的颜色
   static TextStyle threeNoColor(
       {Color? color,
+      num? size,
       FontWeight weight = FontWeight.normal,
       Brightness? brightness}) {
-    return three(color: null, weight: weight, ignoreColor: true);
+    return three(color: null, size: size, weight: weight, ignoreColor: true);
   }
 
   static TextStyle normal({
@@ -342,13 +349,35 @@ class StyleText {
     );
   }
 
+  static TextStyle black({
+    num? size,
+    Color? color,
+    Color? backgroundColor,
+    Color? decorationColor,
+    FontWeight fontWeight = FontWeight.normal,
+    String? fontFamily,
+    TextDecoration decoration = TextDecoration.none,
+    double? decorationThickness,
+    Brightness? brightness,
+    bool ignoreColor = false,
+  }) {
+    return normal(
+      size: size,
+      color: color ?? CConfig.cTextColorOne,
+      backgroundColor: backgroundColor,
+      fontWeight: fontWeight,
+      fontFamily: fontFamily,
+      decoration: decoration,
+    );
+  }
+
   static TextStyle white({
     num? size,
     Color? color,
     Color? backgroundColor,
     FontWeight fontWeight = FontWeight.normal,
     String? fontFamily,
-    TextDecoration d = TextDecoration.none,
+    TextDecoration decoration = TextDecoration.none,
   }) {
     return normal(
       size: size,
@@ -356,7 +385,7 @@ class StyleText {
       backgroundColor: backgroundColor,
       fontWeight: fontWeight,
       fontFamily: fontFamily,
-      decoration: d,
+      decoration: decoration,
     );
   }
 
@@ -460,7 +489,6 @@ class SBorderRadius {
   static BorderRadius leftRight({num? radius, bool isH = true}) {
     var _radius = radius ?? FConfig.ins.radiusOfCircle;
     var value = Radius.circular(_radius.ww!);
-
     return isH
         ? BorderRadius.horizontal(left: value, right: value)
         : BorderRadius.vertical(top: value, bottom: value);

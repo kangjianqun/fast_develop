@@ -429,7 +429,8 @@ class CardEx extends StatelessWidget {
 
       if (center != null) _center = Row(children: <Widget>[_center, center!]);
 
-      Widget _space = Spacing.spacingView(height: space ?? FConfig.ins.listSpace);
+      Widget _space =
+          Spacing.spacingView(height: space ?? FConfig.ins.listSpace);
       view = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -803,7 +804,7 @@ class ListIntervalView extends StatelessWidget {
     );
 
     if (isH || color != null) {
-      var _height = isH ? height.ww : null;
+      var _height = isH ? height.hh : null;
       view = Container(height: _height, color: color, child: view);
     }
     return view;
@@ -1241,7 +1242,7 @@ class SingleLine<T> extends StatelessWidget {
       Spacing.vView(
         isShow: url.en,
         child: () => ClipRRect(
-          borderRadius: SBorderRadius.circle() as BorderRadius,
+          borderRadius: SBorderRadius.circle(),
           child: WrapperImage.size(size: urlSize.ww!, url: url!),
         ),
       ),

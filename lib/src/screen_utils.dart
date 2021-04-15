@@ -24,8 +24,7 @@ extension ScreenUtils on num? {
   double? get ww => _width(this);
   double? get hh => _height(this);
   double? get rr => _rr(this);
-  double? get ssp => _fontSize(this, null);
-  double? get sspA => _fontSize(this, true);
+  double? get ssp => _fontSize(this);
 
   static double get statusBarH => ScreenUtil().statusBarHeight;
   static double get height => ScreenUtil().screenHeight;
@@ -81,13 +80,12 @@ extension ScreenUtils on num? {
       return num!.toDouble();
   }
 
-  static double? _fontSize(num? num, bool? allowFontScalingSelf) {
+  static double? _fontSize(num? num) {
     if (num == null) return null;
     num = valueByType(num, double);
     if (enable)
       try {
-        return ScreenUtil()
-            .setSp(num!, allowFontScalingSelf: allowFontScalingSelf);
+        return ScreenUtil().setSp(num!);
       } catch (e) {
         return num!.toDouble();
       }

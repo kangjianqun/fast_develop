@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fast_router/fast_router.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:image_picker/image_picker.dart';
 import '../fast_develop.dart';
 
@@ -113,7 +113,7 @@ class PhotoSelect extends StatelessWidget {
             color: color ?? CConfig.getBackground(),
             borderColor: CConfig.getMatching()),
         child: ClipRRect(
-          borderRadius: SBorderRadius.normal() as BorderRadius,
+          borderRadius: SBorderRadius.normal(),
           child: _child(_brightness),
         ),
       ),
@@ -209,14 +209,14 @@ class WrapperImage extends StatelessWidget {
       var _radius = fillet ? 20 : radius;
 
       widget = ClipRRect(
-        borderRadius: (circle
+        borderRadius: circle
             ? SBorderRadius.circle()
-            : SBorderRadius.normal(radius: _radius)) as BorderRadius,
+            : SBorderRadius.normal(radius: _radius),
         child: widget,
       );
     }
 
-    if (browseList?.en ?? false)
+    if (browseList.en)
       widget = TouchWidget(
         onTap: (ctx) {
           showDialogCustom(
@@ -272,7 +272,7 @@ class ImageBrowse extends StatelessWidget {
         TouchWidget(
           onTap: (ctx) => FastRouter.popBackDialog(ctx),
           child: ClipRRect(
-            borderRadius: SBorderRadius.circle() as BorderRadius,
+            borderRadius: SBorderRadius.circle(),
             child: Container(
               color: Color(0x22000000),
               padding: Spacing.all(size: 10),
