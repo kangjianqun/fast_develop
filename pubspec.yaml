@@ -29,7 +29,7 @@ dependencies:
   #  https://pub.flutter-io.cn/packages/flutter_screenutil
   flutter_screenutil: ^5.0.0
   #  https://pub.flutter-io.cn/packages/flutter_easyrefresh
-  flutter_easyrefresh: ^2.2.0
+  flutter_easyrefresh: ^2.2.1
   # https://pub.flutter-io.cn/packages/package_info
   package_info: ^2.0.0
   # https://pub.flutter-io.cn/packages/dio
