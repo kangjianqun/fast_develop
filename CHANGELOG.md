@@ -1,5 +1,5 @@
 ## [2.0.7]
-Optimize theme configuration Repair empty security
+Fix empty security|Interceptor add version control
 ## [2.0.6]
 Optimize theme configuration Repair empty security
 ## [2.0.5]

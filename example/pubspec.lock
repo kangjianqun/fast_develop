@@ -140,7 +140,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.0.6"
+    version: "2.0.7"
   fast_event_bus:
     dependency: transitive
     description:
