@@ -46,12 +46,12 @@ class ThemeVM with ChangeNotifier {
 
   /// 可以调用后二次修改 或者自己实现
   static ThemeData switchThemeBrightness(
-      Brightness brightness, ThemeData themeData) {
+      Brightness? brightness, ThemeData? themeData) {
     return _generateThemeData(brightness, themeData: themeData);
   }
 
   /// 根据主题 明暗 和 颜色 生成对应的主题 全局修改
-  static ThemeData _generateThemeData(Brightness brightness,
+  static ThemeData _generateThemeData(Brightness? brightness,
       {ThemeData? themeData,
       MaterialColor? themeColor,
       bool modifyGlobal = false}) {
