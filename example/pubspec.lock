@@ -140,7 +140,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.0.5"
+    version: "2.0.6"
   fast_event_bus:
     dependency: transitive
     description:
@@ -154,7 +154,7 @@ packages:
       name: fast_mvvm
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.0.4"
+    version: "2.0.5"
   fast_router:
     dependency: "direct main"
     description:
