@@ -47,7 +47,7 @@ DioInit _dioInit = (Dio dio, String baseUrl) {
 };
 
 class Http extends DioForNative {
-  static late Http? instance;
+  static Http? instance;
 
   factory Http(String baseUrl, {bool isInstance = true}) {
     if (!isInstance) {

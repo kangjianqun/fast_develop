@@ -9,6 +9,9 @@ import '../../fast_develop.dart';
 typedef ApiInterceptorOnRequest = Future<RequestOptions> Function(
     RequestOptions options, String baseUrl);
 
+bool isVersion = false;
+String versionKey = "version";
+
 void initFastDevelopOfApiInterceptor(
     ApiInterceptorOnRequest? onRequest, bool? extraSaveJson) {
   if (onRequest != null) _onRequest = onRequest;
@@ -17,8 +20,11 @@ void initFastDevelopOfApiInterceptor(
 
 /// 配置[headers] 等
 ApiInterceptorOnRequest _onRequest = (options, String baseUrl) async {
-  var version = await PlatformUtils.getAppVersion();
-  options.headers.putIfAbsent("version", () => "v$version");
+  if (isVersion) {
+    var version = await PlatformUtils.getAppVersion();
+    options.headers.putIfAbsent(versionKey, () => "v$version");
+  }
+
   if (BoolUtil.parse(options.extra[keyShowDialog])) {
 //      LogUtil.printLog("showDialog");
     try {
