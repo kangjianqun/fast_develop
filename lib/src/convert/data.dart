@@ -6,7 +6,7 @@ import '../../fast_develop.dart';
 typedef ItemBuild<T> = T Function(dynamic data);
 
 class ListKV {
-  late List<KeyValue> list;
+  List<KeyValue> list = [];
 
   ListKV();
 

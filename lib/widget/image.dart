@@ -209,14 +209,14 @@ class WrapperImage extends StatelessWidget {
       var _radius = fillet ? 20 : radius;
 
       widget = ClipRRect(
-        borderRadius: (circle
+        borderRadius: circle
             ? SBorderRadius.circle()
-            : SBorderRadius.normal(radius: _radius)),
+            : SBorderRadius.normal(radius: _radius),
         child: widget,
       );
     }
 
-    if (browseList?.en ?? false)
+    if (browseList.en)
       widget = TouchWidget(
         onTap: (ctx) {
           showDialogCustom(

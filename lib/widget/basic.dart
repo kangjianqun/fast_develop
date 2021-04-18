@@ -804,7 +804,7 @@ class ListIntervalView extends StatelessWidget {
     );
 
     if (isH || color != null) {
-      var _height = isH ? height.ww : null;
+      var _height = isH ? height.hh : null;
       view = Container(height: _height, color: color, child: view);
     }
     return view;

@@ -1,5 +1,9 @@
-## [2.0.4+1]
-optimization root_layout
+## [2.0.7]
+Fix empty security|Interceptor add version control
+## [2.0.6]
+Optimize theme configuration Repair empty security
+## [2.0.5]
+Optimize theme configuration Repair empty security
 ## [2.0.4]
 Optimize theme configuration Repair empty security
 ## [2.0.3]

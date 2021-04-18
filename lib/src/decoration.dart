@@ -86,7 +86,7 @@ class DecoUtil {
   }
 
   static BoxDecoration radius(
-      {Color? color, BorderRadiusGeometry? radius, bool isCircle = false}) {
+      {Color? color, BorderRadius? radius, bool isCircle = false}) {
     return BoxDecoration(
         color: color ?? CConfig.cBackgroundColor, borderRadius: radius);
   }
