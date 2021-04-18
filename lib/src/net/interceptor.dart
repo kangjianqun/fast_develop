@@ -50,14 +50,14 @@ class ApiInterceptor extends InterceptorsWrapper {
     RequestInterceptorHandler handler,
   ) async {
     options.baseUrl = baseUrl;
-    await _onRequest(options, baseUrl);
+    var o = await _onRequest(options, baseUrl);
+    super.onRequest(o, handler);
   }
 
   @override
   onResponse(Response response, ResponseInterceptorHandler handler) async {
     bool dialog = BoolUtil.parse(response.requestOptions.extra[keyShowDialog]);
     if (dialog) {
-//      LogUtil.printLog("closeDialog");
       bool allClear =
           BoolUtil.parse(response.requestOptions.extra[keyDialogAllClear]);
       DialogSimple.close(response.requestOptions.uri.toString(),
@@ -75,7 +75,7 @@ class ApiInterceptor extends InterceptorsWrapper {
       Map<String, dynamic> jsonData = {};
       try {
         try {
-          jsonData = json.decode(response.data);
+          jsonData = response.data;
         } catch (e) {
           if (response.data?.runtimeType == String) {
             LogUtil.printLog("---response---> data: ${response.data}");
@@ -88,7 +88,7 @@ class ApiInterceptor extends InterceptorsWrapper {
           }
         }
       } catch (e) {
-        jsonData["datas"] = response.data;
+        jsonData["data"] = response.data;
         jsonData["code"] = response.statusCode;
         debugPrint(response.data);
       }
@@ -187,7 +187,7 @@ class _RespData {
   _RespData.fromJson(Map<String, dynamic> json) {
     this.json = json;
     code = json['code'];
-    data = json['datas'];
+    data = json['data'];
     login = json['login'];
     hint = json['success'];
     next = json['next'];

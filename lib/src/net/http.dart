@@ -24,6 +24,7 @@ String keyResult = "key_result";
 bool postDataIsFromData = true;
 
 typedef DioInit = void Function(Dio dio, String baseUrl);
+JsonDecodeCallback? jsonDecodeCallback;
 
 /// [parseJson]必须是顶层函数
 void initFastDevelopOfHttp(
@@ -32,16 +33,11 @@ void initFastDevelopOfHttp(
   DioInit? dioInit,
 ) {
   if (baseOptions != null) _baseOptions = baseOptions;
-  if (parseJson != null) _parseJson = parseJson;
+  if (parseJson != null) jsonDecodeCallback = parseJson;
 }
 
 BaseOptions _baseOptions =
     BaseOptions(connectTimeout: 1000 * 60, receiveTimeout: 1000 * 60);
-
-/// 必须是顶层函数
-JsonDecodeCallback _parseJson = (String text) {
-  return compute(jsonDecode(text), text);
-};
 
 /// 初始化 Dio
 DioInit _dioInit = (Dio dio, String baseUrl) {
@@ -53,9 +49,9 @@ class Http extends DioForNative {
 
   factory Http(String baseUrl,
       {bool isInstance = true, BaseOptions? options, String? contentType}) {
-    if (!isInstance) return Http._(_baseOptions).._init(baseUrl);
-    if (instance == null) instance = Http._(_baseOptions).._init(baseUrl);
-    if (options != null) instance!.options = options;
+    var o = options ?? _baseOptions;
+    if (!isInstance) return Http._(o).._init(baseUrl);
+    if (instance == null) instance = Http._(o).._init(baseUrl);
     if (contentType.en) instance!.options.contentType = contentType;
     return instance!;
   }
@@ -63,9 +59,10 @@ class Http extends DioForNative {
   Http._([BaseOptions? options]) : super(options);
 
   /// 初始化 加入app通用处理
-  // ignore: unused_element
-  _init(String baseUrl, [BaseOptions? options]) {
-    (transformer as DefaultTransformer).jsonDecodeCallback = _parseJson;
+  _init(String baseUrl) {
+    if (jsonDecodeCallback != null)
+      (transformer as DefaultTransformer).jsonDecodeCallback =
+          jsonDecodeCallback;
     _dioInit(this, baseUrl);
   }
 }
