@@ -1,3 +1,5 @@
+## [2.0.10]
+add InputDecorationUtil | Optimize EditText
 ## [2.0.9]
 Optimize http
 ## [2.0.8]

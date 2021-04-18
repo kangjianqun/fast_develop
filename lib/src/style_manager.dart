@@ -47,6 +47,10 @@ class CConfig {
   static Color? cTextColorTwo;
   static Color? cTextColorThree;
 
+  static Color cDisabledBorderColor = Colors.black;
+  static Color cEnabledBorderColor = Colors.black;
+  static Color cFocusedBorderColor = Colors.black;
+
   /// 白色
   static Color white = Colors.white;
   static Color black = Colors.black;
