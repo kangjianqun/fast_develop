@@ -512,10 +512,12 @@ class ContainerEx extends StatelessWidget {
     this.height,
     this.width,
     this.isSquare = false,
-  }) : super(key: key);
+  })  : this.size = null,
+        super(key: key);
 
   const ContainerEx.square({
     Key? key,
+    required this.size,
     this.color,
     this.child,
     this.alignment,
@@ -527,13 +529,14 @@ class ContainerEx extends StatelessWidget {
     this.transform,
     this.clipBehavior = Clip.none,
     this.brightness,
-    this.height,
-    this.width,
   })  : this.isSquare = true,
+        this.height = null,
+        this.width = null,
         super(key: key);
 
   final double? height;
   final double? width;
+  final double? size;
 
   /// The [child] contained by the container.
   ///
@@ -622,8 +625,8 @@ class ContainerEx extends StatelessWidget {
 
     return Container(
       color: _color,
-      width: width.ww,
-      height: isSquare ? height.ww : height.hh,
+      width: isSquare ? size.rr : width.ww,
+      height: isSquare ? size.rr : height.hh,
       child: child,
       padding: padding,
       decoration: decoration,

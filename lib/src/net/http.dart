@@ -21,6 +21,8 @@ String keyTotalPage = "key_totalPage";
 String keyHint = "key_hint";
 String keyResult = "key_result";
 
+bool postDataIsFromData = true;
+
 typedef DioInit = void Function(Dio dio, String baseUrl);
 
 /// [parseJson]必须是顶层函数
@@ -49,14 +51,12 @@ DioInit _dioInit = (Dio dio, String baseUrl) {
 class Http extends DioForNative {
   static Http? instance;
 
-  factory Http(String baseUrl, {bool isInstance = true}) {
-    if (!isInstance) {
-      return Http._(_baseOptions).._init(baseUrl);
-    }
-
-    if (instance == null) {
-      instance = Http._(_baseOptions).._init(baseUrl);
-    }
+  factory Http(String baseUrl,
+      {bool isInstance = true, BaseOptions? options, String? contentType}) {
+    if (!isInstance) return Http._(_baseOptions).._init(baseUrl);
+    if (instance == null) instance = Http._(_baseOptions).._init(baseUrl);
+    if (options != null) instance!.options = options;
+    if (contentType.en) instance!.options.contentType = contentType;
     return instance!;
   }
 
@@ -85,6 +85,7 @@ Future<void> requestHttp(
   bool isShowError = true,
   bool isShowHint = true,
   bool disposeJson = false,
+  bool? isFromData,
   Function? notLogin,
   required RequestSucceed succeed,
   RequestFailure? failure,
@@ -106,7 +107,9 @@ Future<void> requestHttp(
         response = await dio.get(url, queryParameters: p);
         break;
       case RequestType.Post:
-        var data = p != null ? FormData.fromMap(p) : null;
+        var data = isFromData ?? postDataIsFromData
+            ? (p != null ? FormData.fromMap(p) : null)
+            : p;
         response = await dio.post(url, data: data);
         break;
     }
