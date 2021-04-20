@@ -29,12 +29,6 @@ Future<void> initConfig({BuildContext? context}) async {
     CConfig.scaffoldBackgroundColor = Colors.grey.shade300;
   } else {
     statusBarTransparent(brightness: Brightness.light);
-    FConfig.init(
-      context: context,
-      toast: (text) => showToast(text),
-      respDataJson: (RespData data, Map<String, dynamic> json) {
-        data.data = json['asd'];
-      },
-    );
+    FConfig.init(context: context, toast: (text) => showToast(text));
   }
 }
