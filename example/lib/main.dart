@@ -1,6 +1,7 @@
 import 'package:fast_develop/widget/theme.dart';
 import 'package:fast_router/fast_router.dart';
 import 'package:flutter/material.dart' hide Checkbox;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 
@@ -17,27 +18,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => FutureBuilder(
-      future: future,
-      builder: (ctx, state) {
-        if (state.connectionState != ConnectionState.done)
-          return MaterialApp(
-              debugShowCheckedModeBanner: false, home: InitPage());
-        return OKToast(
-          child: MultiProvider(
-            providers: providers,
-            child: Consumer<ThemeVM>(
-              builder: (_, themeVM, __) => MaterialApp(
-                debugShowCheckedModeBanner: false,
-                title: 'Develop Demo',
-                theme: themeVM.themeData,
-                onGenerateRoute: FastRouter.router.generator,
-                navigatorObservers: [FastRouter.observer],
-                home: HomePage(),
+        future: future,
+        builder: (ctx, state) {
+          if (state.connectionState != ConnectionState.done)
+            return MaterialApp(
+                debugShowCheckedModeBanner: false, home: InitPage());
+          return OKToast(
+            child: ScreenUtilInit(
+              designSize: Size(1080, 1920),
+              builder: () => MultiProvider(
+                providers: providers,
+                child: Consumer<ThemeVM>(
+                  builder: (_, themeVM, __) => MaterialApp(
+                    debugShowCheckedModeBanner: false,
+                    title: 'Develop Demo',
+                    theme: themeVM.themeData,
+                    onGenerateRoute: FastRouter.router.generator,
+                    navigatorObservers: [FastRouter.observer],
+                    home: HomePage(),
+                  ),
+                ),
               ),
             ),
-          ),
-        );
-      });
+          );
+        },
+      );
 }
 
 /// 用于项目初始化之前显示的页面

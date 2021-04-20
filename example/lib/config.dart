@@ -32,6 +32,9 @@ Future<void> initConfig({BuildContext? context}) async {
     FConfig.init(
       context: context,
       toast: (text) => showToast(text),
+      respDataJson: (RespData data, Map<String, dynamic> json) {
+        data.data = json['asd'];
+      },
     );
   }
 }

@@ -148,6 +148,7 @@ class FConfig {
     IconThemeGenerate? iconTheme,
     TextThemeGenerate? textTheme,
     ProcessingExtend? processingExtend,
+    RespDataJson? respDataJson,
     bool screenEnable = true,
     BaseOptions? baseOptions,
     JsonDecodeCallback? parseJson,
@@ -211,7 +212,7 @@ class FConfig {
     this.listIntervalViewOfCacheExtent,
     this.gridIntervalViewOfCacheExtent,
   }) {
-    initFastDevelopOfRespData(processingExtend);
+    initFastDevelopOfRespData(processingExtend, respDataJson);
     initFastDevelopOfHttp(baseOptions, parseJson, dioInit);
     initFastDevelopOfApiInterceptor(onRequest, extraSaveJson);
     initFastDevelopOfData(toast);

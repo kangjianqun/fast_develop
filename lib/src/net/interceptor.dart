@@ -9,6 +9,8 @@ import '../../fast_develop.dart';
 typedef ApiInterceptorOnRequest = Future<RequestOptions> Function(
     RequestOptions options, String baseUrl);
 
+typedef RespDataJson = Function(RespData data, Map<String, dynamic> json);
+
 bool isVersion = false;
 String versionKey = "version";
 
@@ -92,7 +94,7 @@ class ApiInterceptor extends InterceptorsWrapper {
         jsonData["code"] = response.statusCode;
         debugPrint(response.data);
       }
-      _RespData respData = _RespData.fromJson(jsonData);
+      RespData respData = RespData.fromJson(jsonData);
 
       response.data = respData.data;
       if (extraSaveJson)
@@ -143,12 +145,14 @@ class ApiInterceptor extends InterceptorsWrapper {
 typedef ProcessingExtend = Map<String, dynamic> Function(
     Map<String, dynamic>? json);
 
-void initFastDevelopOfRespData(ProcessingExtend? processingExtend) {
-  if (processingExtend != null) _RespData.processingExtend = processingExtend;
+void initFastDevelopOfRespData(
+    ProcessingExtend? processingExtend, RespDataJson? respDataJson) {
+  if (processingExtend != null) RespData.processingExtend = processingExtend;
+  if (respDataJson != null) RespData.responseJson = respDataJson;
 }
 
-class _RespData {
-  _RespData({this.data});
+class RespData {
+  RespData({this.data});
 
   Map<String, dynamic>? json;
   dynamic? data;
@@ -159,16 +163,29 @@ class _RespData {
   String? error;
   String? hint;
 
-  /// 处理扩展参数
-  static ProcessingExtend? processingExtend;
-
   /// 下一步路由路径
   String? next;
 
   /// 默认为空
   String? back;
 
-  bool get result => 200 == code;
+  bool get result => codeSuccess == code;
+
+  /// 处理扩展参数
+  static ProcessingExtend? processingExtend;
+  static RespDataJson? responseJson;
+
+  ///成功code标识
+  static int codeSuccess = 200;
+  static String keyCode = "code";
+  static String keyData = "data";
+  static String keyLogin = "login";
+  static String keyHint = "success";
+  static String keyNext = "next";
+  static String keyBack = "back";
+  static String keyError = "error";
+  static String keyHasMore = "hasmore";
+  static String keyPageTotal = "page_total";
 
   Map<String, dynamic> getExtend() {
     var data = Map<String, dynamic>();
@@ -184,20 +201,25 @@ class _RespData {
       return json.toString();
   }
 
-  _RespData.fromJson(Map<String, dynamic> json) {
-    this.json = json;
-    code = json['code'];
-    data = json['data'];
-    login = json['login'];
-    hint = json['success'];
-    next = json['next'];
-    back = json['back'];
-    error =
-        data != null && data is Map ? valueByType(data['error'], String) : null;
-    isMore = json['hasmore'] ?? false;
-    totalPageNum = json['page_total'] ?? 1;
+  RespData.fromJson(Map<String, dynamic> json) {
+    if (responseJson != null)
+      responseJson!(this, json);
+    else {
+      this.json = json;
+      code = json[keyCode];
+      data = json[keyData];
+      login = json[keyLogin];
+      hint = json[keyHint];
+      next = json[keyNext];
+      back = json[keyBack];
+      error = data != null && data is Map
+          ? valueByType(data[keyError], String)
+          : null;
+      isMore = json[keyHasMore] ?? false;
+      totalPageNum = json[keyPageTotal] ?? 1;
 
-    if (data == null || data is String && (data as String).e)
-      data = Map<String, dynamic>();
+      if (data == null || data is String && (data as String).e)
+        data = Map<String, dynamic>();
+    }
   }
 }

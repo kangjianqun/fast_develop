@@ -20,7 +20,7 @@ dependencies:
   oktoast: ^3.0.0
 
   #  https://pub.flutter-io.cn/packages/flutter_screenutil
-  flutter_screenutil: ^5.0.0-nullsafety.11
+  flutter_screenutil: ^5.0.0
 
   # State https://pub.flutter-io.cn/packages/provider
   provider: ^5.0.0
