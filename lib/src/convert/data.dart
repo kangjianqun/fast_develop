@@ -103,14 +103,14 @@ bool boolOf(data) => valueByType(data, bool);
 
 /// 值转换
 /// [dValue] 默认值
-dynamic valueByType<T>(
-  value,
-  Type type, {
-  String stack: "",
-  ItemBuild<T>? itemBuild,
-  bool nullable = false,
-  T? dValue,
-}) {
+valueByType<T>(
+    value,
+    Type type, {
+      String stack: "",
+      ItemBuild<T>? itemBuild,
+      bool nullable = false,
+      T? dValue,
+    }) {
   if (value == null) {
 //    debugPrint("valueByType  $stack : value is null");
     if (nullable) return null;
@@ -124,7 +124,7 @@ dynamic valueByType<T>(
     } else if (type == bool) {
       return dValue ?? false;
     } else if (type == List) {
-      return dValue ?? [];
+      return dValue ?? [].cast<T>();
     } else if (type == Map) {
       return dValue ?? {};
     }
@@ -202,7 +202,7 @@ extension StringUtil on String? {
   ///  判断数据是否为空 依赖值[JudgeData] 依赖方法 [isEmpty]
   static bool isListEmpty(List<JudgeData<String>> lists) {
     var emptyData = lists.firstWhere(
-      (item) => isEmpty(item.value, toast: item.toast),
+          (item) => isEmpty(item.value, toast: item.toast),
       orElse: () => JudgeData<String>(null),
     );
     return emptyData.value != null;

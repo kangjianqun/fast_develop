@@ -1,3 +1,6 @@
+## 2.0.11+1
+1. Fix data processing exception
+
 ## 2.0.11
 Optimize Http add RespData static Attributes
 1. responseJson
