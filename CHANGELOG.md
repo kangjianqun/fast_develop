@@ -1,3 +1,22 @@
+## 2.0.14
+optimization TitleAction
+1. titleActionOfIconSize
+2. titleActionOfTxtSize
+3. titleActionOfIconPadding
+4. titleActionOfLeftRSize
+5. titleActionOfTopBSize
+
+## 2.0.13
+optimization RespData
+1. RespData.responseJson
+2. FConfig add singleLineOfNameTxtStyle
+
+## 2.0.12
+optimization image
+1. ImageBrowse
+2. WrapperImage
+3. dialogImageSelect
+
 ## 2.0.11+1
 1. Fix data processing exception
 

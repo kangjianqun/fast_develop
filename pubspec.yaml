@@ -1,6 +1,6 @@
 name: fast_develop
 description: This is a rapid development library that encapsulates some commonly used methods. Use fast_router in conflict with fluro
-version: 2.0.11+1
+version: 2.0.14
 homepage: https://github.com/StrangerKjq/fast_develop
 
 environment:
@@ -12,11 +12,11 @@ dependencies:
     sdk: flutter
 
   # https://pub.flutter-io.cn/packages/fast_mvvm
-  fast_mvvm: ^2.0.5
-  fast_router: ^2.0.1+1
+  fast_mvvm: ^2.0.8
+  fast_router: ^2.0.2
 
   # Flutter 轮播图 https://pub.flutter-io.cn/packages/flutter_swiper
-  flutter_swiper_null_safety: ^1.0.0
+  flutter_swiper_null_safety: ^1.0.1
   #  一个适用于iOS和Android的Flutter插件，用于从图像库中拾取图像，并使用相机拍摄新照片。
   #  https://pub.flutter-io.cn/packages/image_picker
   image_picker: ^0.7.4

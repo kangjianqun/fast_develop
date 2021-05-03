@@ -132,10 +132,13 @@ class WrapperImage extends StatelessWidget {
     this.hold = false,
     this.circle = false,
     this.fillet = false,
+    this.square = false,
     this.radius = 0,
     this.browseList,
     this.photo,
     this.delete,
+    this.placeholderWidgetBuilder,
+    this.loadingErrorWidgetBuilder,
   }) : super(key: key);
 
   /// 图片的大小
@@ -148,10 +151,13 @@ class WrapperImage extends StatelessWidget {
     this.hold = false,
     this.circle = false,
     this.fillet = false,
+    this.square = false,
     this.radius = 0,
     this.browseList,
     this.photo,
     this.delete,
+    this.placeholderWidgetBuilder,
+    this.loadingErrorWidgetBuilder,
   }) : super(key: key);
 
   WrapperImage.size({
@@ -162,10 +168,13 @@ class WrapperImage extends StatelessWidget {
     this.hold = false,
     this.circle = false,
     this.fillet = false,
+    this.square = true,
     this.radius = 0,
     this.browseList,
     this.photo,
     this.delete,
+    this.placeholderWidgetBuilder,
+    this.loadingErrorWidgetBuilder,
   })  : this.width = size.toDouble(),
         this.height = size.toDouble(),
         super(key: key);
@@ -184,9 +193,14 @@ class WrapperImage extends StatelessWidget {
 
   /// 圆角
   final bool fillet;
+
+  /// 方形
+  final bool square;
   final num radius;
   final ValueNotifier<File>? photo;
   final void Function()? delete;
+  final PlaceholderWidgetBuilder? placeholderWidgetBuilder;
+  final LoadingErrorWidgetBuilder? loadingErrorWidgetBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -195,8 +209,8 @@ class WrapperImage extends StatelessWidget {
     /// 图片空 不显示
     if (url.en || hold)
       widget = Container(
-        width: width,
-        height: height,
+        width: width.ww,
+        height: square ? height.rr : height.hh,
         child: CachedNetworkImage(
           imageUrl: url,
           fit: fit,
@@ -206,7 +220,7 @@ class WrapperImage extends StatelessWidget {
       );
 
     if (circle || fillet || radius > 0) {
-      var _radius = fillet ? 20 : radius;
+      var _radius = fillet ? FConfig.ins.radius : radius;
 
       widget = ClipRRect(
         borderRadius: circle
@@ -240,8 +254,27 @@ class ImageBrowse extends StatelessWidget {
     required this.images,
     this.photo,
     this.delete,
+    this.square = true,
+    this.childHeight = 1028,
+    this.childWidth = 1028,
+    this.height = 1920,
+    this.width = 1080,
+    this.operatingTopPhoto = 480,
+    this.operatingTop = 100,
+    this.closeSize = 90,
+    this.closeColor = const Color(0x22000000),
   }) : super(key: key);
 
+  /// 方形
+  final bool square;
+  final num childHeight;
+  final num childWidth;
+  final num height;
+  final num width;
+  final num operatingTopPhoto;
+  final num operatingTop;
+  final num closeSize;
+  final Color closeColor;
   final List<String> images;
   final ValueNotifier<File>? photo;
   final void Function()? delete;
@@ -250,7 +283,7 @@ class ImageBrowse extends StatelessWidget {
   List<Widget> _operating() {
     if (photo != null) {
       return [
-        Spacing.spacingView(height: 480),
+        Spacing.spacingView(height: operatingTopPhoto),
         Align(
           alignment: Alignment.centerRight,
           child: Button.img(
@@ -268,15 +301,15 @@ class ImageBrowse extends StatelessWidget {
       ];
     } else {
       return [
-        Spacing.spacePadding(size: 100),
+        Spacing.spacePadding(size: operatingTop),
         TouchWidget(
           onTap: (ctx) => FastRouter.popBackDialog(ctx),
           child: ClipRRect(
             borderRadius: SBorderRadius.circle(),
             child: Container(
-              color: Color(0x22000000),
+              color: closeColor,
               padding: Spacing.all(size: 10),
-              child: Icon(IConfig.close, size: 90.ssp),
+              child: Icon(IConfig.close, size: closeSize.ssp),
             ),
           ),
         ),
@@ -287,18 +320,18 @@ class ImageBrowse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height,
-      width: width,
+      width: square ? width.rr : width.ww,
+      height: square ? height.rr : height.hh,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            height: 1028.ww,
+            height: square ? childHeight.rr : childHeight.hh,
             child: Swiper(
               itemCount: images.length,
               loop: false,
-              containerWidth: 1028.ww,
-              containerHeight: 1028.ww,
+              containerWidth: square ? childWidth.rr : childWidth.ww,
+              containerHeight: square ? childHeight.rr : childHeight.hh,
               pagination: SwiperPagination(),
               itemBuilder: (_, index) => WrapperImage.max(url: images[index]),
             ),
@@ -310,12 +343,12 @@ class ImageBrowse extends StatelessWidget {
   }
 
   static void dialogImageModify(BuildContext ctx, ValueNotifier<File?> photo,
-      {void Function()? next}) {
+      {void Function()? next, num size = 40}) {
     showDialogCustom(
       context: ctx,
       location: Location.bottom,
       offsetHandle: fromBottom,
-      style: StyleText.normal(size: 40),
+      style: StyleText.normal(size: size),
       builder: (_) => SafeArea(
         bottom: true,
         child: DialogListSelect(

@@ -202,24 +202,21 @@ class RespData {
   }
 
   RespData.fromJson(Map<String, dynamic> json) {
-    if (responseJson != null)
-      responseJson!(this, json);
-    else {
-      this.json = json;
-      code = json[keyCode];
-      data = json[keyData];
-      login = json[keyLogin];
-      hint = json[keyHint];
-      next = json[keyNext];
-      back = json[keyBack];
-      error = data != null && data is Map
-          ? valueByType(data[keyError], String)
-          : null;
-      isMore = json[keyHasMore] ?? false;
-      totalPageNum = json[keyPageTotal] ?? 1;
+    this.json = json;
+    code = json[keyCode];
+    data = json[keyData];
+    login = json[keyLogin];
+    hint = json[keyHint];
+    next = json[keyNext];
+    back = json[keyBack];
+    error = data != null && data is Map
+        ? valueByType(data[keyError], String)
+        : null;
+    isMore = json[keyHasMore] ?? false;
+    totalPageNum = json[keyPageTotal] ?? 1;
 
-      if (data == null || data is String && (data as String).e)
-        data = Map<String, dynamic>();
-    }
+    if (data == null || data is String && (data as String).e)
+      data = Map<String, dynamic>();
+    if (responseJson != null) responseJson!(this, json);
   }
 }

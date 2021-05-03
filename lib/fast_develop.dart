@@ -91,6 +91,12 @@ class FConfig {
   num radius;
   num radiusOfCircle;
 
+  double titleActionOfIconSize;
+  double titleActionOfTxtSize;
+  num titleActionOfIconPadding;
+  num titleActionOfLeftRSize;
+  num titleActionOfTopBSize;
+
   num singleLineOfMinHeight;
   num singleLineOfIconHeight;
   num singleLineOfNameLeftPadding;
@@ -101,6 +107,7 @@ class FConfig {
   num singleLineOfRadius;
   bool singleLineOfIsPrimary;
   IconData singleLineOfRightIconData;
+  TextStyle? singleLineOfNameTxtStyle;
 
   double touchWidgetOfPressedOpacity;
   double touchWidgetOfPadding;
@@ -173,6 +180,11 @@ class FConfig {
     this.themeUnselectedIconSize = 46,
     this.themeSelectedLabelSize = 25,
     this.themeUnselectedLabelSize = 25,
+    this.titleActionOfIconSize = 72,
+    this.titleActionOfTxtSize = 25,
+    this.titleActionOfIconPadding = 20,
+    this.titleActionOfTopBSize = 32,
+    this.titleActionOfLeftRSize = 48,
     this.radius = 20,
     this.radiusOfCircle = 100,
     this.titleWidgetOfHeight = 144,
@@ -187,6 +199,7 @@ class FConfig {
     this.singleLineOfRadius = 20,
     this.singleLineOfIsPrimary = false,
     this.singleLineOfRightIconData = Icons.chevron_right,
+    this.singleLineOfNameTxtStyle,
     this.touchWidgetOfPressedOpacity = 0.4,
     this.touchWidgetOfPadding = 0.0,
     this.iconTextOfSpacing = 4,

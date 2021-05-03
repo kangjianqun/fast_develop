@@ -1145,6 +1145,9 @@ class SingleLine<T> extends StatelessWidget {
     var _radius = radius ?? FConfig.ins.singleLineOfRadius;
     var _width = FConfig.ins.pageWidth;
     var _decoration = decoration ?? DecoUtil.normal(color: bg, radius: _radius);
+    var _nameStyle = nameTxtStyle ??
+        FConfig.ins.singleLineOfNameTxtStyle ??
+        StyleText.normal();
     return TouchWidget(
       onTap: onTap,
       child: ConstrainedBox(
@@ -1155,7 +1158,7 @@ class SingleLine<T> extends StatelessWidget {
           decoration: _decoration,
           child: Row(children: <Widget>[
             _icon(iconColor, _iconHeight, _nameLeftPadding),
-            _name(_nameRightPadding),
+            _name(_nameRightPadding, _nameStyle),
             _center(),
             _dropdown(bg),
             ..._right(_urlSize, _rightColor, _rightIconData),
@@ -1186,9 +1189,8 @@ class SingleLine<T> extends StatelessWidget {
     );
   }
 
-  Widget _name(num nameRightPadding) {
-    var leftChild =
-        nameWidget ?? Text(name!, style: nameTxtStyle ?? StyleText.normal());
+  Widget _name(num nameRightPadding, TextStyle style) {
+    var leftChild = nameWidget ?? Text(name!, style: style);
     return Container(
       margin: Spacing.leftOrRight(size: nameRightPadding, isLeft: false),
       child: leftChild,

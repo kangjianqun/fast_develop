@@ -32,6 +32,11 @@ class TitleAction extends StatelessWidget {
     this.color,
     this.child,
     this.textStyle,
+    this.txtSize,
+    this.iconSize,
+    this.iconPadding,
+    this.leftRSize,
+    this.topAndBottomSize,
   })  : assert(iconData == null || imgUrl == null),
         this.negative = null,
         super(key: key);
@@ -45,6 +50,11 @@ class TitleAction extends StatelessWidget {
     this.color,
     this.child,
     this.textStyle,
+    this.txtSize,
+    this.iconSize,
+    this.iconPadding,
+    this.leftRSize,
+    this.topAndBottomSize,
   })  : assert(iconData == null || imgUrl == null),
         this.negative = null,
         super(key: key);
@@ -59,6 +69,11 @@ class TitleAction extends StatelessWidget {
     this.color,
     this.child,
     this.textStyle,
+    this.txtSize,
+    this.iconSize,
+    this.iconPadding,
+    this.leftRSize,
+    this.topAndBottomSize,
   })  : assert(iconData == null || imgUrl == null),
         this.negative = false,
         super(key: key);
@@ -73,14 +88,24 @@ class TitleAction extends StatelessWidget {
     this.color,
     this.child,
     this.textStyle,
+    this.txtSize,
+    this.iconSize,
+    this.iconPadding,
+    this.leftRSize,
+    this.topAndBottomSize,
   })  : assert(iconData == null || imgUrl == null),
         this.negative = true,
         super(key: key);
 
   final TouchTap? onTap;
   final IconData? iconData;
+  final double? iconSize;
+  final num? iconPadding;
+  final num? leftRSize;
+  final num? topAndBottomSize;
   final String? imgUrl;
   final String? txt;
+  final double? txtSize;
   final Widget? child;
   final Color? color;
   final bool? negative;
@@ -92,20 +117,22 @@ class TitleAction extends StatelessWidget {
   }
 
   Widget _child(BuildContext context) {
+    var _iconSize = iconSize ?? FConfig.ins.titleActionOfIconSize;
     if (iconData != null && txt.en) {
       return IconText.simple(
         iData: iconData,
-        size: 72,
+        size: _iconSize,
         data: txt,
         color: CConfig.textColorThree,
-        textSize: 25,
+        textSize: txtSize ?? FConfig.ins.titleActionOfTxtSize,
       );
     }
 
     if (iconData != null) {
+      var _padding = iconPadding ?? FConfig.ins.titleActionOfIconPadding;
       return Container(
-        padding: Spacing.all(),
-        child: IconText.img(icon: Icon(iconData, size: 30)),
+        padding: Spacing.all(size: _padding),
+        child: IconText.img(icon: Icon(iconData, size: _iconSize)),
       );
     }
 
@@ -113,18 +140,19 @@ class TitleAction extends StatelessWidget {
       bool _stress = negative != null && !negative!;
       var _color = color ??
           (_stress ? Theme.of(context).primaryColor : CConfig.negativeColor);
+      var _deco =
+          _stress ? DecoUtil.normal(isCircle: true, color: _color) : null;
+      var _leftR = leftRSize ?? FConfig.ins.titleActionOfLeftRSize;
+      var _topBSize = leftRSize ?? FConfig.ins.titleActionOfTopBSize;
       return Container(
-        margin: Spacing.topAndBottom(size: 32),
-        padding: Spacing.all(leftR: 48),
-        decoration:
-            _stress ? DecoUtil.normal(isCircle: true, color: _color) : null,
+        margin: Spacing.topAndBottom(size: _topBSize),
+        padding: Spacing.all(leftR: _leftR),
+        decoration: _deco,
         alignment: Alignment.center,
         child: Text(
           txt!,
           style: textStyle ??
-              (_stress
-                  ? StyleText.white(size: 32)
-                  : StyleText.three(color: color)),
+              (_stress ? StyleText.white() : StyleText.three(color: color)),
         ),
       );
     }
@@ -171,8 +199,8 @@ class TitleWidget extends StatelessWidget implements PreferredSizeWidget {
   final Brightness? brightness;
 
   @override
-  Size get preferredSize => Size.fromHeight(
-      (height ?? FConfig.ins.titleWidgetOfHeight).hh!);
+  Size get preferredSize =>
+      Size.fromHeight((height ?? FConfig.ins.titleWidgetOfHeight).hh!);
 
   @override
   Widget build(BuildContext context) {

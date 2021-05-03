@@ -140,7 +140,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.0.11+1"
+    version: "2.0.14"
   fast_event_bus:
     dependency: transitive
     description:
@@ -154,14 +154,14 @@ packages:
       name: fast_mvvm
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.0.5"
+    version: "2.0.8"
   fast_router:
     dependency: "direct main"
     description:
       name: fast_router
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.0.1+1"
+    version: "2.0.2"
   ffi:
     dependency: transitive
     description:
@@ -222,7 +222,7 @@ packages:
       name: flutter_swiper_null_safety
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter

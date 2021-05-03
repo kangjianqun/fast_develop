@@ -19,22 +19,16 @@ class CropVM extends BaseViewModel {
 
 /// 裁剪页面
 class CropPage extends StatelessWidget with BaseView<CropVM> {
-  const CropPage({
-    Key? key,
-    required this.filePath,
-  }) : super(key: key);
+  CropPage({Key? key, required this.filePath}) : super(key: key);
 
   final String filePath;
 
   @override
-  ViewConfig<CropVM> initConfig(BuildContext context) =>
-      ViewConfig(vm: CropVM(), load: false);
+  ViewConfig<CropVM> initConfig(context) => ViewConfig.noLoad(vm: CropVM());
 
   @override
-  Widget vmBuild(
-      BuildContext context, CropVM vm, Widget? child, Widget? state) {
+  Widget vmBuild(context, CropVM vm, Widget? child, Widget? state) {
     return MyScaffold.center(
-      stateWidget: state,
       title: "裁剪",
       nextWidget: (_) => TitleAction.stress(
         onTap: (_) => vm.crop(),
