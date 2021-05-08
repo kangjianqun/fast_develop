@@ -39,8 +39,7 @@ class HomePageVM extends BaseViewModel {
 
 class HomePage extends StatelessWidget with BaseView<HomePageVM> {
   @override
-  ViewConfig<HomePageVM> initConfig(BuildContext context) =>
-      ViewConfig.noLoad(vm: HomePageVM());
+  ViewConfig<HomePageVM> initConfig() => ViewConfig.noLoad(vm: HomePageVM());
 
   @override
   Widget vmBuild(

@@ -263,7 +263,7 @@ class Button extends StatelessWidget {
   final num? leftR;
   final num? topB;
   final num? textSize;
-  final int? paddingChild;
+  final num? paddingChild;
   final EdgeInsets? paddingOuter;
   final EdgeInsets? margin;
   final IconData? icon;
@@ -332,7 +332,7 @@ class Button extends StatelessWidget {
             ),
       );
 
-      if (paddingOuter != null || IntUtil.isNotEmpty(paddingChild)) {
+      if (paddingOuter != null || paddingChild != null) {
         view = Padding(
           padding: paddingOuter ?? Spacing.all(size: paddingChild),
           child: view,

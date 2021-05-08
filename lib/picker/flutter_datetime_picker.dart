@@ -14,9 +14,9 @@ typedef void DateChangedCallback(CompleteData data);
 typedef List<Widget> CreateWidgetList();
 
 ///
-///时间选择器
+///数据选择器
 ///
-class DatePicker {
+class DataPicker {
   ///
   /// Display date picker bottom sheet.
   ///
@@ -169,11 +169,10 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   @override
   Color get barrierColor => Colors.black54;
 
-  late AnimationController? _animationController;
+  AnimationController? _animationController;
 
   @override
   AnimationController createAnimationController() {
-    assert(_animationController == null);
     _animationController =
         BottomSheet.createAnimationController(navigator!.overlay!);
     return _animationController!;

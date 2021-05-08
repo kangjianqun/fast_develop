@@ -97,6 +97,17 @@ class FConfig {
   num titleActionOfLeftRSize;
   num titleActionOfTopBSize;
 
+  num dialogViewOfConfirmHeight;
+  num dialogViewOfTitleHeight;
+  num dialogViewOfTitleSize;
+  num dialogViewOfTextSize;
+  num dialogViewOfHorizontal;
+  num dialogViewOfVertical;
+  num dialogViewOfLoadWidth;
+  num dialogViewOfLoadTop;
+  num dialogViewOfTop;
+  num dialogViewOfMinHeight;
+
   num singleLineOfMinHeight;
   num singleLineOfIconHeight;
   num singleLineOfNameLeftPadding;
@@ -180,6 +191,16 @@ class FConfig {
     this.themeUnselectedIconSize = 46,
     this.themeSelectedLabelSize = 25,
     this.themeUnselectedLabelSize = 25,
+    this.dialogViewOfConfirmHeight = 140,
+    this.dialogViewOfTitleHeight = 96,
+    this.dialogViewOfTitleSize = 60,
+    this.dialogViewOfTextSize = 40,
+    this.dialogViewOfHorizontal = 40,
+    this.dialogViewOfVertical = 24,
+    this.dialogViewOfLoadWidth = 500,
+    this.dialogViewOfLoadTop = 96,
+    this.dialogViewOfTop = 48,
+    this.dialogViewOfMinHeight = 80,
     this.titleActionOfIconSize = 72,
     this.titleActionOfTxtSize = 25,
     this.titleActionOfIconPadding = 20,

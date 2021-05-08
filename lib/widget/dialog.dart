@@ -40,8 +40,7 @@ class DialogSimple {
 
     if (_dict.length == 0 && _loadStatue) {
       _loadStatue = false;
-      tryCatch(
-          () => FastRouter.popBackDialog(FConfig.ins.context!));
+      tryCatch(() => FastRouter.popBackDialog(FConfig.ins.context!));
     }
   }
 }
@@ -59,10 +58,14 @@ class DialogListSelect extends StatelessWidget {
     required this.children,
     this.color,
     this.margin,
+    this.wirePadding = 160,
+    this.paddingChild = 56,
   }) : super(key: key);
 
   final List<NameFunction> children;
   final Color? color;
+  final num wirePadding;
+  final num paddingChild;
   final EdgeInsetsGeometry? margin;
 
   @override
@@ -74,7 +77,7 @@ class DialogListSelect extends StatelessWidget {
         Button(
           size: null,
           paddingInside: Spacing.all(size: 0),
-          paddingChild: 56,
+          paddingChild: paddingChild,
           onTap: (_) {
             FastRouter.popBack();
             if (item.function != null) item.function!();
@@ -83,7 +86,7 @@ class DialogListSelect extends StatelessWidget {
         ),
       );
       if (children.indexOf(item) < children.length - 1)
-        _view.add(Spacing.wireView2(w: width - 160));
+        _view.add(Spacing.wireView2(w: width - wirePadding));
     });
     return DialogCustom.body(
       color: CConfig.getBackground(color: color),
@@ -109,6 +112,16 @@ class DialogView extends Dialog {
     this.onNo,
     this.expanded = false,
     this.backgroundColor,
+    this.confirmHeight,
+    this.titleHeight,
+    this.horizontal,
+    this.vertical,
+    this.minHeight,
+    this.titleSize,
+    this.textSize,
+    this.loadWidth,
+    this.loadTop,
+    this.top,
     this.insetAnimationCurve = Curves.decelerate,
     this.insetAnimationDuration = const Duration(milliseconds: 100),
   }) : super(key: key);
@@ -129,6 +142,16 @@ class DialogView extends Dialog {
     this.onNo,
     this.expanded = false,
     this.backgroundColor,
+    this.confirmHeight,
+    this.titleHeight,
+    this.horizontal,
+    this.vertical,
+    this.minHeight,
+    this.titleSize,
+    this.textSize,
+    this.loadWidth,
+    this.loadTop,
+    this.top,
     this.insetAnimationCurve = Curves.decelerate,
     this.insetAnimationDuration = const Duration(milliseconds: 100),
   }) : super(key: key);
@@ -149,6 +172,16 @@ class DialogView extends Dialog {
     this.onNo,
     this.expanded = false,
     this.backgroundColor,
+    this.confirmHeight,
+    this.titleHeight,
+    this.horizontal,
+    this.vertical,
+    this.minHeight,
+    this.titleSize,
+    this.textSize,
+    this.loadWidth,
+    this.loadTop,
+    this.top,
     this.insetAnimationCurve = Curves.decelerate,
     this.insetAnimationDuration = const Duration(milliseconds: 100),
   }) : super(key: key);
@@ -169,6 +202,16 @@ class DialogView extends Dialog {
     this.onNo,
     this.expanded = false,
     this.backgroundColor,
+    this.confirmHeight,
+    this.titleHeight,
+    this.horizontal,
+    this.vertical,
+    this.minHeight,
+    this.titleSize,
+    this.textSize,
+    this.loadWidth,
+    this.loadTop,
+    this.top,
     this.insetAnimationCurve = Curves.decelerate,
     this.insetAnimationDuration = const Duration(milliseconds: 100),
   }) : super(key: key);
@@ -184,6 +227,16 @@ class DialogView extends Dialog {
   final String? content;
   final String? okHint;
   final String? noHint;
+  final num? confirmHeight;
+  final num? titleHeight;
+  final num? horizontal;
+  final num? vertical;
+  final num? minHeight;
+  final num? titleSize;
+  final num? textSize;
+  final num? loadWidth;
+  final num? loadTop;
+  final num? top;
 
   final TouchTap? onOk;
   final TouchTap? onNo;
@@ -200,9 +253,9 @@ class DialogView extends Dialog {
   /// Defaults to [Curves.fastOutSlowIn].
   final Curve insetAnimationCurve;
 
-  Widget _confirm(BuildContext context) {
+  Widget _confirm(BuildContext context, num height) {
     return Container(
-      height: 140.ww,
+      height: height.hh,
       child: Row(children: <Widget>[
         Expanded(
           child: TouchWidget(
@@ -233,17 +286,17 @@ class DialogView extends Dialog {
     );
   }
 
-  Widget _title() {
+  Widget _title(num height, titleSize) {
     return Container(
-      height: 96.ww,
+      height: height.hh,
       alignment: Alignment.center,
-      child: Text(title ?? "", style: StyleText.normal(size: 60)),
+      child: Text(title ?? "", style: StyleText.one(size: titleSize)),
     );
   }
 
-  Widget _defaultTxt() {
+  Widget _defaultTxt(num minHeight) {
     Widget view = ConstrainedBox(
-      constraints: BoxConstraints(minHeight: 80.0),
+      constraints: BoxConstraints(minHeight: minHeight.hh!),
       child: ListIntervalView.children(
         physics: BouncingScrollPhysics(),
         children: [
@@ -252,7 +305,7 @@ class DialogView extends Dialog {
             padding: Spacing.leftAndRight(size: 64),
             alignment: Alignment.center,
             child: Text(content ?? ""),
-          )
+          ),
         ],
       ),
     );
@@ -266,12 +319,23 @@ class DialogView extends Dialog {
     if (fullScreen) return child!;
 
     final DialogTheme dialogTheme = DialogTheme.of(context);
+    var _height = confirmHeight ?? FConfig.ins.dialogViewOfConfirmHeight;
+    var _titleHeight = confirmHeight ?? FConfig.ins.dialogViewOfTitleHeight;
+    var _horizontal = horizontal ?? FConfig.ins.dialogViewOfHorizontal;
+    var _vertical = vertical ?? FConfig.ins.dialogViewOfVertical;
+    var _titleSize = titleSize ?? FConfig.ins.dialogViewOfTitleSize;
+    var _textSize = textSize ?? FConfig.ins.dialogViewOfTextSize;
+    var _minHeight = minHeight ?? FConfig.ins.dialogViewOfTitleSize;
+    var _loadWidth = loadWidth ?? FConfig.ins.dialogViewOfLoadWidth;
+    var _loadTop = loadTop ?? FConfig.ins.dialogViewOfLoadTop;
+    var _top = top ?? FConfig.ins.dialogViewOfTop;
 
-    var view = child ?? _defaultTxt();
+    var view = child ?? _defaultTxt(_minHeight);
 
     return AnimatedContainer(
       padding: MediaQuery.of(context).viewInsets +
-          const EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0),
+          EdgeInsets.symmetric(
+              horizontal: _horizontal.ww!, vertical: _vertical.hh!),
       duration: insetAnimationDuration,
       curve: insetAnimationCurve,
       child: MediaQuery.removeViewInsets(
@@ -281,10 +345,10 @@ class DialogView extends Dialog {
         removeBottom: true,
         context: context,
         child: DefaultTextStyle(
-          style: StyleText.normal(size: 40),
+          style: StyleText.normal(size: _textSize),
           child: Container(
-            padding: Spacing.topOrBottom(size: isLoad ? 96 : 48),
-            width: isLoad ? 500.ww : null,
+            padding: Spacing.topOrBottom(size: isLoad ? _loadTop : _top),
+            width: isLoad ? _loadWidth.ww : null,
             decoration: BoxDecoration(
               color: backgroundColor ??
                   dialogTheme.backgroundColor ??
@@ -294,11 +358,14 @@ class DialogView extends Dialog {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Spacing.vView(isShow: isShowTitle, child: () => _title()),
+                Spacing.vView(
+                  isShow: isShowTitle,
+                  child: () => _title(_titleHeight, _titleSize),
+                ),
                 view,
                 Spacing.vView(
                   isShow: child != null && content != null,
-                  child: () => _defaultTxt(),
+                  child: () => _defaultTxt(_minHeight),
                 ),
                 Spacing.vView(
                   isShow: isConfirm,
@@ -306,7 +373,7 @@ class DialogView extends Dialog {
                 ),
                 Spacing.vView(
                   isShow: isConfirm,
-                  child: () => _confirm(context),
+                  child: () => _confirm(context, _height),
                 ),
               ],
             ),
@@ -429,6 +496,7 @@ Widget _buildMaterialDialogTransitions(
 enum Location { left, right, top, bottom, center }
 
 typedef Offset OffsetHandle(Animation animation);
+
 RouteTransitionsBuilder offsetAnim(OffsetHandle oh) {
   return (_, animation, __, child) {
     return FractionalTranslation(translation: oh(animation), child: child);
@@ -436,11 +504,15 @@ RouteTransitionsBuilder offsetAnim(OffsetHandle oh) {
 }
 
 Offset fromLeft(Animation animation) => Offset(animation.value - 1, 0);
+
 Offset fromRight(Animation animation) =>
     Offset(valueByType(1 - animation.value, double), 0);
+
 Offset fromTop(Animation animation) => Offset(0, animation.value - 1);
+
 Offset fromBottom(Animation animation) =>
     Offset(0, valueByType(1 - animation.value, double));
+
 Offset fromTopLeft(Animation anim) => fromLeft(anim) + fromTop(anim);
 
 /// [cushion] 垫层  [offset]偏移值

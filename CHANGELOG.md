@@ -1,3 +1,19 @@
+## 2.0.15
+FConfig add
+1. dialogViewOfConfirmHeight
+2. dialogViewOfTitleHeight
+3. dialogViewOfTitleSize
+4. dialogViewOfTextSize
+5. dialogViewOfHorizontal
+6. dialogViewOfVertical
+7. dialogViewOfLoadWidth
+8. dialogViewOfLoadTop
+9. dialogViewOfTop
+10. dialogViewOfMinHeight;
+
+## 2.0.14+1
+1. Plugin update
+
 ## 2.0.14
 optimization TitleAction
 1. titleActionOfIconSize

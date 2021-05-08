@@ -11,7 +11,9 @@ typedef DataItemBuild<T extends BaseItem> = T Function(int index, dynamic data);
 
 abstract class BaseItem {
   String hint();
+
   String value();
+
   List<BaseItem> lists();
 }
 
@@ -98,11 +100,10 @@ class _CityPickerRoute<T extends BaseItem> extends PopupRoute {
   @override
   bool get barrierDismissible => true;
 
-  late AnimationController? _animationController;
+  AnimationController? _animationController;
 
   @override
   AnimationController createAnimationController() {
-    assert(_animationController == null);
     _animationController =
         BottomSheet.createAnimationController(navigator!.overlay!);
     return _animationController!;

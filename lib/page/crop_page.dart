@@ -24,7 +24,7 @@ class CropPage extends StatelessWidget with BaseView<CropVM> {
   final String filePath;
 
   @override
-  ViewConfig<CropVM> initConfig(context) => ViewConfig.noLoad(vm: CropVM());
+  ViewConfig<CropVM> initConfig() => ViewConfig.noLoad(vm: CropVM());
 
   @override
   Widget vmBuild(context, CropVM vm, Widget? child, Widget? state) {
