@@ -108,6 +108,19 @@ class FConfig {
   num dialogViewOfTop;
   num dialogViewOfMinHeight;
 
+  num dialogListSelectOfPaddingChild;
+  num dialogListSelectOfWirePadding;
+
+  num imageBrowseOfChildHeight;
+  num imageBrowseOfChildWidth;
+  num imageBrowseOfHeight;
+  num imageBrowseOfWitch;
+  num imageBrowseOfOperatingTopPadding;
+  num imageBrowseOfOperatingTop;
+  num imageBrowseOfCloseSize;
+  bool imageBrowseOfSquare;
+  Color imageBrowseOfCloseColor;
+
   num singleLineOfMinHeight;
   num singleLineOfIconHeight;
   num singleLineOfNameLeftPadding;
@@ -201,6 +214,17 @@ class FConfig {
     this.dialogViewOfLoadTop = 96,
     this.dialogViewOfTop = 48,
     this.dialogViewOfMinHeight = 80,
+    this.dialogListSelectOfPaddingChild = 56,
+    this.dialogListSelectOfWirePadding = 160,
+    this.imageBrowseOfChildHeight = 1028,
+    this.imageBrowseOfChildWidth = 1028,
+    this.imageBrowseOfHeight = 1920,
+    this.imageBrowseOfWitch = 1080,
+    this.imageBrowseOfOperatingTopPadding = 480,
+    this.imageBrowseOfOperatingTop = 100,
+    this.imageBrowseOfCloseSize = 90,
+    this.imageBrowseOfSquare = true,
+    this.imageBrowseOfCloseColor = const Color(0x22000000),
     this.titleActionOfIconSize = 72,
     this.titleActionOfTxtSize = 25,
     this.titleActionOfIconPadding = 20,

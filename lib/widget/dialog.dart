@@ -58,18 +58,21 @@ class DialogListSelect extends StatelessWidget {
     required this.children,
     this.color,
     this.margin,
-    this.wirePadding = 160,
-    this.paddingChild = 56,
+    this.wirePadding,
+    this.paddingChild,
   }) : super(key: key);
 
   final List<NameFunction> children;
   final Color? color;
-  final num wirePadding;
-  final num paddingChild;
+  final num? wirePadding;
+  final num? paddingChild;
   final EdgeInsetsGeometry? margin;
 
   @override
   Widget build(BuildContext context) {
+    var _paddingChild =
+        paddingChild ?? FConfig.ins.dialogListSelectOfPaddingChild;
+    var _wirePadding = wirePadding ?? FConfig.ins.dialogListSelectOfWirePadding;
     List<Widget> _view = [];
     children.add(NameFunction("取消", null));
     children.forEach((item) {
@@ -77,7 +80,7 @@ class DialogListSelect extends StatelessWidget {
         Button(
           size: null,
           paddingInside: Spacing.all(size: 0),
-          paddingChild: paddingChild,
+          paddingChild: _paddingChild,
           onTap: (_) {
             FastRouter.popBack();
             if (item.function != null) item.function!();
@@ -86,7 +89,7 @@ class DialogListSelect extends StatelessWidget {
         ),
       );
       if (children.indexOf(item) < children.length - 1)
-        _view.add(Spacing.wireView2(w: width - wirePadding));
+        _view.add(Spacing.wireView2(w: width - _wirePadding));
     });
     return DialogCustom.body(
       color: CConfig.getBackground(color: color),

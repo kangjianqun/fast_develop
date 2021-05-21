@@ -21,14 +21,22 @@ class ImgHelp {
   }
 }
 
-void dialogImageSelect(BuildContext ctx, ValueNotifier<File?> photo,
-    {void Function()? next, num size = 40}) {
+void dialogImageSelect(
+  BuildContext ctx,
+  ValueNotifier<File?> photo, {
+  void Function()? next,
+  num? size,
+  num? paddingChild,
+  num? wirePadding,
+}) {
   showDialogCustom(
     context: ctx,
     location: Location.bottom,
     offsetHandle: fromBottom,
-    style: StyleText.normal(size: size),
+    style: StyleText.one(size: size),
     builder: (_) => DialogListSelect(
+      paddingChild: paddingChild,
+      wirePadding: wirePadding,
       children: [
         NameFunction("从相册选择", () async {
           var file = await ImagePicker().getImage(source: ImageSource.gallery);
@@ -53,6 +61,8 @@ class PhotoSelect extends StatelessWidget {
     this.imgHelp,
     this.color,
     this.brightness,
+    this.width,
+    this.height,
   })  : isUrl = imgHelp != null,
         super(key: key);
 
@@ -62,6 +72,8 @@ class PhotoSelect extends StatelessWidget {
   final bool isUrl;
   final Color? color;
   final Brightness? brightness;
+  final num? width;
+  final num? height;
 
   Widget _imgChild(File? file, String? url, Brightness brightness) {
     if ((imgHelp == null || url.e) && file == null) {
@@ -77,23 +89,17 @@ class PhotoSelect extends StatelessWidget {
     }
   }
 
-  Widget _child(Brightness brightness) {
+  Widget _child(Brightness bri) {
     return ValueListenableBuilder<File>(
       valueListenable: photo,
       builder: (_, file, __) {
         if (isUrl) {
           return ValueListenableBuilder<String?>(
             valueListenable: imgHelp!.vnUrl,
-            builder: (_, url, __) {
-              return _imgChild(file, url, brightness);
-            },
+            builder: (_, url, __) => _imgChild(file, url, bri),
           );
         } else {
-          return _imgChild(
-            file,
-            imgHelp == null ? null : imgHelp!.img(),
-            brightness,
-          );
+          return _imgChild(file, imgHelp == null ? null : imgHelp!.img(), bri);
         }
       },
     );
@@ -102,13 +108,11 @@ class PhotoSelect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _brightness = brightness ?? Theme.of(context).brightness;
-
     return TouchWidget(
-      // onTap: isUrl == null ? null : (_) => dialogImageSelect(context, photo),
       onTap: (_) => dialogImageSelect(context, photo),
       child: Container(
-        width: 177.ww,
-        height: 177.ww,
+        width: width.ww,
+        height: height.ww,
         decoration: DecoUtil.border(
             color: color ?? CConfig.getBackground(),
             borderColor: CConfig.getMatching()),
@@ -254,36 +258,37 @@ class ImageBrowse extends StatelessWidget {
     required this.images,
     this.photo,
     this.delete,
-    this.square = true,
-    this.childHeight = 1028,
-    this.childWidth = 1028,
-    this.height = 1920,
-    this.width = 1080,
-    this.operatingTopPhoto = 480,
-    this.operatingTop = 100,
-    this.closeSize = 90,
-    this.closeColor = const Color(0x22000000),
+    this.square,
+    this.childHeight,
+    this.childWidth,
+    this.height,
+    this.width,
+    this.operatingTopPadding,
+    this.operatingTop,
+    this.closeSize,
+    this.closeColor,
   }) : super(key: key);
 
   /// 方形
-  final bool square;
-  final num childHeight;
-  final num childWidth;
-  final num height;
-  final num width;
-  final num operatingTopPhoto;
-  final num operatingTop;
-  final num closeSize;
-  final Color closeColor;
+  final bool? square;
+  final num? childHeight;
+  final num? childWidth;
+  final num? height;
+  final num? width;
+  final num? operatingTopPadding;
+  final num? operatingTop;
+  final num? closeSize;
+  final Color? closeColor;
   final List<String> images;
   final ValueNotifier<File>? photo;
   final void Function()? delete;
 
   /// 操作
-  List<Widget> _operating() {
+  List<Widget> _operating(
+      num operatingTopPadding, num closeSize, Color closeColor) {
     if (photo != null) {
       return [
-        Spacing.spacingView(height: operatingTopPhoto),
+        Spacing.spacingView(height: operatingTopPadding),
         Align(
           alignment: Alignment.centerRight,
           child: Button.img(
@@ -319,39 +324,58 @@ class ImageBrowse extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var config = FConfig.ins;
+    var w = width ?? config.imageBrowseOfWitch;
+    var h = height ?? config.imageBrowseOfHeight;
+    var cW = childWidth ?? config.imageBrowseOfChildWidth;
+    var cH = childHeight ?? config.imageBrowseOfChildHeight;
+    var s = square ?? config.imageBrowseOfSquare;
+
+    var oTP = operatingTopPadding ?? config.imageBrowseOfOperatingTopPadding;
+    var cS = closeSize ?? config.imageBrowseOfCloseSize;
+    var cC = closeColor ?? config.imageBrowseOfCloseColor;
+
     return Container(
-      width: square ? width.rr : width.ww,
-      height: square ? height.rr : height.hh,
+      width: s ? w.rr : w.ww,
+      height: s ? h.rr : h.hh,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            height: square ? childHeight.rr : childHeight.hh,
+            height: s ? cH.rr : cH.hh,
             child: Swiper(
               itemCount: images.length,
               loop: false,
-              containerWidth: square ? childWidth.rr : childWidth.ww,
-              containerHeight: square ? childHeight.rr : childHeight.hh,
+              containerWidth: s ? cW.rr : cW.ww,
+              containerHeight: s ? cH.rr : cH.hh,
               pagination: SwiperPagination(),
               itemBuilder: (_, index) => WrapperImage.max(url: images[index]),
             ),
           ),
-          ..._operating(),
+          ..._operating(oTP, cS, cC),
         ],
       ),
     );
   }
 
-  static void dialogImageModify(BuildContext ctx, ValueNotifier<File?> photo,
-      {void Function()? next, num size = 40}) {
+  static void dialogImageModify(
+    BuildContext ctx,
+    ValueNotifier<File?> photo, {
+    void Function()? next,
+    num? size,
+    num? paddingChild,
+    num? wirePadding,
+  }) {
     showDialogCustom(
       context: ctx,
       location: Location.bottom,
       offsetHandle: fromBottom,
-      style: StyleText.normal(size: size),
+      style: StyleText.one(size: size),
       builder: (_) => SafeArea(
         bottom: true,
         child: DialogListSelect(
+          paddingChild: paddingChild,
+          wirePadding: wirePadding,
           children: [
             NameFunction("删除", () async {
               photo.value = null;

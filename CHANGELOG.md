@@ -1,3 +1,17 @@
+## 2.0.16
+FConfig add
+1. dialogListSelectOfPaddingChild;
+2. dialogListSelectOfWirePadding;
+3. imageBrowseOfChildHeight;
+4. imageBrowseOfChildWidth;
+5. imageBrowseOfHeight;
+6. imageBrowseOfWitch;
+7. imageBrowseOfOperatingTopPadding
+8. imageBrowseOfOperatingTop;
+9. imageBrowseOfCloseSize;
+10. imageBrowseOfSquare;
+11. imageBrowseOfCloseColor;
+
 ## 2.0.15
 FConfig add
 1. dialogViewOfConfirmHeight

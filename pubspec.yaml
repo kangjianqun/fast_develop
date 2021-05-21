@@ -1,6 +1,6 @@
 name: fast_develop
 description: This is a rapid development library that encapsulates some commonly used methods. Use fast_router in conflict with fluro
-version: 2.0.15
+version: 2.0.16
 homepage: https://github.com/StrangerKjq/fast_develop
 
 environment:
@@ -16,14 +16,14 @@ dependencies:
   fast_router: ^2.0.2
 
   # Flutter 轮播图 https://pub.flutter-io.cn/packages/flutter_swiper
-  flutter_swiper_null_safety: ^1.0.1
+  flutter_swiper_null_safety: ^1.0.2
   #  一个适用于iOS和Android的Flutter插件，用于从图像库中拾取图像，并使用相机拍摄新照片。
   #  https://pub.flutter-io.cn/packages/image_picker
-  image_picker: ^0.7.4
+  image_picker: ^0.7.5+2
   # 图片缓存 https://pub.flutter-io.cn/packages/cached_network_image
   cached_network_image: ^3.0.0
   # https://pub.flutter-io.cn/packages/url_launcher
-  url_launcher: ^6.0.3
+  url_launcher: ^6.0.4
   # 本地json对象存储 https://pub.flutter-io.cn/packages/localstorage
   localstorage: ^4.0.0+1
   #  https://pub.flutter-io.cn/packages/flutter_screenutil
@@ -40,7 +40,7 @@ dependencies:
   # https://pub.flutter-io.cn/packages/universal_io
   universal_io: ^2.0.4
   # https://pub.flutter-io.cn/packages/device_info
-  device_info: ^2.0.0
+  device_info: ^2.0.1
   # State https://pub.flutter-io.cn/packages/provider
   provider: ^5.0.0
   #https://pub.flutter-io.cn/packages/convert
@@ -49,7 +49,6 @@ dependencies:
   crypto: ^3.0.1
   # https://pub.flutter-io.cn/packages/cropƒ
   crop: ^0.5.0
-
 
 dev_dependencies:
   flutter_test:
