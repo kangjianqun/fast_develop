@@ -1,6 +1,6 @@
 name: fast_develop
 description: This is a rapid development library that encapsulates some commonly used methods. Use fast_router in conflict with fluro
-version: 2.0.16
+version: 2.0.17
 homepage: https://github.com/StrangerKjq/fast_develop
 
 environment:
@@ -30,8 +30,8 @@ dependencies:
   flutter_screenutil: ^5.0.0
   #  https://pub.flutter-io.cn/packages/flutter_easyrefresh
   flutter_easyrefresh: ^2.2.1
-  # https://pub.flutter-io.cn/packages/package_info
-  package_info: ^2.0.0
+  # https://pub.flutter-io.cn/packages/package_info_plus
+  package_info_plus: ^1.0.4
   # https://pub.flutter-io.cn/packages/dio
   dio: ^4.0.0
   dio_cookie_manager: ^2.0.0
