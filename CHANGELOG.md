@@ -1,3 +1,7 @@
+## 2.0.17
+
+1. Migrated from the deprecated package_info plugin to package_info_plus.
+
 ## 2.0.16
 FConfig add
 1. dialogListSelectOfPaddingChild;
