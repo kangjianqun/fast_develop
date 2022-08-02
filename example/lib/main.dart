@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           return OKToast(
             child: ScreenUtilInit(
               designSize: Size(1080, 1920),
-              builder: () => MultiProvider(
+              builder: (_, __) => MultiProvider(
                 providers: providers,
                 child: Consumer<ThemeVM>(
                   builder: (_, themeVM, __) => MaterialApp(

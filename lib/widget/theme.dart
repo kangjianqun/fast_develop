@@ -131,7 +131,7 @@ class ThemeVM with ChangeNotifier {
         pressElevation: 0,
         padding: EdgeInsets.symmetric(horizontal: 10),
         labelStyle: _themeData.textTheme.caption,
-        backgroundColor: _themeData.chipTheme.backgroundColor.withOpacity(0.1),
+        backgroundColor: _themeData.chipTheme.backgroundColor?.withOpacity(0.1),
       ),
     );
     return _themeData;

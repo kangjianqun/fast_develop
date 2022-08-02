@@ -42,9 +42,9 @@ class HomePage extends StatelessWidget with BaseView<HomePageVM> {
   ViewConfig<HomePageVM> initConfig() => ViewConfig.noLoad(vm: HomePageVM());
 
   @override
-  Widget vmBuild(
-      BuildContext context, HomePageVM vm, Widget? child, Widget? state) {
+  Widget vBuild(context, HomePageVM vm, Widget? child, Widget? state) {
     return MyScaffold.center(
+      stateWidget: state,
       title: "菜单页",
       body: (_) => MyBody(children: [
         SingleLine.normal(name: "测试的"),

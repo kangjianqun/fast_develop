@@ -27,7 +27,7 @@ class CropPage extends StatelessWidget with BaseView<CropVM> {
   ViewConfig<CropVM> initConfig() => ViewConfig.noLoad(vm: CropVM());
 
   @override
-  Widget vmBuild(context, CropVM vm, Widget? child, Widget? state) {
+  Widget vBuild(context, CropVM vm, Widget? child, Widget? state) {
     return MyScaffold.center(
       title: "裁剪",
       nextWidget: (_) => TitleAction.stress(
