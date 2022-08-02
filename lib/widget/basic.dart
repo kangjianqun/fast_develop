@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../fast_develop.dart';
 
@@ -73,11 +72,11 @@ class IconText extends StatelessWidget {
     this.iconBottom,
     this.isExpanded = false,
     this.crossAxisAlignment,
-  })  : this.data = null,
-        this.iData = null,
-        this.color = null,
-        this.size = null,
-        this.textSize = null,
+  })  : data = null,
+        iData = null,
+        color = null,
+        size = null,
+        textSize = null,
         super(key: key);
 
   const IconText.simple({
@@ -94,8 +93,8 @@ class IconText extends StatelessWidget {
     this.iconBottom = 4,
     this.isExpanded = false,
     this.crossAxisAlignment,
-  })  : this.text = null,
-        this.icon = null,
+  })  : text = null,
+        icon = null,
         super(key: key);
 
   const IconText.img({
@@ -109,11 +108,11 @@ class IconText extends StatelessWidget {
     this.isExpanded = false,
     this.crossAxisAlignment,
     this.textSize,
-  })  : this.text = null,
-        this.data = null,
-        this.iData = null,
-        this.color = null,
-        this.size = null,
+  })  : text = null,
+        data = null,
+        iData = null,
+        color = null,
+        size = null,
         super(key: key);
 
   final Widget? icon;
@@ -141,16 +140,15 @@ class IconText extends StatelessWidget {
   }
 
   Widget? _icon(num iconBottom) {
-    var _icon = Spacing.vView();
+    var icon_ = Spacing.vView();
     if (icon != null || iData != null) {
-      _icon = Container(
-        padding: this.isV
-            ? null
-            : Spacing.topOrBottom(size: iconBottom, isTop: false),
+      icon_ = Container(
+        padding:
+            isV ? null : Spacing.topOrBottom(size: iconBottom, isTop: false),
         child: icon ?? Icon(iData, size: ((size ?? 2) - 2).ssp, color: color),
       );
     }
-    return _icon;
+    return icon_;
   }
 
   @override
@@ -158,17 +156,17 @@ class IconText extends StatelessWidget {
     num w = 0;
     num h = 0;
 //    ThemeData themeData = Theme.of(context);
-    var _iconBottom = iconBottom ?? FConfig.ins.iconTextOfIconBottom;
+    var iconBottom_ = iconBottom ?? FConfig.ins.iconTextOfIconBottom;
     if (isV) {
       h = spacing ?? FConfig.ins.iconTextOfSpacing;
     } else {
       w = spacing ?? FConfig.ins.iconTextOfSpacing;
     }
     List<Widget> childView = [];
-    var view;
-    var icon = _icon(_iconBottom);
+    Widget view;
+    var icon = _icon(iconBottom_);
     var text = _text();
-    if (this.iconIsLeftOrTop) {
+    if (iconIsLeftOrTop) {
       if (icon != null) childView.add(icon);
       if (text != null) {
         childView.add(Spacing.spacingView(width: w, height: h));
@@ -184,7 +182,7 @@ class IconText extends StatelessWidget {
     if (childView.length == 1) {
       view = childView[0];
     } else {
-      if (this.isV) {
+      if (isV) {
         view = Column(mainAxisSize: MainAxisSize.min, children: childView);
       } else {
         view = Row(
@@ -247,7 +245,7 @@ class Button extends StatelessWidget {
     this.touchSpaced,
     this.leftR,
     this.topB,
-  })  : this.style = null,
+  })  : style = null,
         super(key: key);
 
   final bool isCircle;
@@ -280,55 +278,55 @@ class Button extends StatelessWidget {
     Widget view;
     ThemeData themeData = Theme.of(context);
 
-    PrimarySecondary _color = color ??
+    PrimarySecondary color_ = color ??
         PrimarySecondary(themeData.iconTheme.color, CConfig.transparent);
 
     Border? border =
         borderColor == null ? null : Border.all(color: borderColor!);
 
-    var _r = radius ?? FConfig.ins.radius;
-    var _leftR = leftR ?? FConfig.ins.buttonOfLeftR;
-    var _topB = topB ?? FConfig.ins.buttonOfTopB;
-    var padding = paddingInside ?? Spacing.all(leftR: _leftR, topB: _topB);
-    var _ts = textSize ?? FConfig.ins.buttonOfTextSize;
-    var _deco = decoration ??
+    var radius_ = radius ?? FConfig.ins.radius;
+    var lR = leftR ?? FConfig.ins.buttonOfLeftR;
+    var tB = topB ?? FConfig.ins.buttonOfTopB;
+    var padding = paddingInside ?? Spacing.all(leftR: lR, topB: tB);
+    var ts = textSize ?? FConfig.ins.buttonOfTextSize;
+    var deco = decoration ??
         DecoUtil.normal(
-            color: _color.secondary,
+            color: color_.secondary,
             isCircle: isCircle,
-            radius: _r,
+            radius: radius_,
             border: border);
-    var _style = style ?? StyleText.normal(color: _color.primary, size: _ts);
-    var _sH = sizeH ?? FConfig.ins.buttonOfSizeH;
+    var style_ = style ?? StyleText.normal(color: color_.primary, size: ts);
+    var sH = sizeH ?? FConfig.ins.buttonOfSizeH;
     if (icon != null) {
-      var _size = size ?? FConfig.ins.buttonOfSize;
+      var size_ = size ?? FConfig.ins.buttonOfSize;
       view = Container(
-        height: _size.rr,
-        width: _size.rr,
+        height: size_.rr,
+        width: size_.rr,
         margin: margin,
         decoration: DecoUtil.normal(
-          color: _color.secondary,
+          color: color_.secondary,
           isCircle: isCircle,
-          radius: _r,
+          radius: radius_,
           border: border,
         ),
         child: Icon(
           icon,
-          color: _color.primary,
+          color: color_.primary,
           size: (size! - paddingChild!).ssp,
         ),
       );
     } else {
       view = Container(
         width: size.rr,
-        height: _sH.rr,
+        height: sH.rr,
         margin: margin,
         padding: padding,
-        decoration: _deco,
+        decoration: deco,
         child: child ??
             Center(
               widthFactor: 1,
               heightFactor: 1,
-              child: Text(text!, style: _style),
+              child: Text(text!, style: style_),
             ),
       );
 
@@ -343,7 +341,7 @@ class Button extends StatelessWidget {
     if (onTap == null) {
       return view;
     } else {
-      return TouchWidget(child: view, onTap: onTap, touchSpaced: touchSpaced);
+      return TouchWidget(onTap: onTap, touchSpaced: touchSpaced, child: view);
     }
   }
 }
@@ -412,9 +410,9 @@ class CardEx extends StatelessWidget {
   final Gradient? gradient;
 
   Widget _child(Color? titleColor, Color? subTitleColor) {
-    var view;
+    Widget view;
     if (title.en || subTitle.en || center != null) {
-      Widget _center = TextRich(color: textColor, children: [
+      Widget center_ = TextRich(color: textColor, children: [
         RichTextItem(
           title ?? "",
           StyleText.one(
@@ -423,13 +421,13 @@ class CardEx extends StatelessWidget {
             brightness: brightness,
           ),
         ),
-        RichTextItem(title.e ? "" : "  " + subTitle,
+        RichTextItem(title.e ? "" : "  $subTitle",
             StyleText.grey(size: 25, color: subTitleColor))
       ]);
 
-      if (center != null) _center = Row(children: <Widget>[_center, center!]);
+      if (center != null) center_ = Row(children: <Widget>[center_, center!]);
 
-      Widget _space =
+      Widget space_ =
           Spacing.spacingView(height: space ?? FConfig.ins.listSpace);
       view = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -437,13 +435,13 @@ class CardEx extends StatelessWidget {
           Row(
             children: <Widget>[
               Spacing.vView(isShow: left != null, child: () => left!),
-              Spacing.vView(isShow: left != null, child: () => _space),
-              Expanded(child: _center),
-              Spacing.vView(isShow: right != null, child: () => _space),
+              Spacing.vView(isShow: left != null, child: () => space_),
+              Expanded(child: center_),
+              Spacing.vView(isShow: right != null, child: () => space_),
               Spacing.vView(isShow: right != null, child: () => right!),
             ],
           ),
-          _space,
+          space_,
           child,
         ],
       );
@@ -456,23 +454,23 @@ class CardEx extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
-    var _paddingSize = paddingSize ?? FConfig.ins.cardExOfPaddingSize;
-    var _marginSize = marginSize ?? FConfig.ins.cardExOfMarginSize;
+    var paddingS = paddingSize ?? FConfig.ins.cardExOfPaddingSize;
+    var marginS = marginSize ?? FConfig.ins.cardExOfMarginSize;
 
-    var _padding = padding ?? Spacing.all(size: _paddingSize);
-    var _margin = margin ?? Spacing.all(size: _marginSize);
-    Brightness _brightness = brightness ?? themeData.brightness;
+    var padding_ = padding ?? Spacing.all(size: paddingS);
+    var margin_ = margin ?? Spacing.all(size: marginS);
+    Brightness brightness_ = brightness ?? themeData.brightness;
 
     Color? color =
-        backgroundColor ?? CConfig.getBackground(brightness: _brightness);
-    Color? _titleColor = textColor ?? titleColor;
-    Color? _subTitleColor = textColor ?? subTitleColor;
+        backgroundColor ?? CConfig.getBackground(brightness: brightness_);
+    Color? titleColor_ = textColor ?? titleColor;
+    Color? subTitleColor_ = textColor ?? subTitleColor;
 
-    var _view = isChild ? child : _child(_titleColor, _subTitleColor);
+    Widget childView = isChild ? child : _child(titleColor_, subTitleColor_);
     if (shadow) {
       color = backgroundColor ?? themeData.cardTheme.color;
       return Card(
-        margin: _margin,
+        margin: margin_,
         color: color,
         shadowColor: shadowColor,
         elevation: elevation?.toDouble(),
@@ -480,15 +478,15 @@ class CardEx extends StatelessWidget {
         borderOnForeground: borderOnForeground,
         clipBehavior: clipBehavior,
         semanticContainer: semanticContainer,
-        child: Padding(padding: _padding, child: _view),
+        child: Padding(padding: padding_, child: childView),
       );
     } else {
       return Container(
         width: width?.toDouble(),
         height: height?.toDouble(),
         decoration: DecoUtil.normal(color: color, gradient: gradient),
-        margin: _margin,
-        child: Padding(padding: _padding, child: _view),
+        margin: margin_,
+        child: Padding(padding: padding_, child: childView),
       );
     }
   }
@@ -512,7 +510,7 @@ class ContainerEx extends StatelessWidget {
     this.height,
     this.width,
     this.isSquare = false,
-  })  : this.size = null,
+  })  : size = null,
         super(key: key);
 
   const ContainerEx.square({
@@ -529,9 +527,9 @@ class ContainerEx extends StatelessWidget {
     this.transform,
     this.clipBehavior = Clip.none,
     this.brightness,
-  })  : this.isSquare = true,
-        this.height = null,
-        this.width = null,
+  })  : isSquare = true,
+        height = null,
+        width = null,
         super(key: key);
 
   final double? height;
@@ -618,16 +616,15 @@ class ContainerEx extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Brightness _brightness = brightness ?? Theme.of(context).brightness;
-    Color? _color = decoration != null
+    Brightness brightness_ = brightness ?? Theme.of(context).brightness;
+    Color? color_ = decoration != null
         ? null
-        : (color ?? CConfig.getBackground(brightness: _brightness));
+        : (color ?? CConfig.getBackground(brightness: brightness_));
 
     return Container(
-      color: _color,
+      color: color_,
       width: isSquare ? size.rr : width.ww,
       height: isSquare ? size.rr : height.hh,
-      child: child,
       padding: padding,
       decoration: decoration,
       margin: margin,
@@ -636,6 +633,7 @@ class ContainerEx extends StatelessWidget {
       transform: transform,
       constraints: constraints,
       foregroundDecoration: foregroundDecoration,
+      child: child,
     );
   }
 }
@@ -646,7 +644,7 @@ class Describe extends StatelessWidget {
     Key? key,
     required this.title,
     required this.data,
-  })   : child = null,
+  })  : child = null,
         super(key: key);
 
   /// 自定义
@@ -654,7 +652,7 @@ class Describe extends StatelessWidget {
     Key? key,
     required this.title,
     required this.child,
-  })   : data = null,
+  })  : data = null,
         super(key: key);
 
   final String title;
@@ -663,15 +661,15 @@ class Describe extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget _child = Spacing.vView();
+    Widget child_ = Spacing.vView();
 
-    if (data.en) _child = Text(data!);
+    if (data.en) child_ = Text(data!);
 
-    if (child != null) _child = child!;
+    if (child != null) child_ = child!;
 
     return DefaultTextStyle(
       style: StyleText.normal(),
-      child: Row(children: <Widget>[Text(title), Expanded(child: _child)]),
+      child: Row(children: <Widget>[Text(title), Expanded(child: child_)]),
     );
   }
 }
@@ -697,7 +695,7 @@ class ListIntervalView extends StatelessWidget {
     this.cacheExtent,
     this.controller,
     this.fullLineIgnoreOfIndex,
-  })  : this.children = null,
+  })  : children = null,
         super(key: key);
 
   const ListIntervalView.children({
@@ -718,8 +716,8 @@ class ListIntervalView extends StatelessWidget {
     this.cacheExtent,
     this.controller,
     this.fullLineIgnoreOfIndex,
-  })  : this.itemCount = children?.length,
-        this.itemBuilder = null,
+  })  : itemCount = children?.length,
+        itemBuilder = null,
         super(key: key);
 
   const ListIntervalView.nested({
@@ -741,7 +739,7 @@ class ListIntervalView extends StatelessWidget {
     this.cacheExtent,
     this.controller,
     this.fullLineIgnoreOfIndex,
-  })  : this.children = null,
+  })  : children = null,
         super(key: key);
 
   final List<Widget>? children;
@@ -777,38 +775,39 @@ class ListIntervalView extends StatelessWidget {
     bool isChild = ListUtil.isNotEmpty(children);
     if (fullLine &&
         (fullLineIgnoreOfIndex == null ||
-            fullLineIgnoreOfIndex!.indexOf(index) == -1))
+            !fullLineIgnoreOfIndex!.contains(index))) {
       return isChild ? children![index] : itemBuilder!(ctx, index);
-    else
+    } else {
       return Row(
           children: [isChild ? children![index] : itemBuilder!(ctx, index)]);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     bool isH = direction == Axis.horizontal;
-    var _cacheExtent = cacheExtent ?? FConfig.ins.listIntervalViewOfCacheExtent;
+    var cacheExtent_ = cacheExtent ?? FConfig.ins.listIntervalViewOfCacheExtent;
 
-    var _mp = mainPadding ?? FConfig.ins.mainPadding;
-    var _cp = crossPadding ?? FConfig.ins.crossPadding;
-    var _space = space ?? FConfig.ins.space;
-    Widget _separator = _getSeparator(_space);
+    var mp = mainPadding ?? FConfig.ins.mainPadding;
+    var cp = crossPadding ?? FConfig.ins.crossPadding;
+    var space_ = space ?? FConfig.ins.space;
+    Widget separator = _getSeparator(space_);
     Widget view = ListView.separated(
       shrinkWrap: shrinkWrap,
       primary: primary,
-      padding: Spacing.all(leftR: isH ? _mp : _cp, topB: isH ? _cp : _mp),
-      physics: physics ?? NeverScrollableScrollPhysics(),
+      padding: Spacing.all(leftR: isH ? mp : cp, topB: isH ? cp : mp),
+      physics: physics ?? const NeverScrollableScrollPhysics(),
       scrollDirection: direction,
       itemCount: itemCount!,
       itemBuilder: _getItem,
       controller: controller,
-      separatorBuilder: (_, __) => _separator,
-      cacheExtent: _cacheExtent?.toDouble(),
+      separatorBuilder: (_, __) => separator,
+      cacheExtent: cacheExtent_?.toDouble(),
     );
 
     if (isH || color != null) {
-      var _height = isH ? height.hh : null;
-      view = Container(height: _height, color: color, child: view);
+      var height_ = isH ? height.hh : null;
+      view = Container(height: height_, color: color, child: view);
     }
     return view;
   }
@@ -878,9 +877,9 @@ class GridIntervalView extends StatelessWidget {
     this.physics = const NeverScrollableScrollPhysics(),
     required this.crossAxisCount,
     required this.children,
-  })   : itemCount = children?.length,
+  })  : itemCount = children?.length,
         itemBuilder = null,
-        this.cacheExtent = null,
+        cacheExtent = null,
         super(key: key);
 
   final IndexedWidgetBuilder? itemBuilder;
@@ -897,7 +896,7 @@ class GridIntervalView extends StatelessWidget {
   final num? cacheExtent;
 
   final int? itemCount;
-  final crossAxisCount;
+  final int crossAxisCount;
   final num? ratio;
   final bool shrinkWrap;
   final bool primary;
@@ -909,16 +908,16 @@ class GridIntervalView extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isH = direction == Axis.horizontal;
 
-    var _mp = mainPadding ?? FConfig.ins.mainPadding;
-    var _cp = crossPadding ?? FConfig.ins.crossPadding;
-    var _mSpace = mainSpace ?? FConfig.ins.space;
-    var _cSpace = crossSpace ?? FConfig.ins.space;
+    var mP = mainPadding ?? FConfig.ins.mainPadding;
+    var cP = crossPadding ?? FConfig.ins.crossPadding;
+    var mS = mainSpace ?? FConfig.ins.space;
+    var cS = crossSpace ?? FConfig.ins.space;
 
-    var _padding = Spacing.all(leftR: isH ? _mp : _cp, topB: isH ? _cp : _mp);
-    var _cacheExtent = cacheExtent ?? FConfig.ins.gridIntervalViewOfCacheExtent;
+    var padding = Spacing.all(leftR: isH ? mP : cP, topB: isH ? cP : mP);
+    var cacheExtent_ = cacheExtent ?? FConfig.ins.gridIntervalViewOfCacheExtent;
     return Container(
       height: isH || height != null ? height.ww : null,
-      width: width != null ? width.ww : null,
+      width: width.ww,
       color: color,
       alignment: Alignment.topCenter,
       child: GridView.builder(
@@ -926,14 +925,14 @@ class GridIntervalView extends StatelessWidget {
         primary: primary,
         itemCount: itemCount,
         physics: physics,
-        padding: _padding,
+        padding: padding,
         itemBuilder: itemBuilder ?? (_, index) => children![index],
-        cacheExtent: _cacheExtent?.toDouble(),
+        cacheExtent: cacheExtent_?.toDouble(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,
           childAspectRatio: ratio?.toDouble() ?? 1.0,
-          mainAxisSpacing: _mSpace.ww!,
-          crossAxisSpacing: _cSpace.ww!,
+          mainAxisSpacing: mS.ww!,
+          crossAxisSpacing: cS.ww!,
         ),
       ),
     );
@@ -1087,7 +1086,7 @@ class SingleLine<T> extends StatelessWidget {
     this.radius,
   })  : assert(name == null || nameWidget == null),
         assert(centerTxt == null || centerWidget == null),
-        this.rightWidget = null,
+        rightWidget = null,
         super(key: key);
 
   final String? name;
@@ -1129,39 +1128,38 @@ class SingleLine<T> extends StatelessWidget {
     Color? bg =
         backgroundColor ?? CConfig.cBackgroundColor ?? theme.backgroundColor;
     Color iconColor = iconThemeData.color!;
-    var _minHeight = minHeight ?? FConfig.ins.singleLineOfMinHeight;
-    var _iconHeight = iconHeight ?? FConfig.ins.singleLineOfIconHeight;
-    var _nameLeftPadding =
-        nameLeftPadding ?? FConfig.ins.singleLineOfNameLeftPadding;
-    var _nameRightPadding =
+    var minH = minHeight ?? FConfig.ins.singleLineOfMinHeight;
+    var iconH = iconHeight ?? FConfig.ins.singleLineOfIconHeight;
+    var nameLeftP = nameLeftPadding ?? FConfig.ins.singleLineOfNameLeftPadding;
+    var nameRightP =
         nameRightPadding ?? FConfig.ins.singleLineOfNameRightPadding;
-    var _isPrimary = isPrimary ?? FConfig.ins.singleLineOfIsPrimary;
-    var _rightIconData = rightIconData ?? FConfig.ins.singleLineOfRightIconData;
-    var _rightColor = _isPrimary ? theme.primaryColor : iconColor;
+    var isPrimary_ = isPrimary ?? FConfig.ins.singleLineOfIsPrimary;
+    var rightIconData_ = rightIconData ?? FConfig.ins.singleLineOfRightIconData;
+    var rightColor_ = isPrimary_ ? theme.primaryColor : iconColor;
 
-    var _leftR = leftRight ?? FConfig.ins.singleLineOfLeftRight;
-    var _topB = topBottom ?? FConfig.ins.singleLineOfTopBottom;
-    var _urlSize = urlSize ?? FConfig.ins.singleLineOfUrlSize;
-    var _radius = radius ?? FConfig.ins.singleLineOfRadius;
-    var _width = FConfig.ins.pageWidth;
-    var _decoration = decoration ?? DecoUtil.normal(color: bg, radius: _radius);
-    var _nameStyle = nameTxtStyle ??
+    var leftR = leftRight ?? FConfig.ins.singleLineOfLeftRight;
+    var topB = topBottom ?? FConfig.ins.singleLineOfTopBottom;
+    var urlSize_ = urlSize ?? FConfig.ins.singleLineOfUrlSize;
+    var radius_ = radius ?? FConfig.ins.singleLineOfRadius;
+    var width_ = FConfig.ins.pageWidth;
+    var decoration_ = decoration ?? DecoUtil.normal(color: bg, radius: radius_);
+    var nameStyle = nameTxtStyle ??
         FConfig.ins.singleLineOfNameTxtStyle ??
         StyleText.normal();
     return TouchWidget(
       onTap: onTap,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-            minHeight: _minHeight.hh!, maxWidth: (_width - _leftR * 2).ww!),
+            minHeight: minH.hh!, maxWidth: (width_ - leftR * 2).ww!),
         child: Container(
-          padding: padding ?? Spacing.all(leftR: _leftR, topB: _topB),
-          decoration: _decoration,
+          padding: padding ?? Spacing.all(leftR: leftR, topB: topB),
+          decoration: decoration_,
           child: Row(children: <Widget>[
-            _icon(iconColor, _iconHeight, _nameLeftPadding),
-            _name(_nameRightPadding, _nameStyle),
+            _icon(iconColor, iconH, nameLeftP),
+            _name(nameRightP, nameStyle),
             _center(),
             _dropdown(bg),
-            ..._right(_urlSize, _rightColor, _rightIconData),
+            ..._right(urlSize_, rightColor_, rightIconData_),
           ]),
         ),
       ),
@@ -1215,7 +1213,7 @@ class SingleLine<T> extends StatelessWidget {
     return Spacing.vView(
       isShow: ListUtil.isNotEmpty(dropdownItems),
       child: () {
-        ValueNotifier<T> cause = ValueNotifier(dropdownValue!);
+        ValueNotifier<T> cause = ValueNotifier(dropdownValue as T);
         return Expanded(
           child: ValueListenableBuilder<T>(
             valueListenable: cause,
@@ -1228,9 +1226,9 @@ class SingleLine<T> extends StatelessWidget {
                   isDense: true,
                   style: centerTxtStyle ?? StyleText.two(),
                   items: dropdownItems,
-                  underline: SizedBox(),
+                  underline: const SizedBox(),
                   onChanged: (value) {
-                    cause.value = value!;
+                    cause.value = value as T;
                     onDropdownChanged!(value);
                   },
                 ),

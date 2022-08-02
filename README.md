@@ -1,6 +1,6 @@
 # fast_develop
 
-这是一个快速开发库，封装了一些常用的方法 与fluro冲突使用fast_router。
+这是一个快速开发库，封装了一些常用的方法 与fluro冲突请改用使用fast_router。
 使用前记得调用 FastDevelopConfig.init
 
 屏幕适配

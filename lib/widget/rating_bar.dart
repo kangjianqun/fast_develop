@@ -11,8 +11,8 @@ class RatingBar extends StatefulWidget {
   final bool selectAble;
   final ValueChanged<String> onRatingUpdate;
 
-  RatingBar(
-      {this.maxRating = 10.0,
+  const RatingBar(
+      {Key? key, this.maxRating = 10.0,
       this.count = 5,
       this.value = 10.0,
       this.size = 20,
@@ -20,10 +20,10 @@ class RatingBar extends StatefulWidget {
       required this.selectImage,
       this.padding = 5,
       this.selectAble = false,
-      required this.onRatingUpdate});
+      required this.onRatingUpdate}) : super(key: key);
 
   @override
-  _RatingBarState createState() => _RatingBarState();
+  State<RatingBar> createState() => _RatingBarState();
 }
 
 class _RatingBarState extends State<RatingBar> {
@@ -32,7 +32,6 @@ class _RatingBarState extends State<RatingBar> {
   @override
   Widget build(BuildContext context) {
     return Listener(
-      child: buildRowRating(),
       onPointerDown: (PointerDownEvent event) {
         double x = event.localPosition.dx;
         if (x < 0) x = 0;
@@ -45,6 +44,7 @@ class _RatingBarState extends State<RatingBar> {
       },
       onPointerUp: (_) {},
       behavior: HitTestBehavior.deferToChild,
+      child: buildRowRating(),
     );
   }
 
@@ -139,13 +139,11 @@ class _RatingBarState extends State<RatingBar> {
   }
 
   Widget buildRowRating() {
-    return Container(
-      child: Stack(
-        children: <Widget>[
-          Row(children: buildNormalRow()),
-          Row(children: buildRow())
-        ],
-      ),
+    return Stack(
+      children: <Widget>[
+        Row(children: buildNormalRow()),
+        Row(children: buildRow())
+      ],
     );
   }
 

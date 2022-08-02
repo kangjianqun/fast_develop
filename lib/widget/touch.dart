@@ -12,9 +12,9 @@ class TouchWidget extends StatefulWidget {
     this.pressedOpacity,
     this.padding,
     int? touchSpaced,
-  })  : this.onDoubleTap = null,
-        this.onLongPressUp = null,
-        this.touchSpaced = touchSpaced == null ? 1 : touchSpaced,
+  })  : onDoubleTap = null,
+        onLongPressUp = null,
+        touchSpaced = touchSpaced ?? 1,
         super(key: key);
 
   final Widget child;
@@ -35,7 +35,7 @@ class TouchWidget extends StatefulWidget {
   final double? pressedOpacity;
 
   @override
-  _TouchWidgetState createState() => _TouchWidgetState();
+  State<TouchWidget> createState() => _TouchWidgetState();
 }
 
 class _TouchWidgetState extends State<TouchWidget>
@@ -48,13 +48,13 @@ class _TouchWidgetState extends State<TouchWidget>
   late Animation<double> _opacityAnimation;
   DateTime? _lastPressed;
   Duration? _touchSp;
-  var _pressedOpacity;
+  late double _pressedOpacity;
 
   @override
   void initState() {
     super.initState();
-    _pressedOpacity = widget.pressedOpacity ??
-        FConfig.ins.touchWidgetOfPressedOpacity;
+    _pressedOpacity =
+        widget.pressedOpacity ?? FConfig.ins.touchWidgetOfPressedOpacity;
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 200),
       value: 0.0,
@@ -73,7 +73,8 @@ class _TouchWidgetState extends State<TouchWidget>
   }
 
   void _setTween() {
-    _opacityTween.end = _pressedOpacity ?? 1.0;
+    _opacityTween.end = _pressedOpacity;
+    // _opacityTween.end = _pressedOpacity ?? 1.0;
   }
 
   @override
@@ -107,8 +108,9 @@ class _TouchWidgetState extends State<TouchWidget>
   }
 
   void _animate() {
-    if (_animationController == null || _animationController!.isAnimating)
+    if (_animationController == null || _animationController!.isAnimating) {
       return;
+    }
     final bool wasHeldDown = _buttonHeldDown;
     final TickerFuture ticker = _buttonHeldDown
         ? _animationController!.animateTo(1.0, duration: kFadeOutDuration)
@@ -121,10 +123,9 @@ class _TouchWidgetState extends State<TouchWidget>
   @override
   Widget build(BuildContext context) {
     bool enabled = widget.onTap != null && _pressedOpacity > 0;
-    var _padding =
-        widget.padding ?? FConfig.ins.touchWidgetOfPadding;
+    var padding = widget.padding ?? FConfig.ins.touchWidgetOfPadding;
     return Padding(
-      padding: Spacing.all(size: _padding),
+      padding: Spacing.all(size: padding),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: enabled ? _handleTapDown : null,

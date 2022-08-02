@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:card_swiper/card_swiper.dart';
 import 'package:fast_router/fast_router.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:image_picker/image_picker.dart';
 import '../fast_develop.dart';
 
@@ -39,12 +39,12 @@ void dialogImageSelect(
       wirePadding: wirePadding,
       children: [
         NameFunction("从相册选择", () async {
-          var file = await ImagePicker().getImage(source: ImageSource.gallery);
+          var file = await ImagePicker().pickImage(source: ImageSource.gallery);
           if (file != null) photo.value = File(file.path);
           if (next != null) next();
         }),
         NameFunction("拍摄", () async {
-          var file = await ImagePicker().getImage(source: ImageSource.camera);
+          var file = await ImagePicker().pickImage(source: ImageSource.camera);
           if (file != null) photo.value = File(file.path);
           if (next != null) next();
         }),
@@ -107,7 +107,7 @@ class PhotoSelect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _brightness = brightness ?? Theme.of(context).brightness;
+    var brightness_ = brightness ?? Theme.of(context).brightness;
     return TouchWidget(
       onTap: (_) => dialogImageSelect(context, photo),
       child: Container(
@@ -118,7 +118,7 @@ class PhotoSelect extends StatelessWidget {
             borderColor: CConfig.getMatching()),
         child: ClipRRect(
           borderRadius: SBorderRadius.normal(),
-          child: _child(_brightness),
+          child: _child(brightness_),
         ),
       ),
     );
@@ -127,12 +127,12 @@ class PhotoSelect extends StatelessWidget {
 
 /// 图片显示
 class WrapperImage extends StatelessWidget {
-  WrapperImage({
+  const WrapperImage({
     Key? key,
     required this.width,
     required this.height,
     required this.url,
-    this.fit: BoxFit.contain,
+    this.fit = BoxFit.contain,
     this.hold = false,
     this.circle = false,
     this.fillet = false,
@@ -146,12 +146,12 @@ class WrapperImage extends StatelessWidget {
   }) : super(key: key);
 
   /// 图片的大小
-  WrapperImage.max({
+  const WrapperImage.max({
     Key? key,
     this.width,
     this.height,
     required this.url,
-    this.fit: BoxFit.fill,
+    this.fit = BoxFit.fill,
     this.hold = false,
     this.circle = false,
     this.fillet = false,
@@ -168,7 +168,7 @@ class WrapperImage extends StatelessWidget {
     Key? key,
     required this.url,
     required num size,
-    this.fit: BoxFit.contain,
+    this.fit = BoxFit.contain,
     this.hold = false,
     this.circle = false,
     this.fillet = false,
@@ -179,8 +179,8 @@ class WrapperImage extends StatelessWidget {
     this.delete,
     this.placeholderWidgetBuilder,
     this.loadingErrorWidgetBuilder,
-  })  : this.width = size.toDouble(),
-        this.height = size.toDouble(),
+  })  : width = size.toDouble(),
+        height = size.toDouble(),
         super(key: key);
 
   final String url;
@@ -211,8 +211,8 @@ class WrapperImage extends StatelessWidget {
     Widget widget = Spacing.vView();
 
     /// 图片空 不显示
-    if (url.en || hold)
-      widget = Container(
+    if (url.en || hold) {
+      widget = SizedBox(
         width: width.ww,
         height: square ? height.rr : height.hh,
         child: CachedNetworkImage(
@@ -222,19 +222,20 @@ class WrapperImage extends StatelessWidget {
           errorWidget: (_, __, ___) => Spacing.error(width: 18, height: 18),
         ),
       );
+    }
 
     if (circle || fillet || radius > 0) {
-      var _radius = fillet ? FConfig.ins.radius : radius;
+      var radius_ = fillet ? FConfig.ins.radius : radius;
 
       widget = ClipRRect(
         borderRadius: circle
             ? SBorderRadius.circle()
-            : SBorderRadius.normal(radius: _radius),
+            : SBorderRadius.normal(radius: radius_),
         child: widget,
       );
     }
 
-    if (browseList.en)
+    if (browseList.en) {
       widget = TouchWidget(
         onTap: (ctx) {
           showDialogCustom(
@@ -247,6 +248,7 @@ class WrapperImage extends StatelessWidget {
         },
         child: widget,
       );
+    }
     return widget;
   }
 }
@@ -335,20 +337,20 @@ class ImageBrowse extends StatelessWidget {
     var cS = closeSize ?? config.imageBrowseOfCloseSize;
     var cC = closeColor ?? config.imageBrowseOfCloseColor;
 
-    return Container(
+    return SizedBox(
       width: s ? w.rr : w.ww,
       height: s ? h.rr : h.hh,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Container(
+          SizedBox(
             height: s ? cH.rr : cH.hh,
             child: Swiper(
               itemCount: images.length,
               loop: false,
               containerWidth: s ? cW.rr : cW.ww,
               containerHeight: s ? cH.rr : cH.hh,
-              pagination: SwiperPagination(),
+              pagination: const SwiperPagination(),
               itemBuilder: (_, index) => WrapperImage.max(url: images[index]),
             ),
           ),

@@ -12,7 +12,7 @@ main() => runApp(MyApp(future: initConfig()));
 
 class MyApp extends StatelessWidget {
   final Future future;
-  MyApp({required this.future}) {
+  MyApp({Key? key, required this.future}) : super(key: key) {
     FastRouter.configureRouters(FastRouter(), []);
   }
 
@@ -20,12 +20,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => FutureBuilder(
         future: future,
         builder: (ctx, state) {
-          if (state.connectionState != ConnectionState.done)
-            return MaterialApp(
+          if (state.connectionState != ConnectionState.done) {
+            return const MaterialApp(
                 debugShowCheckedModeBanner: false, home: InitPage());
+          }
           return OKToast(
             child: ScreenUtilInit(
-              designSize: Size(1080, 1920),
+              designSize: const Size(1080, 1920),
               builder: (_, __) => MultiProvider(
                 providers: providers,
                 child: Consumer<ThemeVM>(
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
                     theme: themeVM.themeData,
                     onGenerateRoute: FastRouter.router.generator,
                     navigatorObservers: [FastRouter.observer],
-                    home: HomePage(),
+                    home: const HomePage(),
                   ),
                 ),
               ),
@@ -47,9 +48,11 @@ class MyApp extends StatelessWidget {
 
 /// 用于项目初始化之前显示的页面
 class InitPage extends StatelessWidget {
+  const InitPage({Key? key}) : super(key: key);
+
+  @override
   Widget build(BuildContext context) {
     initConfig(context: context);
-
     /// 可以自己换配图
     return Container(color: Colors.black);
   }

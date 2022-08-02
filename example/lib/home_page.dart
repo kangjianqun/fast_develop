@@ -16,7 +16,7 @@ class HomePageVM extends BaseViewModel {
 
   testNet() async {
     await requestHttp(
-      RequestType.Post,
+      RequestType.post,
       http,
       "/user/sms_code",
       p: {"_data": "asdasd"},
@@ -29,15 +29,17 @@ class HomePageVM extends BaseViewModel {
         // if (notLoginIsPop) FastRouter.popBack();
         // UserRouter.login(home: true);
       },
-      failure: (d) => print(d),
+      failure: (d) => printLog(d),
       succeed: (response) {
-        print(response);
+        printLog(response);
       },
     );
   }
 }
 
 class HomePage extends StatelessWidget with BaseView<HomePageVM> {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   ViewConfig<HomePageVM> initConfig() => ViewConfig.noLoad(vm: HomePageVM());
 
@@ -47,7 +49,7 @@ class HomePage extends StatelessWidget with BaseView<HomePageVM> {
       stateWidget: state,
       title: "菜单页",
       body: (_) => MyBody(children: [
-        SingleLine.normal(name: "测试的"),
+        const SingleLine.normal(name: "测试的"),
         SingleLine.normal(
           name: "弹窗",
           onTap: (ctx) {
@@ -73,7 +75,7 @@ class HomePage extends StatelessWidget with BaseView<HomePageVM> {
             ),
           ),
         ),
-        EditText.text(name: "输入框"),
+        const EditText.text(name: "输入框"),
       ]),
     );
   }

@@ -1,4 +1,4 @@
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 import '../fast_develop.dart';
 
@@ -14,8 +14,10 @@ class LaunchUtil {
   }
 
   static Future<bool> launchUrl(String url) async {
-    if (await canLaunch(url)) {
-      return await launch(url);
+    Uri? uri = Uri.tryParse(url.trimLeft());
+    if (uri == null) return false;
+    if (await url_launcher.canLaunchUrl(uri)) {
+      return await url_launcher.launchUrl(uri);
     } else {
       return false;
     }

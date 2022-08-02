@@ -3,8 +3,6 @@ import 'package:dio/native_imp.dart';
 import 'package:fast_mvvm/fast_mvvm.dart';
 import '../../fast_develop.dart';
 
-import 'interceptor.dart';
-
 String keyShowDialog = "key_show_dialog";
 String keyDialogAllClear = "key_dialog_clear";
 String keyShowError = "key_show_error";
@@ -48,7 +46,7 @@ class Http extends DioForNative {
       {bool isInstance = true, BaseOptions? options, String? contentType}) {
     var o = options ?? _baseOptions;
     if (!isInstance) return Http._(o).._init(baseUrl);
-    if (instance == null) instance = Http._(o).._init(baseUrl);
+    instance ??= Http._(o).._init(baseUrl);
     if (contentType.en) instance!.options.contentType = contentType;
     return instance!;
   }
@@ -57,14 +55,15 @@ class Http extends DioForNative {
 
   /// 初始化 加入app通用处理
   _init(String baseUrl) {
-    if (jsonDecodeCallback != null)
+    if (jsonDecodeCallback != null) {
       (transformer as DefaultTransformer).jsonDecodeCallback =
           jsonDecodeCallback;
+    }
     _dioInit(this, baseUrl);
   }
 }
 
-enum RequestType { Get, Post }
+enum RequestType { get, post }
 
 typedef RequestSucceed = void Function(Response);
 typedef RequestFailure = void Function(DioError);
@@ -97,10 +96,10 @@ Future<void> requestHttp(
       ifAbsent: () => disposeJson);
   try {
     switch (type) {
-      case RequestType.Get:
+      case RequestType.get:
         response = await dio.get(url, queryParameters: p);
         break;
-      case RequestType.Post:
+      case RequestType.post:
         var data = isFromData ?? postDataIsFromData
             ? (p != null ? FormData.fromMap(p) : null)
             : p;
@@ -113,7 +112,7 @@ Future<void> requestHttp(
     if (e.error is UnAuthorizedException) {
       if (notLogin != null) notLogin();
     } else {
-      LogUtil.printLog("error");
+      printLog("error");
       if (failure != null) failure(e);
     }
   }

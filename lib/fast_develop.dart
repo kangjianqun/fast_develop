@@ -2,7 +2,6 @@ library fast_develop;
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fast_develop/fast_develop.dart';
 
 export 'page/crop_page.dart';
@@ -58,9 +57,7 @@ class FConfig {
   static FConfig? _instance;
 
   static FConfig _getInstance() {
-    if (_instance == null) {
-      _instance = FConfig.init();
-    }
+    _instance ??= FConfig.init();
 
     return _instance!;
   }

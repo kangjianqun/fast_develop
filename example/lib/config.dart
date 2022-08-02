@@ -1,7 +1,6 @@
 import 'package:fast_develop/fast_develop.dart';
-import 'package:fast_develop/widget/title.dart';
+import 'package:fast_mvvm/fast_mvvm.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -24,6 +23,7 @@ List<SingleChildWidget> uiConsumableProviders = [];
 
 /// 需要context  分批初始化  可以一个方法或者多个方法
 Future<void> initConfig({BuildContext? context}) async {
+  initMVVM<BaseViewModel>([]);
   if (context == null) {
     CConfig.backgroundColor = Colors.white;
     CConfig.scaffoldBackgroundColor = Colors.grey.shade300;

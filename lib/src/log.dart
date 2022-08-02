@@ -15,16 +15,15 @@ void showToast(String? hint) {
   if (_showToast != null && StringUtil.isNotEmpty(hint)) _showToast!(hint!);
 }
 
-class LogUtil {
-  static const String _TAG = "projectDebugLog";
-  static bool isDebugPrint = true;
+const String _tag = "projectDebugLog";
+bool isDebugPrint = true;
 
-  static void printLog(Object msg) {
-    var content = "$_TAG: ";
-    content += msg.toString();
-    if (isDebugPrint)
-      debugPrint(content);
-    else
-      print(content);
+void printLog(Object msg) {
+  var content = "$_tag: ";
+  content += msg.toString();
+  if (isDebugPrint) {
+    debugPrint(content);
+  } else {
+    print(content);
   }
 }

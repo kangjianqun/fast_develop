@@ -5,10 +5,10 @@ extension DateTimeUtil on int {
 
   static String _time(int time) {
     time = _timeCompletion(time);
-    var _timeStr = DateTime.fromMillisecondsSinceEpoch(time).toString();
+    var timeStr = DateTime.fromMillisecondsSinceEpoch(time).toString();
 
-    int i = _timeStr.indexOf(".");
-    return _timeStr.substring(0, i);
+    int i = timeStr.indexOf(".");
+    return timeStr.substring(0, i);
   }
 
   static DateTime _dateTime(int time) {
@@ -18,12 +18,12 @@ extension DateTimeUtil on int {
 
   /// 时间补全
   static int _timeCompletion(int time) {
-    var _timeLength = time.toString().length;
-    if (_timeLength == 10) {
+    var timeLength = time.toString().length;
+    if (timeLength == 10) {
       time *= 1000;
-    } else if (_timeLength == 11) {
+    } else if (timeLength == 11) {
       time *= 100;
-    } else if (_timeLength == 12) {
+    } else if (timeLength == 12) {
       time *= 10;
     }
     return time;

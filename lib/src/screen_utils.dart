@@ -33,27 +33,29 @@ extension ScreenUtils on num? {
     RenderObject? h = context.findRenderObject();
     if (h is RenderBox) {
       return h.localToGlobal(Offset.zero);
-    } else
+    } else {
       return null;
+    }
   }
 
   static double? _width(num? num) {
     if (num == null) return null;
     num = valueByType(num, double);
-    if (enable)
+    if (enable) {
       try {
         return ScreenUtil().setWidth(num!);
       } catch (e) {
         return num!.toDouble();
       }
-    else
+    } else {
       return num!.toDouble();
+    }
   }
 
   static double? _rr(num? num) {
     if (num == null) return null;
     num = valueByType(num, double);
-    if (enable)
+    if (enable) {
       try {
         return pixelMatching
             ? ScreenUtil().radius(num!)
@@ -61,14 +63,15 @@ extension ScreenUtils on num? {
       } catch (e) {
         return num!.toDouble();
       }
-    else
+    } else {
       return num!.toDouble();
+    }
   }
 
   static double? _height(num? num) {
     if (num == null) return null;
     num = valueByType(num, double);
-    if (enable)
+    if (enable) {
       try {
         return pixelMatching
             ? ScreenUtil().setWidth(num!)
@@ -76,20 +79,22 @@ extension ScreenUtils on num? {
       } catch (e) {
         return num!.toDouble();
       }
-    else
+    } else {
       return num!.toDouble();
+    }
   }
 
   static double? _fontSize(num? num) {
     if (num == null) return null;
     num = valueByType(num, double);
-    if (enable)
+    if (enable) {
       try {
         return ScreenUtil().setSp(num!);
       } catch (e) {
         return num!.toDouble();
       }
-    else
+    } else {
       return num!.toDouble();
+    }
   }
 }

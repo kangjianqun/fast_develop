@@ -4,8 +4,8 @@ import 'dart:math';
 
 import 'i18n_model.dart';
 
-typedef String StringAtIndex(int index);
-typedef int ColumnValueKey();
+typedef StringAtIndex = String Function(int index);
+typedef ColumnValueKey = int Function();
 
 class ItemData {
   dynamic data;
@@ -23,14 +23,14 @@ class CompleteData {
 
 /// 选择器数据模型的基类
 class CommonPickerData {
-  Map<int, List<ItemData>> _content = Map<int, List<ItemData>>();
-  Map<int, int> _currentIndex = Map<int, int>();
+  final Map<int, List<ItemData>> _content = <int, List<ItemData>>{};
+  final Map<int, int> _currentIndex = <int, int>{};
   int columnCount;
   late DateTime currentTime;
   LocaleType locale;
 
   CommonPickerData({locale, this.columnCount = 3})
-      : this.locale = locale ?? LocaleType.en;
+      : locale = locale ?? LocaleType.en;
 
   String leftDivider() {
     return "";
@@ -49,7 +49,7 @@ class CommonPickerData {
   }
 
   int getColumnCount() {
-    return this.columnCount;
+    return columnCount;
   }
 
   int getColumnIndex(int column) {
@@ -164,7 +164,7 @@ class DatePickerModel extends CommonPickerData {
     int maxMonth = _maxMonthOfCurrentYear();
 
     List<ItemData> list = List.generate(maxMonth - minMonth + 1, (int index) {
-      return ItemData('${_localeMonth(minMonth + index)}');
+      return ItemData(_localeMonth(minMonth + index));
     });
     setColumnContent(1, list);
   }
@@ -418,10 +418,10 @@ class DateTimePickerModel extends CommonPickerData {
     DateTime time = currentTime.add(Duration(days: index));
     if (isAtSameDay(minTime, time)) {
       var index = min(24 - minTime!.hour - 1, _currentIndex[1]!);
-      this.setMiddleIndex(index);
+      setMiddleIndex(index);
     } else if (isAtSameDay(maxTime, time)) {
       var index = min(maxTime!.hour, _currentIndex[1]!);
-      this.setMiddleIndex(index);
+      setMiddleIndex(index);
     }
   }
 

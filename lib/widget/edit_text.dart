@@ -1,7 +1,5 @@
 import 'package:fast_develop/fast_develop.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class InputDecorationUtil {
   /// 正常
@@ -182,7 +180,7 @@ class EditText extends StatefulWidget {
   final VoidCallback? complete;
 
   @override
-  _EditTextState createState() => _EditTextState();
+  State<EditText> createState() => _EditTextState();
 }
 
 class _EditTextState extends State<EditText> {
@@ -202,11 +200,11 @@ class _EditTextState extends State<EditText> {
 
   @override
   Widget build(BuildContext context) {
-    InputDecoration _decoration = widget.decoration ??
+    InputDecoration decoration = widget.decoration ??
         InputDecorationUtil.normal(
             hintText: widget.hint, hintStyle: widget.hintStyle);
 
-    var _complete = widget.complete == null
+    var complete = widget.complete == null
         ? null
         : () {
             _effectiveFNode.unfocus();
@@ -214,8 +212,8 @@ class _EditTextState extends State<EditText> {
           };
 
     return Container(
-      width: widget.width == null ? null : widget.width.ww,
-      height: widget.height == null ? null : widget.height.hh,
+      width: widget.width.ww,
+      height: widget.height.hh,
       alignment: Alignment.center,
       margin: widget.margin,
       padding: widget.padding,
@@ -227,14 +225,14 @@ class _EditTextState extends State<EditText> {
         style: widget.style ?? StyleText.normal(size: FConfig.ins.textTwo),
         controller: _effectiveController,
         focusNode: _effectiveFNode,
-        decoration: _decoration,
+        decoration: decoration,
         maxLines: widget.maxLines,
         maxLength: widget.maxLength,
         keyboardType: widget.keyboardType,
         textDirection: widget.textDirection,
         cursorColor: widget.cursorColor,
         textAlign: widget.textAlign,
-        onEditingComplete: _complete,
+        onEditingComplete: complete,
         textInputAction: widget.textInputAction,
         onChanged: widget.onChanged,
         onSubmitted: widget.onSubmitted,

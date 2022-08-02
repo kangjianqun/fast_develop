@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:fast_mvvm/fast_mvvm.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../fast_develop.dart';
@@ -38,7 +35,7 @@ class TitleAction extends StatelessWidget {
     this.leftRSize,
     this.topAndBottomSize,
   })  : assert(iconData == null || imgUrl == null),
-        this.negative = null,
+        negative = null,
         super(key: key);
 
   const TitleAction.all({
@@ -56,7 +53,7 @@ class TitleAction extends StatelessWidget {
     this.leftRSize,
     this.topAndBottomSize,
   })  : assert(iconData == null || imgUrl == null),
-        this.negative = null,
+        negative = null,
         super(key: key);
 
   /// 强调
@@ -75,7 +72,7 @@ class TitleAction extends StatelessWidget {
     this.leftRSize,
     this.topAndBottomSize,
   })  : assert(iconData == null || imgUrl == null),
-        this.negative = false,
+        negative = false,
         super(key: key);
 
   /// 消极
@@ -94,7 +91,7 @@ class TitleAction extends StatelessWidget {
     this.leftRSize,
     this.topAndBottomSize,
   })  : assert(iconData == null || imgUrl == null),
-        this.negative = true,
+        negative = true,
         super(key: key);
 
   final TouchTap? onTap;
@@ -117,11 +114,11 @@ class TitleAction extends StatelessWidget {
   }
 
   Widget _child(BuildContext context) {
-    var _iconSize = iconSize ?? FConfig.ins.titleActionOfIconSize;
+    var iconSize_ = iconSize ?? FConfig.ins.titleActionOfIconSize;
     if (iconData != null && txt.en) {
       return IconText.simple(
         iData: iconData,
-        size: _iconSize,
+        size: iconSize_,
         data: txt,
         color: CConfig.textColorThree,
         textSize: txtSize ?? FConfig.ins.titleActionOfTxtSize,
@@ -129,30 +126,29 @@ class TitleAction extends StatelessWidget {
     }
 
     if (iconData != null) {
-      var _padding = iconPadding ?? FConfig.ins.titleActionOfIconPadding;
+      var padding = iconPadding ?? FConfig.ins.titleActionOfIconPadding;
       return Container(
-        padding: Spacing.all(size: _padding),
-        child: IconText.img(icon: Icon(iconData, size: _iconSize)),
+        padding: Spacing.all(size: padding),
+        child: IconText.img(icon: Icon(iconData, size: iconSize_)),
       );
     }
 
     if (txt.en) {
-      bool _stress = negative != null && !negative!;
-      var _color = color ??
-          (_stress ? Theme.of(context).primaryColor : CConfig.negativeColor);
-      var _deco =
-          _stress ? DecoUtil.normal(isCircle: true, color: _color) : null;
-      var _leftR = leftRSize ?? FConfig.ins.titleActionOfLeftRSize;
-      var _topBSize = leftRSize ?? FConfig.ins.titleActionOfTopBSize;
+      bool stress = negative != null && !negative!;
+      var color_ = color ??
+          (stress ? Theme.of(context).primaryColor : CConfig.negativeColor);
+      var deco = stress ? DecoUtil.normal(isCircle: true, color: color_) : null;
+      var leftR = leftRSize ?? FConfig.ins.titleActionOfLeftRSize;
+      var topB = leftRSize ?? FConfig.ins.titleActionOfTopBSize;
       return Container(
-        margin: Spacing.topAndBottom(size: _topBSize),
-        padding: Spacing.all(leftR: _leftR),
-        decoration: _deco,
+        margin: Spacing.topAndBottom(size: topB),
+        padding: Spacing.all(leftR: leftR),
+        decoration: deco,
         alignment: Alignment.center,
         child: Text(
           txt!,
           style: textStyle ??
-              (_stress ? StyleText.white() : StyleText.three(color: color)),
+              (stress ? StyleText.white() : StyleText.three(color: color)),
         ),
       );
     }
@@ -204,8 +200,7 @@ class TitleWidget extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _actionSpacing =
-        actionSpacing ?? FConfig.ins.titleWidgetOfActionSpacing;
+    var actionS = actionSpacing ?? FConfig.ins.titleWidgetOfActionSpacing;
     getVM<TitleVM>(context)
         .setTitle(title, notify: false, allowNull: tWidget != null);
     var iconTheme = brightness == null || _iconThemeGenerate == null
@@ -221,7 +216,7 @@ class TitleWidget extends StatelessWidget implements PreferredSizeWidget {
         if (actions != null) {
           actionChild = [];
           actionChild.addAll(actions!);
-          actionChild.add(Spacing.spacingView(width: _actionSpacing));
+          actionChild.add(Spacing.spacingView(width: actionS));
         }
 
         Widget view = AppBar(

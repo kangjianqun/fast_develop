@@ -33,7 +33,7 @@ class RichTextItem {
 
 List<RichTextItem> consistent(List<RichTextStyle> children, {Color? color}) {
   List<RichTextItem> list = [];
-  children.forEach((style) {
+  for (var style in children) {
     list.add(
       RichTextItem(
         style.text,
@@ -41,7 +41,7 @@ List<RichTextItem> consistent(List<RichTextStyle> children, {Color? color}) {
         onTap: style.onTap,
       ),
     );
-  });
+  }
   return list;
 }
 
@@ -97,8 +97,8 @@ class _RichTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     List<TextSpan> view = [];
 
-    var _text = children[0].text;
-    var _style = children[0].textStyle;
+    var text = children[0].text;
+    var style = children[0].textStyle;
     children.removeAt(0);
     view = children
         .map((item) => TextSpan(
@@ -107,7 +107,7 @@ class _RichTextWidget extends StatelessWidget {
 
     return RichText(
       textAlign: textAlign,
-      text: TextSpan(text: _text, style: _style, children: view),
+      text: TextSpan(text: text, style: style, children: view),
     );
   }
 }

@@ -21,11 +21,11 @@ Widget easyRefreshList({
 }) {
   List<Widget> child = [];
   child.add(ListIntervalView.children(
-      children: children,
       space: space,
       fullLine: fullLine,
       mainPadding: mainPadding,
-      crossPadding: crossPadding));
+      crossPadding: crossPadding,
+      children: children));
 
   Widget view = EasyRefresh.custom(
     controller: controller,

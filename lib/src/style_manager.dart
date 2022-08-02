@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import '../fast_develop.dart';
 
 class IConfig {
@@ -10,7 +9,7 @@ class IConfig {
 }
 
 class CConfig {
-  static MaterialColor pColor = MaterialColor(
+  static MaterialColor pColor = const MaterialColor(
     0xFF0266B3,
     <int, Color>{
       50: Color(0xFFE3F2FD),
@@ -32,9 +31,9 @@ class CConfig {
   static bool enableDark = true;
 
   /// 着重色
-  static Color focusColor = Color(0xFFDB3117);
-  static Color primaryColor = Color(0xFF0266B3);
-  static Color primaryDarkColor = Color(0xFF0266B3);
+  static Color focusColor = const Color(0xFFDB3117);
+  static Color primaryColor = const Color(0xFF0266B3);
+  static Color primaryDarkColor = const Color(0xFF0266B3);
   static Color backgroundColor = Colors.white;
   static Color scaffoldBackgroundColor = Colors.white;
   static Color backgroundDarkColor = Colors.black;
@@ -78,23 +77,23 @@ class CConfig {
     bool nullable = false,
   }) {
     if (!enableDark) return light;
-
     if (color != null) return color;
     if (brightness == null && nullable) return null;
-    var _bright = brightness ??
+    var bright = brightness ??
         (context == null ? platformBrightness : Theme.of(context).brightness);
-    var isLight = _bright == Brightness.light;
-    var _color = isLight ? light : dark;
-    return _color;
+    var isLight = bright == Brightness.light;
+    color = isLight ? light : dark;
+    return color;
   }
 
-  static Color? getOne(
-      {Brightness? brightness,
-      Color? color,
-      BuildContext? context,
-      bool nullable = false,
-      bool modifyGlobal = false}) {
-    var _color = getColor(
+  static Color? getOne({
+    Brightness? brightness,
+    Color? color,
+    BuildContext? context,
+    bool nullable = false,
+    bool modifyGlobal = false,
+  }) {
+    color = getColor(
       brightness: brightness,
       context: context,
       light: textColorOne,
@@ -103,22 +102,19 @@ class CConfig {
       nullable: nullable,
     );
     if (color == null) {
-      if (modifyGlobal) {
-        cTextColorOne = _color;
-      } else {
-        cTextColorOne ??= _color;
-      }
+      cTextColorOne = modifyGlobal ? color : cTextColorOne ??= color;
     }
-    return _color;
+    return color;
   }
 
-  static Color? getTwo(
-      {Brightness? brightness,
-      Color? color,
-      BuildContext? context,
-      bool nullable = false,
-      bool modifyGlobal = false}) {
-    var _color = getColor(
+  static Color? getTwo({
+    Brightness? brightness,
+    Color? color,
+    BuildContext? context,
+    bool nullable = false,
+    bool modifyGlobal = false,
+  }) {
+    color = getColor(
       brightness: brightness,
       context: context,
       light: textColorTwo,
@@ -127,22 +123,19 @@ class CConfig {
       nullable: nullable,
     );
     if (color == null) {
-      if (modifyGlobal) {
-        cTextColorTwo = _color;
-      } else {
-        cTextColorTwo ??= _color;
-      }
+      cTextColorTwo = modifyGlobal ? color : cTextColorOne ??= color;
     }
-    return _color;
+    return color;
   }
 
-  static Color? getThree(
-      {Brightness? brightness,
-      Color? color,
-      BuildContext? context,
-      bool nullable = false,
-      bool modifyGlobal = false}) {
-    var _color = getColor(
+  static Color? getThree({
+    Brightness? brightness,
+    Color? color,
+    BuildContext? context,
+    bool nullable = false,
+    bool modifyGlobal = false,
+  }) {
+    color = getColor(
       brightness: brightness,
       context: context,
       light: textColorThree,
@@ -151,22 +144,19 @@ class CConfig {
       nullable: nullable,
     );
     if (color == null) {
-      if (modifyGlobal) {
-        cTextColorThree = _color;
-      } else {
-        cTextColorThree ??= _color;
-      }
+      cTextColorThree = modifyGlobal ? color : cTextColorOne ??= color;
     }
-    return _color;
+    return color;
   }
 
-  static Color? getBackground(
-      {Brightness? brightness,
-      Color? color,
-      BuildContext? context,
-      bool nullable = false,
-      bool modifyGlobal = false}) {
-    var _color = getColor(
+  static Color? getBackground({
+    Brightness? brightness,
+    Color? color,
+    BuildContext? context,
+    bool nullable = false,
+    bool modifyGlobal = false,
+  }) {
+    color = getColor(
       brightness: brightness,
       context: context,
       light: backgroundColor,
@@ -174,24 +164,20 @@ class CConfig {
       color: color,
       nullable: nullable,
     );
-
     if (color == null) {
-      if (modifyGlobal) {
-        cBackgroundColor = _color;
-      } else {
-        cBackgroundColor ??= _color;
-      }
+      cBackgroundColor = modifyGlobal ? color : cTextColorOne ??= color;
     }
-    return _color;
+    return color;
   }
 
-  static Color? getScaffoldBackground(
-      {Brightness? brightness,
-      Color? color,
-      BuildContext? context,
-      bool nullable = false,
-      bool modifyGlobal = false}) {
-    var _color = getColor(
+  static Color? getScaffoldBackground({
+    Brightness? brightness,
+    Color? color,
+    BuildContext? context,
+    bool nullable = false,
+    bool modifyGlobal = false,
+  }) {
+    color = getColor(
       brightness: brightness,
       context: context,
       light: scaffoldBackgroundColor,
@@ -200,13 +186,9 @@ class CConfig {
       nullable: nullable,
     );
     if (color == null) {
-      if (modifyGlobal) {
-        cScaffoldBackgroundColor = _color;
-      } else {
-        cScaffoldBackgroundColor ??= _color;
-      }
+      cScaffoldBackgroundColor = modifyGlobal ? color : cTextColorOne ??= color;
     }
-    return _color;
+    return color;
   }
 
   /// 比对色
@@ -216,7 +198,7 @@ class CConfig {
       BuildContext? context,
       bool nullable = false,
       bool modifyGlobal = false}) {
-    var _color = getColor(
+    color = getColor(
       brightness: brightness,
       context: context,
       light: black,
@@ -225,13 +207,9 @@ class CConfig {
       nullable: nullable,
     );
     if (color == null) {
-      if (modifyGlobal) {
-        cMatchingColor = _color;
-      } else {
-        cMatchingColor ??= _color;
-      }
+      cMatchingColor = modifyGlobal ? color : cTextColorOne ??= color;
     }
-    return _color;
+    return color;
   }
 }
 
@@ -450,27 +428,27 @@ class StyleText {
 
 class SBorderRadius {
   static BorderRadius normal({num? radius}) {
-    var _radius = radius ?? FConfig.ins.radius;
-    return BorderRadius.all(Radius.circular(_radius.ww!));
+    radius = radius ?? FConfig.ins.radius;
+    return BorderRadius.all(Radius.circular(radius.ww!));
   }
 
   static BorderRadius circle({num? radius}) {
-    var _radius = radius ?? FConfig.ins.radiusOfCircle;
-    return BorderRadius.circular(_radius.ww!);
+    radius = radius ?? FConfig.ins.radiusOfCircle;
+    return BorderRadius.circular(radius.ww!);
   }
 
   static BorderRadius only(
       {num? topLeft, num? topRight, num? bottomLeft, num? bottomRight}) {
-    var _topLeft = topLeft ?? FConfig.ins.radius;
-    var _topRight = topRight ?? FConfig.ins.radius;
-    var _bottomLeft = bottomLeft ?? FConfig.ins.radius;
-    var _bottomRight = bottomRight ?? FConfig.ins.radius;
+    topLeft = topLeft ?? FConfig.ins.radius;
+    topRight = topRight ?? FConfig.ins.radius;
+    bottomLeft = bottomLeft ?? FConfig.ins.radius;
+    bottomRight = bottomRight ?? FConfig.ins.radius;
 
     return BorderRadius.only(
-      topLeft: Radius.circular(_topLeft.ww!),
-      topRight: Radius.circular(_topRight.ww!),
-      bottomLeft: Radius.circular(_bottomLeft.ww!),
-      bottomRight: Radius.circular(_bottomRight.ww!),
+      topLeft: Radius.circular(topLeft.ww!),
+      topRight: Radius.circular(topRight.ww!),
+      bottomLeft: Radius.circular(bottomLeft.ww!),
+      bottomRight: Radius.circular(bottomRight.ww!),
     );
   }
 
@@ -491,17 +469,17 @@ class SBorderRadius {
   }
 
   static BorderRadius leftRight({num? radius, bool isH = true}) {
-    var _radius = radius ?? FConfig.ins.radiusOfCircle;
-    var value = Radius.circular(_radius.ww!);
+    radius = radius ?? FConfig.ins.radiusOfCircle;
+    var value = Radius.circular(radius.ww!);
     return isH
         ? BorderRadius.horizontal(left: value, right: value)
         : BorderRadius.vertical(top: value, bottom: value);
   }
 
   static BorderRadius leftOrRight({num? radius, bool isLeft = true}) {
-    var _radius = radius ?? FConfig.ins.radius;
-    var value = Radius.circular(_radius.ww!);
-    var nullValue = Radius.circular(0);
+    radius = radius ?? FConfig.ins.radius;
+    var value = Radius.circular(radius.ww!);
+    var nullValue = const Radius.circular(0);
     return BorderRadius.only(
       topLeft: isLeft ? value : nullValue,
       bottomLeft: isLeft ? value : nullValue,
@@ -511,9 +489,9 @@ class SBorderRadius {
   }
 
   static BorderRadius topOrButton({num? radius, bool isTop = true}) {
-    var _radius = radius ?? FConfig.ins.radius;
-    var value = Radius.circular(_radius.ww!);
-    var nullValue = Radius.circular(0);
+    radius = radius ?? FConfig.ins.radius;
+    var value = Radius.circular(radius.ww!);
+    var nullValue = const Radius.circular(0);
     return BorderRadius.only(
       topLeft: isTop ? value : nullValue,
       topRight: isTop ? value : nullValue,

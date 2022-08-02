@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../fast_develop.dart';
 
@@ -24,23 +23,21 @@ class UnreadHintWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: <Widget>[
-          ValueListenableBuilder<int>(
-            valueListenable: count,
-            builder: (_, count, __) => child(context, count),
-          ),
-          Positioned(
-            right: valueByType(right, double, dValue: 8),
-            bottom: valueByType(bottom, double, dValue: 18),
-            top: valueByType(top, double),
-            left: valueByType(left, double),
-            child: _hintGroup(),
-          ),
-        ],
-      ),
+    return Stack(
+      clipBehavior: Clip.none,
+      children: <Widget>[
+        ValueListenableBuilder<int>(
+          valueListenable: count,
+          builder: (_, count, __) => child(context, count),
+        ),
+        Positioned(
+          right: valueByType(right, double, dValue: 8),
+          bottom: valueByType(bottom, double, dValue: 18),
+          top: valueByType(top, double),
+          left: valueByType(left, double),
+          child: _hintGroup(),
+        ),
+      ],
     );
   }
 

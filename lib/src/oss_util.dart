@@ -8,15 +8,15 @@ class OssUtil {
   static String stsToken = ""; //临时用户鉴权Token,临时用户认证时必传，通过后台接口动态获取
 
   //验证文本域
-  static String _policyText =
+  static const String _policyText =
       '{"expiration": "2069-05-22T03:15:00.000Z","conditions": [["content-length-range", 0, 1048576000]]}'; //UTC时间+8=北京时间
 
   //进行utf8编码
-  static List<int> _policyTextUtf8 = utf8.encode(_policyText);
+  static final List<int> _policyTextUtf8 = utf8.encode(_policyText);
   //进行base64编码
   static String policy = base64.encode(_policyTextUtf8);
   //再次进行utf8编码
-  static List<int> _policyUtf8 = utf8.encode(policy);
+  static final List<int> _policyUtf8 = utf8.encode(policy);
 
   // 工厂模式
   factory OssUtil() => _getInstance();
@@ -27,22 +27,20 @@ class OssUtil {
   OssUtil._internal();
 
   static OssUtil _getInstance() {
-    if (_instance == null) {
-      _instance = OssUtil._internal();
-    }
+    _instance ??= OssUtil._internal();
     return _instance!;
   }
 
   /*
   *获取signature签名参数
   */
-  String getSignature(String _accessKeySecret) {
+  String getSignature(String accessKeySecret) {
     //进行utf8 编码
-    List<int> _accessKeySecretUtf8 = utf8.encode(_accessKeySecret);
+    List<int> accessKeySecretUtf8 = utf8.encode(accessKeySecret);
 
     //通过hmac,使用sha1进行加密
     List<int> signaturePre =
-        Hmac(sha1, _accessKeySecretUtf8).convert(_policyUtf8).bytes;
+        Hmac(sha1, accessKeySecretUtf8).convert(_policyUtf8).bytes;
 
     //最后一步，将上述所得进行base64 编码
     String signature = base64.encode(signaturePre);
@@ -56,9 +54,9 @@ class OssUtil {
   String getImageUploadName(String? uploadPath, String filePath) {
     String imageMame = "";
     var timestamp = DateTime.now().millisecondsSinceEpoch;
-    imageMame = timestamp.toString() + "_" + getRandom(6);
+    imageMame = "${timestamp}_${getRandom(6)}";
     if (uploadPath != null && uploadPath.isNotEmpty) {
-      imageMame = uploadPath + "/" + imageMame;
+      imageMame = "$uploadPath/$imageMame";
     }
     var imageType =
         filePath.substring(filePath.lastIndexOf("."), filePath.length);

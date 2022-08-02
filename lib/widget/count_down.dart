@@ -1,21 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
 import '../fast_develop.dart';
 
-const Widget DefaultSpace = const Text(
-  ' : ',
-  style: TextStyle(
-    color: Colors.red,
-  ),
-);
+const Widget defaultSpace = Text(' : ', style: TextStyle(color: Colors.red));
 
 class CountDown extends StatefulWidget {
   const CountDown({
     Key? key,
-    this.space = DefaultSpace,
+    this.space = defaultSpace,
     this.duration = const Duration(hours: 10, minutes: 30, seconds: 0),
     this.textStyle =
         const TextStyle(color: Colors.white, backgroundColor: Colors.red),
@@ -26,10 +19,11 @@ class CountDown extends StatefulWidget {
     this.onTap,
     this.timeOver,
     this.backgroundColor,
-  })  : this.build = null,
+  })  : build = null,
         super(key: key);
 
   const CountDown.only({
+    Key? key,
     this.only = true,
     this.onlyAutoStart = false,
     this.space,
@@ -41,7 +35,8 @@ class CountDown extends StatefulWidget {
     this.textStyle =
         const TextStyle(color: Colors.white, backgroundColor: Colors.red),
     this.borderRadius = const BorderRadius.all(Radius.circular(3)),
-  }) : this.backgroundColor = null;
+  }) : backgroundColor = null,
+        super(key: key);
 
   final bool only;
   final bool onlyAutoStart;
@@ -59,17 +54,17 @@ class CountDown extends StatefulWidget {
   CountDownState createState() => CountDownState();
 }
 
-enum TimeType { Hours, Minutes, Seconds }
+enum TimeType { hours, minutes, seconds }
 
 class CountDownState extends State<CountDown> with TickerProviderStateMixin {
   late Timer? _timer;
   late int _allSeconds;
   bool timeFinish = true;
   late Color backgroundColor;
-  ValueNotifier<String> _vNDay = ValueNotifier("");
-  ValueNotifier<String> _vNHour = ValueNotifier("");
-  ValueNotifier<String> _vNMinute = ValueNotifier("");
-  ValueNotifier<String> _vNSecond = ValueNotifier("");
+  final ValueNotifier<String> _vNDay = ValueNotifier("");
+  final ValueNotifier<String> _vNHour = ValueNotifier("");
+  final ValueNotifier<String> _vNMinute = ValueNotifier("");
+  final ValueNotifier<String> _vNSecond = ValueNotifier("");
 
   //时间格式化，根据总秒数转换为对应的 hh:mm:ss 格式
   _constructTime(int seconds) {
@@ -86,12 +81,14 @@ class CountDownState extends State<CountDown> with TickerProviderStateMixin {
         _vNMinute.value = _formatTime(minute);
         _vNSecond.value = _formatTime(second);
       }
-    } catch (e) {}
+    } catch (e) {
+      printLog(e);
+    }
   }
 
   //数字格式化，将 0~9 的时间转换为 00~09
   String _formatTime(int timeNum) {
-    return timeNum < 10 ? "0" + timeNum.toString() : timeNum.toString();
+    return timeNum < 10 ? "0$timeNum" : timeNum.toString();
   }
 
   void _initOnly() {
@@ -101,7 +98,7 @@ class CountDownState extends State<CountDown> with TickerProviderStateMixin {
   void _startTimer() {
     timeFinish = false;
     //设置 1 秒回调一次
-    const period = const Duration(seconds: 1);
+    const period = Duration(seconds: 1);
     _timer = Timer.periodic(period, (timer) {
       //更新界面
       _allSeconds--;
@@ -178,69 +175,68 @@ class CountDownState extends State<CountDown> with TickerProviderStateMixin {
   }
 
   Widget _allTime() {
-    return Container(
-      child: Row(children: <Widget>[
-        ClipRRect(
-          borderRadius: widget.borderRadius,
-          child: Container(
-            color: backgroundColor,
-            height: 65.hh,
-            alignment: Alignment.center,
-            child: ValueListenableBuilder<String>(
-              valueListenable: _vNDay,
-              builder: (_, value, ___) {
-                if (value == "00")
-                  return SizedBox();
-                else
-                  return Text(" " + value + " 天 ", style: widget.textStyle);
-              },
-            ),
+    return Row(children: <Widget>[
+      ClipRRect(
+        borderRadius: widget.borderRadius,
+        child: Container(
+          color: backgroundColor,
+          height: 65.hh,
+          alignment: Alignment.center,
+          child: ValueListenableBuilder<String>(
+            valueListenable: _vNDay,
+            builder: (_, value, ___) {
+              if (value == "00") {
+                return const SizedBox();
+              } else {
+                return Text(" $value 天 ", style: widget.textStyle);
+              }
+            },
           ),
         ),
-        Spacing.spacingView(),
-        ClipRRect(
-          borderRadius: widget.borderRadius,
-          child: Container(
-            color: backgroundColor,
-            width: 45.ww,
-            height: 65.hh,
-            alignment: Alignment.center,
-            child: ValueListenableBuilder<String>(
-              valueListenable: _vNHour,
-              builder: (_, value, ___) => Text(value, style: widget.textStyle),
-            ),
+      ),
+      Spacing.spacingView(),
+      ClipRRect(
+        borderRadius: widget.borderRadius,
+        child: Container(
+          color: backgroundColor,
+          width: 45.ww,
+          height: 65.hh,
+          alignment: Alignment.center,
+          child: ValueListenableBuilder<String>(
+            valueListenable: _vNHour,
+            builder: (_, value, ___) => Text(value, style: widget.textStyle),
           ),
         ),
-        widget.space!,
-        ClipRRect(
-          borderRadius: widget.borderRadius,
-          child: Container(
-            color: backgroundColor,
-            width: 45.ww,
-            height: 65.hh,
-            alignment: Alignment.center,
-            child: ValueListenableBuilder<String>(
-              valueListenable: _vNMinute,
-              builder: (_, value, ___) => Text(value, style: widget.textStyle),
-            ),
+      ),
+      widget.space!,
+      ClipRRect(
+        borderRadius: widget.borderRadius,
+        child: Container(
+          color: backgroundColor,
+          width: 45.ww,
+          height: 65.hh,
+          alignment: Alignment.center,
+          child: ValueListenableBuilder<String>(
+            valueListenable: _vNMinute,
+            builder: (_, value, ___) => Text(value, style: widget.textStyle),
           ),
         ),
-        widget.space!,
-        ClipRRect(
-          borderRadius: widget.borderRadius,
-          child: Container(
-            color: backgroundColor,
-            width: 45.ww,
-            height: 65.hh,
-            alignment: Alignment.center,
-            child: ValueListenableBuilder<String>(
-              valueListenable: _vNSecond,
-              builder: (_, value, ___) => Text(value, style: widget.textStyle),
-            ),
+      ),
+      widget.space!,
+      ClipRRect(
+        borderRadius: widget.borderRadius,
+        child: Container(
+          color: backgroundColor,
+          width: 45.ww,
+          height: 65.hh,
+          alignment: Alignment.center,
+          child: ValueListenableBuilder<String>(
+            valueListenable: _vNSecond,
+            builder: (_, value, ___) => Text(value, style: widget.textStyle),
           ),
         ),
-      ]),
-    );
+      ),
+    ]);
   }
 
   @override

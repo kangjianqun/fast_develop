@@ -1,14 +1,13 @@
 import 'package:fast_router/fast_router.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../fast_develop.dart';
 
-Set<String> _dict = Set();
+Set<String> _dict = {};
 bool _loadStatue = false;
 
 class DialogSimple {
-  static String _s = "临时弹窗";
+  static const String _s = "临时弹窗";
 
   static showS() => show(_s);
 
@@ -25,7 +24,7 @@ class DialogSimple {
       barrierDismissible: false,
       builder: (_) => WillPopScope(
         onWillPop: () async => false,
-        child: DialogView.load(content: "加载中"),
+        child: const DialogView.load(content: "加载中"),
       ),
     );
   }
@@ -38,7 +37,7 @@ class DialogSimple {
       _dict.remove(url);
     }
 
-    if (_dict.length == 0 && _loadStatue) {
+    if (_dict.isEmpty && _loadStatue) {
       _loadStatue = false;
       tryCatch(() => FastRouter.popBackDialog(FConfig.ins.context!));
     }
@@ -70,17 +69,17 @@ class DialogListSelect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _paddingChild =
+    var paddingChild_ =
         paddingChild ?? FConfig.ins.dialogListSelectOfPaddingChild;
-    var _wirePadding = wirePadding ?? FConfig.ins.dialogListSelectOfWirePadding;
-    List<Widget> _view = [];
+    var wireP = wirePadding ?? FConfig.ins.dialogListSelectOfWirePadding;
+    List<Widget> view = [];
     children.add(NameFunction("取消", null));
-    children.forEach((item) {
-      _view.add(
+    for (var item in children) {
+      view.add(
         Button(
           size: null,
           paddingInside: Spacing.all(size: 0),
-          paddingChild: _paddingChild,
+          paddingChild: paddingChild_,
           onTap: (_) {
             FastRouter.popBack();
             if (item.function != null) item.function!();
@@ -88,13 +87,14 @@ class DialogListSelect extends StatelessWidget {
           child: Center(child: Text(item.name)),
         ),
       );
-      if (children.indexOf(item) < children.length - 1)
-        _view.add(Spacing.wireView2(w: width - _wirePadding));
-    });
+      if (children.indexOf(item) < children.length - 1) {
+        view.add(Spacing.wireView2(w: width - wireP));
+      }
+    }
     return DialogCustom.body(
       color: CConfig.getBackground(color: color),
-      children: _view,
       rootMargin: margin,
+      children: view,
     );
   }
 }
@@ -102,7 +102,7 @@ class DialogListSelect extends StatelessWidget {
 class DialogView extends Dialog {
   const DialogView({
     Key? key,
-    required this.child,
+    required child,
     this.isShowTitle = false,
     this.isConfirm = false,
     this.isLoad = false,
@@ -114,7 +114,7 @@ class DialogView extends Dialog {
     this.onOk,
     this.onNo,
     this.expanded = false,
-    this.backgroundColor,
+    backgroundColor,
     this.confirmHeight,
     this.titleHeight,
     this.horizontal,
@@ -125,14 +125,20 @@ class DialogView extends Dialog {
     this.loadWidth,
     this.loadTop,
     this.top,
-    this.insetAnimationCurve = Curves.decelerate,
-    this.insetAnimationDuration = const Duration(milliseconds: 100),
-  }) : super(key: key);
+    insetAnimationCurve = Curves.decelerate,
+    insetAnimationDuration = const Duration(milliseconds: 100),
+  }) : super(
+          key: key,
+          backgroundColor: backgroundColor,
+          child: child,
+          insetAnimationCurve: insetAnimationCurve,
+          insetAnimationDuration: insetAnimationDuration,
+        );
 
   /// 显示确定与取消
   const DialogView.confirm({
     Key? key,
-    this.child,
+    child,
     this.isShowTitle = true,
     this.isConfirm = true,
     this.isLoad = false,
@@ -144,7 +150,7 @@ class DialogView extends Dialog {
     required this.onOk,
     this.onNo,
     this.expanded = false,
-    this.backgroundColor,
+    backgroundColor,
     this.confirmHeight,
     this.titleHeight,
     this.horizontal,
@@ -155,14 +161,20 @@ class DialogView extends Dialog {
     this.loadWidth,
     this.loadTop,
     this.top,
-    this.insetAnimationCurve = Curves.decelerate,
-    this.insetAnimationDuration = const Duration(milliseconds: 100),
-  }) : super(key: key);
+    insetAnimationCurve = Curves.decelerate,
+    insetAnimationDuration = const Duration(milliseconds: 100),
+  }) : super(
+          key: key,
+          backgroundColor: backgroundColor,
+          child: child,
+          insetAnimationCurve: insetAnimationCurve,
+          insetAnimationDuration: insetAnimationDuration,
+        );
 
   /// 显示标题 内容
   const DialogView.hint({
     Key? key,
-    this.child,
+    child,
     this.isShowTitle = true,
     this.isConfirm = false,
     this.isLoad = false,
@@ -174,7 +186,7 @@ class DialogView extends Dialog {
     this.onOk,
     this.onNo,
     this.expanded = false,
-    this.backgroundColor,
+    backgroundColor,
     this.confirmHeight,
     this.titleHeight,
     this.horizontal,
@@ -185,14 +197,20 @@ class DialogView extends Dialog {
     this.loadWidth,
     this.loadTop,
     this.top,
-    this.insetAnimationCurve = Curves.decelerate,
-    this.insetAnimationDuration = const Duration(milliseconds: 100),
-  }) : super(key: key);
+    insetAnimationCurve = Curves.decelerate,
+    insetAnimationDuration = const Duration(milliseconds: 100),
+  }) : super(
+          key: key,
+          backgroundColor: backgroundColor,
+          child: child,
+          insetAnimationCurve: insetAnimationCurve,
+          insetAnimationDuration: insetAnimationDuration,
+        );
 
   ///
   const DialogView.load({
     Key? key,
-    this.child = const CircularProgressIndicator(),
+    child = const CircularProgressIndicator(),
     this.isShowTitle = false,
     this.isConfirm = false,
     this.isLoad = true,
@@ -204,7 +222,7 @@ class DialogView extends Dialog {
     this.onOk,
     this.onNo,
     this.expanded = false,
-    this.backgroundColor,
+    backgroundColor,
     this.confirmHeight,
     this.titleHeight,
     this.horizontal,
@@ -215,17 +233,21 @@ class DialogView extends Dialog {
     this.loadWidth,
     this.loadTop,
     this.top,
-    this.insetAnimationCurve = Curves.decelerate,
-    this.insetAnimationDuration = const Duration(milliseconds: 100),
-  }) : super(key: key);
+    insetAnimationCurve = Curves.decelerate,
+    insetAnimationDuration = const Duration(milliseconds: 100),
+  }) : super(
+          key: key,
+          backgroundColor: backgroundColor,
+          child: child,
+          insetAnimationCurve: insetAnimationCurve,
+          insetAnimationDuration: insetAnimationDuration,
+        );
 
   final bool isShowTitle;
   final bool isConfirm;
   final bool isLoad;
   final bool fullScreen;
   final bool expanded;
-  final Color? backgroundColor;
-  final Widget? child;
   final String? title;
   final String? content;
   final String? okHint;
@@ -244,20 +266,8 @@ class DialogView extends Dialog {
   final TouchTap? onOk;
   final TouchTap? onNo;
 
-  /// The duration of the animation to show when the system keyboard intrudes
-  /// into the space that the dialog is placed in.
-  ///
-  /// Defaults to 100 milliseconds.
-  final Duration insetAnimationDuration;
-
-  /// The curve to use for the animation shown when the system keyboard intrudes
-  /// into the space that the dialog is placed in.
-  ///
-  /// Defaults to [Curves.fastOutSlowIn].
-  final Curve insetAnimationCurve;
-
   Widget _confirm(BuildContext context, num height) {
-    return Container(
+    return SizedBox(
       height: height.hh,
       child: Row(children: <Widget>[
         Expanded(
@@ -301,7 +311,7 @@ class DialogView extends Dialog {
     Widget view = ConstrainedBox(
       constraints: BoxConstraints(minHeight: minHeight.hh!),
       child: ListIntervalView.children(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         children: [
           Container(
             margin: Spacing.topAndBottom(size: 32),
@@ -322,23 +332,23 @@ class DialogView extends Dialog {
     if (fullScreen) return child!;
 
     final DialogTheme dialogTheme = DialogTheme.of(context);
-    var _height = confirmHeight ?? FConfig.ins.dialogViewOfConfirmHeight;
-    var _titleHeight = confirmHeight ?? FConfig.ins.dialogViewOfTitleHeight;
-    var _horizontal = horizontal ?? FConfig.ins.dialogViewOfHorizontal;
-    var _vertical = vertical ?? FConfig.ins.dialogViewOfVertical;
-    var _titleSize = titleSize ?? FConfig.ins.dialogViewOfTitleSize;
-    var _textSize = textSize ?? FConfig.ins.dialogViewOfTextSize;
-    var _minHeight = minHeight ?? FConfig.ins.dialogViewOfTitleSize;
-    var _loadWidth = loadWidth ?? FConfig.ins.dialogViewOfLoadWidth;
-    var _loadTop = loadTop ?? FConfig.ins.dialogViewOfLoadTop;
-    var _top = top ?? FConfig.ins.dialogViewOfTop;
+    var height = confirmHeight ?? FConfig.ins.dialogViewOfConfirmHeight;
+    var titleHeight = confirmHeight ?? FConfig.ins.dialogViewOfTitleHeight;
+    var horizontal_ = horizontal ?? FConfig.ins.dialogViewOfHorizontal;
+    var vertical_ = vertical ?? FConfig.ins.dialogViewOfVertical;
+    var titleSize_ = titleSize ?? FConfig.ins.dialogViewOfTitleSize;
+    var textSize_ = textSize ?? FConfig.ins.dialogViewOfTextSize;
+    var minHeight_ = minHeight ?? FConfig.ins.dialogViewOfTitleSize;
+    var loadWidth_ = loadWidth ?? FConfig.ins.dialogViewOfLoadWidth;
+    var loadTop_ = loadTop ?? FConfig.ins.dialogViewOfLoadTop;
+    var top_ = top ?? FConfig.ins.dialogViewOfTop;
 
-    var view = child ?? _defaultTxt(_minHeight);
+    var view = child ?? _defaultTxt(minHeight_);
 
     return AnimatedContainer(
       padding: MediaQuery.of(context).viewInsets +
           EdgeInsets.symmetric(
-              horizontal: _horizontal.ww!, vertical: _vertical.hh!),
+              horizontal: horizontal_.ww!, vertical: vertical_.hh!),
       duration: insetAnimationDuration,
       curve: insetAnimationCurve,
       child: MediaQuery.removeViewInsets(
@@ -348,10 +358,10 @@ class DialogView extends Dialog {
         removeBottom: true,
         context: context,
         child: DefaultTextStyle(
-          style: StyleText.normal(size: _textSize),
+          style: StyleText.normal(size: textSize_),
           child: Container(
-            padding: Spacing.topOrBottom(size: isLoad ? _loadTop : _top),
-            width: isLoad ? _loadWidth.ww : null,
+            padding: Spacing.topOrBottom(size: isLoad ? loadTop_ : top_),
+            width: isLoad ? loadWidth_.ww : null,
             decoration: BoxDecoration(
               color: backgroundColor ??
                   dialogTheme.backgroundColor ??
@@ -363,12 +373,12 @@ class DialogView extends Dialog {
               children: <Widget>[
                 Spacing.vView(
                   isShow: isShowTitle,
-                  child: () => _title(_titleHeight, _titleSize),
+                  child: () => _title(titleHeight, titleSize_),
                 ),
                 view,
                 Spacing.vView(
                   isShow: child != null && content != null,
-                  child: () => _defaultTxt(_minHeight),
+                  child: () => _defaultTxt(minHeight_),
                 ),
                 Spacing.vView(
                   isShow: isConfirm,
@@ -376,7 +386,7 @@ class DialogView extends Dialog {
                 ),
                 Spacing.vView(
                   isShow: isConfirm,
-                  child: () => _confirm(context, _height),
+                  child: () => _confirm(context, height),
                 ),
               ],
             ),
@@ -433,8 +443,8 @@ class DialogCustom extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           Container(
-            child: Text(name!, style: StyleText.normal(size: 48)),
             alignment: Alignment.center,
+            child: Text(name!, style: StyleText.normal(size: 48)),
           ),
           Positioned(
             right: 0,
@@ -498,7 +508,7 @@ Widget _buildMaterialDialogTransitions(
 
 enum Location { left, right, top, bottom, center }
 
-typedef Offset OffsetHandle(Animation animation);
+typedef OffsetHandle = Offset Function(Animation animation);
 
 RouteTransitionsBuilder offsetAnim(OffsetHandle oh) {
   return (_, animation, __, child) {
@@ -532,7 +542,7 @@ Future<T?> showDialogCustom<T>({
   TextStyle? style,
 }) {
   assert(debugCheckHasMaterialLocalizations(context));
-  var _targetContext = context;
+  var targetContext = context;
 //  final ThemeData theme = Theme.of(context, shadowThemeOnly: true);
 
   var transition = offsetHandle == null ? null : offsetAnim(offsetHandle);
@@ -579,8 +589,8 @@ Future<T?> showDialogCustom<T>({
             }
           }
 
-          RenderBox renderBox = _targetContext.findRenderObject() as RenderBox;
-          Offset _offset = renderBox.localToGlobal(Offset.zero);
+          RenderBox renderBox = targetContext.findRenderObject() as RenderBox;
+          Offset boxOffset = renderBox.localToGlobal(Offset.zero);
           double left = 0;
           double top = 0;
           switch (location) {
@@ -590,16 +600,16 @@ Future<T?> showDialogCustom<T>({
                 child: pageChild,
               );
             case Location.left:
-              left = _offset.dx + offset;
+              left = boxOffset.dx + offset;
               break;
             case Location.right:
-              left = _offset.dx + renderBox.size.width + offset;
+              left = boxOffset.dx + renderBox.size.width + offset;
               break;
             case Location.top:
-              top = _offset.dy + offset;
+              top = boxOffset.dy + offset;
               break;
             case Location.bottom:
-              top = _offset.dy + renderBox.size.height + offset;
+              top = boxOffset.dy + renderBox.size.height + offset;
               break;
           }
 

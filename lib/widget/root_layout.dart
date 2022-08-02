@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:fast_mvvm/fast_mvvm.dart';
 import '../fast_develop.dart';
@@ -50,8 +49,8 @@ class MyScaffold extends StatelessWidget {
     this.appBarBrightness,
     this.themeData,
     this.defaultTextColor,
-  })  : this.immerse = false,
-        this.backgroundWidget = null,
+  })  : immerse = false,
+        backgroundWidget = null,
         super(key: kye);
 
   const MyScaffold.center({
@@ -77,8 +76,8 @@ class MyScaffold extends StatelessWidget {
     this.appBarBrightness,
     this.themeData,
     this.defaultTextColor,
-  })  : this.immerse = false,
-        this.backgroundWidget = null,
+  })  : immerse = false,
+        backgroundWidget = null,
         super(key: kye);
 
   /// 沉浸式
@@ -106,7 +105,7 @@ class MyScaffold extends StatelessWidget {
     this.appBarBrightness,
     this.themeData,
     this.defaultTextColor,
-  })  : this.immerse = true,
+  })  : immerse = true,
         super(key: kye);
 
   /// 状态页面   显示当前页面加载状态  优先度最高
@@ -147,11 +146,11 @@ class MyScaffold extends StatelessWidget {
 
   /// 生成top
   Widget? _resultTop(BuildContext? ctx) {
-    var _brightness = appBarBrightness ?? brightness;
+    var brightness_ = appBarBrightness ?? brightness;
     Widget? top = appBar == null ? null : appBar!(ctx);
 
-    List<Widget> _actions = actions == null ? [] : actions!(ctx);
-    if (nextWidget != null) _actions = [nextWidget!(ctx)];
+    List<Widget> actions_ = actions == null ? [] : actions!(ctx);
+    if (nextWidget != null) actions_ = [nextWidget!(ctx)];
 
     if (top == null && isShowTitle) {
       var bgIsTr = stateWidget == null && immerse && backgroundWidget != null;
@@ -159,9 +158,9 @@ class MyScaffold extends StatelessWidget {
       var bgColor = titleBackgroundColor;
       bgColor ??= backgroundWidget != null
           ? CConfig.transparent
-          : (themeData?.appBarTheme.color ??
+          : (themeData?.appBarTheme.backgroundColor ??
               CConfig.getBackground(
-                  brightness: _brightness,
+                  brightness: brightness_,
                   context: ctx,
                   color: (bgIsTr || backgroundWidget != null)
                       ? CConfig.transparent
@@ -171,9 +170,9 @@ class MyScaffold extends StatelessWidget {
         titleIsCenter: titleIsCenter,
         backgroundColor: bgColor,
         title: title,
-        brightness: _brightness,
+        brightness: brightness_,
         tWidget: titleWidget == null ? null : titleWidget!(ctx),
-        actions: stateWidget != null ? null : _actions,
+        actions: stateWidget != null ? null : actions_,
       );
     }
     return top;
@@ -187,12 +186,12 @@ class MyScaffold extends StatelessWidget {
     Widget bodyView =
         DefaultTextStyle(style: style, child: stateWidget ?? body(context));
 
-    Widget? _bottom = bottom == null ? null : bottom!(context);
-    if (_bottom != null) {
-      _bottom = DefaultTextStyle(style: style, child: stateWidget ?? _bottom);
+    Widget? bottom_ = bottom == null ? null : bottom!(context);
+    if (bottom_ != null) {
+      bottom_ = DefaultTextStyle(style: style, child: stateWidget ?? bottom_);
     }
 
-    Widget? _drawer = drawer == null ? null : drawer!(context);
+    Widget? drawer_ = drawer == null ? null : drawer!(context);
 
     /// 不显示标题和不是沉浸式  填充标题栏颜色
     if (!isShowTitle && !immerse) {
@@ -207,7 +206,7 @@ class MyScaffold extends StatelessWidget {
       );
     }
 
-    var _bgColor = bgColor ?? Theme.of(context).scaffoldBackgroundColor;
+    var bgColor_ = bgColor ?? Theme.of(context).scaffoldBackgroundColor;
     var isTransparent = immerse && backgroundWidget != null;
 
     if (isMaterial) {
@@ -215,46 +214,44 @@ class MyScaffold extends StatelessWidget {
         appBar: top as PreferredSizeWidget,
         body: bodyView,
         resizeToAvoidBottomInset: isBottom,
-        drawer: drawerIsLeft && stateWidget == null ? _drawer : null,
-        endDrawer: !drawerIsLeft && stateWidget == null ? _drawer : null,
-        backgroundColor: !isTransparent ? _bgColor : CConfig.transparent,
-        bottomNavigationBar: _bottom,
+        drawer: drawerIsLeft && stateWidget == null ? drawer_ : null,
+        endDrawer: !drawerIsLeft && stateWidget == null ? drawer_ : null,
+        backgroundColor: !isTransparent ? bgColor_ : CConfig.transparent,
+        bottomNavigationBar: bottom_,
       );
 
       if (stateWidget == null && isTransparent) {
         bodyView = Stack(children: [
-          Container(color: _bgColor),
+          Container(color: bgColor_),
           backgroundWidget!(context),
           bodyView,
         ]);
       }
     } else {
-      var _view;
+      Widget view;
 
       Widget center = bottom != null && stateWidget == null
           ? Container(
               height: ScreenUtils.height,
-              decoration: BoxDecoration(),
+              decoration: const BoxDecoration(),
               child: Column(
                   children: [Expanded(child: bodyView), bottom!(context)]))
           : bodyView;
 
-      var _top = top;
-
       /// 如果使用 [TitleWidget] 则需要限制高度
-      if (_top != null && isShowTitle && top is TitleWidget) {
-        _top = ConstrainedBox(
+      if (top != null && isShowTitle && top is TitleWidget) {
+        top = ConstrainedBox(
           constraints: BoxConstraints(maxHeight: top.preferredSize.height),
-          child: _top,
+          child: top,
         );
       }
 
       if (stateWidget == null && isTransparent) {
-        _view = _top == null
+        view = top == null
             ? Stack(children: [backgroundWidget!(context), center])
-            : Stack(children: [backgroundWidget!(context), center, _top]);
+            : Stack(children: [backgroundWidget!(context), center, top]);
       } else {
-        _view = _top == null ? center : Column(children: [_top, center]);
+        view = top == null ? center : Column(children: [top, center]);
       }
 
       /// 安全间距
@@ -267,7 +264,7 @@ class MyScaffold extends StatelessWidget {
             isSafeArea!.right ? padding.right : 0,
             isSafeArea!.bottom ? padding.bottom : 0);
       }
-      bodyView = Container(color: _bgColor, padding: safePadding, child: _view);
+      bodyView = Container(color: bgColor_, padding: safePadding, child: view);
     }
     return bodyView;
   }
@@ -278,22 +275,23 @@ class MyScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _themeData = themeData;
-    if (_themeData == null && brightness != null) {
-      _themeData = Theme.of(context);
-      if (_switchThemeBrightness != null)
-        _themeData = _switchThemeBrightness!(brightness!, _themeData);
+    var themeData_ = themeData;
+    if (themeData_ == null && brightness != null) {
+      themeData_ = Theme.of(context);
+      if (_switchThemeBrightness != null) {
+        themeData_ = _switchThemeBrightness!(brightness!, themeData_);
+      }
     }
 
-    if (_themeData != null) {
-      return Theme(data: _themeData, child: Builder(builder: _child));
+    if (themeData_ != null) {
+      return Theme(data: themeData_, child: Builder(builder: _child));
     } else {
       return _child(context);
     }
   }
 }
 
-enum ShowType { Default, Hide }
+enum ShowType { normal, hide }
 
 class MyBody extends StatelessWidget {
   const MyBody({
@@ -319,7 +317,7 @@ class MyBody extends StatelessWidget {
     this.footer,
     this.topShrink = false,
     this.cacheExtent,
-  })  : this.child = null,
+  })  : child = null,
         itemBuilder = null,
         itemCount = null,
         super(key: key);
@@ -414,15 +412,15 @@ class MyBody extends StatelessWidget {
   final Footer? footer;
 
   Widget _content(num padding, space) {
-    List<Widget>? _children = children ?? (child == null ? [] : [child!]);
+    List<Widget>? children_ = children ?? (child == null ? [] : [child!]);
 
     Widget? view;
     if (noList) {
       view = child;
     } else {
       view = easyRefresh(
-        itemCount: itemCount ?? _children.length,
-        itemBuilder: itemBuilder ?? (_, index) => _children[index],
+        itemCount: itemCount ?? children_.length,
+        itemBuilder: itemBuilder ?? (_, index) => children_[index],
         controller: controller,
         refresh: refresh,
         mainPadding: padding,
@@ -449,15 +447,16 @@ class MyBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _padding = padding ?? FConfig.ins.myBodyOfPadding;
-    var _space = space ?? FConfig.ins.myBodyOfSpace ?? FConfig.ins.listSpace;
-    Widget view = _content(_padding, _space);
+    var padding_ = padding ?? FConfig.ins.myBodyOfPadding;
+    var space_ = space ?? FConfig.ins.myBodyOfSpace ?? FConfig.ins.listSpace;
+    Widget view = _content(padding_, space_);
     if (topWidget != null) {
-      Widget _topWidget = topWidget!;
-      if (topShrink)
-        _topWidget =
-            Container(margin: Spacing.all(size: _padding), child: topWidget);
-      view = Column(children: [_topWidget, Expanded(child: view)]);
+      Widget topWidget_ = topWidget!;
+      if (topShrink) {
+        topWidget_ =
+            Container(margin: Spacing.all(size: padding_), child: topWidget);
+      }
+      view = Column(children: [topWidget_, Expanded(child: view)]);
     }
     return view;
   }
@@ -472,7 +471,7 @@ class SPHDelegate extends SliverPersistentHeaderDelegate {
   final Widget? background;
   final double heightRatio;
 
-  ShowType? showType = ShowType.Default;
+  ShowType? showType = ShowType.normal;
 
   SPHDelegate({
     this.unfoldChild,
@@ -481,7 +480,7 @@ class SPHDelegate extends SliverPersistentHeaderDelegate {
     required this.maxOfExtent,
     required this.minOfExtent,
     required this.child,
-  }) : this.heightRatio = 1 - (minOfExtent / maxOfExtent);
+  }) : heightRatio = 1 - (minOfExtent / maxOfExtent);
 
   /// 高度 最大/最小相同
   SPHDelegate.same({
@@ -489,23 +488,23 @@ class SPHDelegate extends SliverPersistentHeaderDelegate {
     required this.child,
     this.unfoldChild,
     required extent,
-  })   : this.maxOfExtent = extent,
-        this.minOfExtent = extent,
-        this.heightRatio = 1;
+  })  : maxOfExtent = extent,
+        minOfExtent = extent,
+        heightRatio = 1;
 
   @override
   Widget build(context, double shrinkOffset, bool overlapsContent) {
-    var view;
+    Widget view;
 //    LogUtil.printLog(aa);
     var opacity = shrinkOffset / maxOfExtent;
     switch (showType) {
-      case ShowType.Hide:
+      case ShowType.hide:
         view = Stack(children: <Widget>[
-          this.background!,
+          background!,
           Positioned(
             top: 0,
             child: Opacity(
-              child: this.child(context),
+              child: child(context),
               opacity: opacity >= heightRatio ? 1 : opacity,
             ),
           ),
@@ -514,25 +513,25 @@ class SPHDelegate extends SliverPersistentHeaderDelegate {
             child: () => Positioned(
               top: 0,
               child: Opacity(
-                child: unfoldChild,
                 opacity: 1 - (shrinkOffset / maxOfExtent),
+                child: unfoldChild,
               ),
             ),
           ),
         ]);
         break;
       default:
-        view = this.child(context);
+        view = child(context);
         break;
     }
     return view;
   }
 
   @override
-  double get maxExtent => this.maxOfExtent;
+  double get maxExtent => maxOfExtent;
 
   @override
-  double get minExtent => this.minOfExtent;
+  double get minExtent => minOfExtent;
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
@@ -582,7 +581,7 @@ class BodyE extends StatelessWidget {
     this.load,
     this.fullLine = true,
     this.noList = true,
-  })  : this.children = null,
+  })  : children = null,
         super(key: key);
 
   final List<Widget>? children;
@@ -607,7 +606,7 @@ class BodyE extends StatelessWidget {
   final bool fullLine;
 
   Widget _content() {
-    List<Widget> _children = children ?? [child!];
+    List<Widget> children_ = children ?? [child!];
 
     Widget? view;
     if (noList) {
@@ -615,7 +614,7 @@ class BodyE extends StatelessWidget {
     } else {
       view = slide
           ? easyRefreshList(
-              children: _children,
+              children: children_,
               controller: controller,
               refresh: refresh,
               mainPadding: padding,
@@ -629,8 +628,8 @@ class BodyE extends StatelessWidget {
               mainPadding: padding,
               crossPadding: padding,
               fullLine: fullLine,
-              itemCount: _children.length,
-              itemBuilder: (_, index) => _children[index],
+              itemCount: children_.length,
+              itemBuilder: (_, index) => children_[index],
             );
     }
 

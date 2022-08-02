@@ -7,7 +7,7 @@ import '../fast_develop.dart';
 class PrimaryScrollContainer extends StatefulWidget {
   final Widget child;
 
-  PrimaryScrollContainer(
+  const PrimaryScrollContainer(
     GlobalKey<PrimaryScrollContainerState> key,
     this.child,
   ) : super(key: key);
@@ -36,7 +36,7 @@ class PrimaryScrollContainerState extends State<PrimaryScrollContainer> {
 
   @override
   void initState() {
-//    print('initstate');
+//    print('initState');
     _scrollController = ScrollControllerWrapper();
     super.initState();
   }
@@ -44,8 +44,8 @@ class PrimaryScrollContainerState extends State<PrimaryScrollContainer> {
   @override
   Widget build(BuildContext context) {
     return PrimaryScrollControllerWrapper(
-      child: widget.child,
       scrollController: scrollController,
+      child: widget.child,
     );
   }
 
@@ -64,8 +64,10 @@ class PrimaryScrollControllerWrapper extends InheritedWidget
     required this.scrollController,
   }) : super(key: key, child: child);
 
+  @override
   get runtimeType => PrimaryScrollController;
 
+  @override
   get controller => scrollController;
 
   @override
@@ -115,7 +117,7 @@ class ScrollControllerWrapper implements ScrollController {
 //      print('{$code}:detach start {$showing}');
       return true;
     }.call());
-//    if (fake) print("detach is innner");
+//    if (fake) print("detach is inner");
     if (inner.positions.contains(position)) {
       inner.detach(position);
     }
@@ -208,7 +210,7 @@ class ScrollSwitchWidget extends StatelessWidget {
     required this.scrollableNotifier,
     required this.maxOfExtent,
     required this.minOfExtent,
-  })   : this.heightRatio = 1 - (minOfExtent / maxOfExtent),
+  })   : heightRatio = 1 - (minOfExtent / maxOfExtent),
         super(key: key);
 
   final Widget child;
@@ -220,49 +222,47 @@ class ScrollSwitchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Stack(children: <Widget>[
-        ValueListenableBuilder<double>(
+    return Stack(children: <Widget>[
+      ValueListenableBuilder<double>(
+        valueListenable: scrollableNotifier,
+        builder: (_, shrinkOffset, ___) {
+          var opacity = shrinkOffset / maxOfExtent;
+          if (opacity > 1) {
+            opacity = 1;
+          } else if (opacity < 0.0) {
+            opacity = 0.0;
+          }
+          return Positioned(
+            top: 0,
+            child: Opacity(
+              opacity: opacity >= heightRatio ? 1 : opacity,
+              child: child,
+            ),
+          );
+        },
+      ),
+      Spacing.vView(
+        isShow: unfoldChild != null,
+        child: () => ValueListenableBuilder<double>(
           valueListenable: scrollableNotifier,
           builder: (_, shrinkOffset, ___) {
-            var opacity = shrinkOffset / maxOfExtent;
-            if (opacity > 1) {
-              opacity = 1;
-            } else if (opacity < 0.0) {
-              opacity = 0.0;
+            if (shrinkOffset < 0) {
+              shrinkOffset = 0.0;
+            } else {
+              shrinkOffset =
+                  shrinkOffset > maxOfExtent ? maxOfExtent : shrinkOffset;
             }
+
             return Positioned(
               top: 0,
               child: Opacity(
-                child: this.child,
-                opacity: opacity >= heightRatio ? 1 : opacity,
+                opacity: 1 - (shrinkOffset / maxOfExtent),
+                child: unfoldChild,
               ),
             );
           },
         ),
-        Spacing.vView(
-          isShow: unfoldChild != null,
-          child: () => ValueListenableBuilder<double>(
-            valueListenable: scrollableNotifier,
-            builder: (_, shrinkOffset, ___) {
-              if (shrinkOffset < 0) {
-                shrinkOffset = 0.0;
-              } else {
-                shrinkOffset =
-                    shrinkOffset > maxOfExtent ? maxOfExtent : shrinkOffset;
-              }
-
-              return Positioned(
-                top: 0,
-                child: Opacity(
-                  child: unfoldChild,
-                  opacity: 1 - (shrinkOffset / maxOfExtent),
-                ),
-              );
-            },
-          ),
-        ),
-      ]),
-    );
+      ),
+    ]);
   }
 }

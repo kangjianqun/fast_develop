@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../fast_develop.dart';
 
@@ -51,12 +50,11 @@ class Checkbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _spacing = spacing ?? FConfig.ins.checkboxOfSpacing;
-    var __size = size ?? FConfig.ins.checkboxOfSize;
-    var _padding = padding ?? FConfig.ins.checkboxOfPadding;
-    var _borderWidth =
-        borderWidth ?? FConfig.ins.checkboxOfBorderWidth;
-    var _size = (__size + _padding).ww;
+    var childrenSpacing = spacing ?? FConfig.ins.checkboxOfSpacing;
+    var size_ = size ?? FConfig.ins.checkboxOfSize;
+    var checkboxPadding = padding ?? FConfig.ins.checkboxOfPadding;
+    var checkboxBorderWidth = borderWidth ?? FConfig.ins.checkboxOfBorderWidth;
+    var checkboxSize = (size_ + checkboxPadding).ww;
 
     final ThemeData themeData = Theme.of(context);
     var borderColor = value
@@ -68,31 +66,29 @@ class Checkbox extends StatelessWidget {
     var color = checkColor ?? CConfig.white;
     var tick = !value
         ? Container()
-        : Center(child: Icon(Icons.check, size: __size.ssp, color: color));
+        : Center(child: Icon(Icons.check, size: size_.ssp, color: color));
 
-    Widget _view = Container(
-      width: _size,
-      height: _size,
-      margin: description != null ? null : Spacing.all(size: _padding),
+    Widget view = Container(
+      width: checkboxSize,
+      height: checkboxSize,
+      margin: description != null ? null : Spacing.all(size: checkboxPadding),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(_size! / 2)),
+        borderRadius: BorderRadius.all(Radius.circular(checkboxSize! / 2)),
         color: bgColor,
-        border: Border.all(color: borderColor, width: _borderWidth.ww!),
+        border: Border.all(color: borderColor, width: checkboxBorderWidth.ww!),
       ),
       child: tick,
     );
 
     if (description != null) {
-      _view = Row(children: [
-        _view,
-        Spacing.spacingView(width: _spacing),
-        description!
-      ]);
+      view = Row(
+          children: [view, Spacing.spacingView(width: childrenSpacing), description!]);
     }
 
-    if (onChanged == null)
-      return _view;
-    else
-      return TouchWidget(onTap: (_) => onChanged!(!value), child: _view);
+    if (onChanged == null) {
+      return view;
+    } else {
+      return TouchWidget(onTap: (_) => onChanged!(!value), child: view);
+    }
   }
 }

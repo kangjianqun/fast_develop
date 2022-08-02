@@ -2,16 +2,12 @@ import 'package:fast_develop/fast_develop.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'src/date_model.dart';
-import 'src/datetime_picker_theme.dart';
-import 'src/i18n_model.dart';
-
 export 'src/date_model.dart';
 export 'src/datetime_picker_theme.dart';
 export 'src/i18n_model.dart';
 
-typedef void DateChangedCallback(CompleteData data);
-typedef List<Widget> CreateWidgetList();
+typedef DateChangedCallback = void Function(CompleteData data);
+typedef CreateWidgetList = List<Widget> Function();
 
 ///
 ///数据选择器
@@ -22,18 +18,18 @@ class DataPicker {
   ///
   static Future showDatePicker(
     BuildContext context, {
-    bool showTitleActions: true,
+    bool showTitleActions = true,
     DateTime? minTime,
     DateTime? maxTime,
     DateChangedCallback? onChanged,
     DateChangedCallback? onConfirm,
-    locale: LocaleType.zh,
+    locale = LocaleType.zh,
     DateTime? currentTime,
     DatePickerTheme? theme,
   }) {
     return Navigator.push(
         context,
-        new _DatePickerRoute(
+        _DatePickerRoute(
             showTitleActions: showTitleActions,
             onChanged: onChanged,
             onConfirm: onConfirm,
@@ -53,16 +49,16 @@ class DataPicker {
   ///
   static Future showTimePicker(
     BuildContext context, {
-    bool showTitleActions: true,
+    bool showTitleActions = true,
     DateChangedCallback? onChanged,
     DateChangedCallback? onConfirm,
-    locale: LocaleType.zh,
+    locale = LocaleType.zh,
     DateTime? currentTime,
     DatePickerTheme? theme,
   }) {
     return Navigator.push(
         context,
-        new _DatePickerRoute(
+        _DatePickerRoute(
             showTitleActions: showTitleActions,
             onChanged: onChanged,
             onConfirm: onConfirm,
@@ -79,18 +75,18 @@ class DataPicker {
   ///
   static Future showDateTimePicker(
     BuildContext context, {
-    bool showTitleActions: true,
+    bool showTitleActions = true,
     DateTime? minTime,
     DateTime? maxTime,
     DateChangedCallback? onChanged,
     DateChangedCallback? onConfirm,
-    locale: LocaleType.zh,
+    locale = LocaleType.zh,
     DateTime? currentTime,
     DatePickerTheme? theme,
   }) {
     return Navigator.push(
         context,
-        new _DatePickerRoute(
+        _DatePickerRoute(
             showTitleActions: showTitleActions,
             onChanged: onChanged,
             onConfirm: onConfirm,
@@ -109,11 +105,11 @@ class DataPicker {
   /// 显示选择器底页 自定义选择器模型
   static Future showPicker(
     BuildContext context, {
-    bool showTitleActions: true,
+    bool showTitleActions = true,
     bool? loopList,
     DateChangedCallback? onChanged,
     DateChangedCallback? onConfirm,
-    locale: LocaleType.zh,
+    locale = LocaleType.zh,
     CommonPickerData? pickerData,
     DatePickerTheme? theme,
   }) {
@@ -145,8 +141,8 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
     this.loopList,
     RouteSettings? settings,
     pickerModel,
-  })  : this.pickerModel = pickerModel ?? DatePickerModel(),
-        this.theme = theme ?? DatePickerTheme.autoColor(),
+  })  : pickerModel = pickerModel ?? DatePickerModel(),
+        theme = theme ?? DatePickerTheme.autoColor(),
         super(settings: settings);
 
   final bool showTitleActions;
@@ -181,19 +177,19 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   @override
   Widget buildPage(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation) {
-    Widget bottomSheet = new MediaQuery.removePadding(
+    Widget bottomSheet = MediaQuery.removePadding(
       context: context,
       removeTop: true,
       child: _DatePickerComponent(
         onChanged: onChanged,
-        locale: this.locale,
+        locale: locale,
         route: this,
         pickerModel: pickerModel,
         loopList: loopList,
       ),
     );
     ThemeData inheritTheme = Theme.of(context);
-    bottomSheet = new Theme(data: inheritTheme, child: bottomSheet);
+    bottomSheet = Theme(data: inheritTheme, child: bottomSheet);
     return bottomSheet;
   }
 }
@@ -206,7 +202,7 @@ class _DatePickerComponent extends StatefulWidget {
     this.locale,
     required this.pickerModel,
     bool? loopList,
-  })  : this.loop = loopList ?? pickerModel.columnCount > 1,
+  })  : loop = loopList ?? pickerModel.columnCount > 1,
         super(key: key);
 
   final DateChangedCallback? onChanged;
@@ -350,8 +346,8 @@ class _DatePickerState extends State<_DatePickerComponent> {
             createWidgetList: () {
               return widget.pickerModel.getColumnItem(columnIndex).map((v) {
                 return Align(
-                  child: Text(v.show(), style: theme.itemStyle),
                   alignment: Alignment.center,
+                  child: Text(v.show(), style: theme.itemStyle),
                 );
               }).toList();
             },
@@ -374,27 +370,21 @@ class _DatePickerState extends State<_DatePickerComponent> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Container(
+          SizedBox(
             height: theme.titleHeight,
             child: CupertinoButton(
               pressedOpacity: 0.3,
-              padding: EdgeInsets.only(left: 16, top: 0),
-              child: Text(
-                '$cancel',
-                style: theme.cancelStyle,
-              ),
+              padding: const EdgeInsets.only(left: 16, top: 0),
+              child: Text(cancel, style: theme.cancelStyle),
               onPressed: () => Navigator.pop(context),
             ),
           ),
-          Container(
+          SizedBox(
             height: theme.titleHeight,
             child: CupertinoButton(
               pressedOpacity: 0.3,
-              padding: EdgeInsets.only(right: 16, top: 0),
-              child: Text(
-                '$done',
-                style: theme.doneStyle,
-              ),
+              padding: const EdgeInsets.only(right: 16, top: 0),
+              child: Text(done, style: theme.doneStyle),
               onPressed: () {
                 Navigator.pop(context);
                 if (widget.route.onConfirm != null) {
@@ -418,8 +408,8 @@ class _DatePickerState extends State<_DatePickerComponent> {
 }
 
 class _PickerColumn extends StatefulWidget {
-  _PickerColumn({
-    this.key,
+  const _PickerColumn({
+    Key? key,
     this.column,
     required this.createWidgetList,
     this.controller,
@@ -428,9 +418,8 @@ class _PickerColumn extends StatefulWidget {
     this.changerEnd,
     required this.viewRefresh,
     this.loopList = true,
-  });
+  }) : super(key: key);
 
-  final Key? key;
   final bool loopList;
   final CreateWidgetList createWidgetList;
   final FixedExtentScrollController? controller;
@@ -455,7 +444,7 @@ class _PickerColumnState extends State<_PickerColumn> {
         valueListenable: widget.viewRefresh,
         builder: (_, ___, ____) {
           return Container(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             height: widget.theme.containerHeight,
             decoration: BoxDecoration(
                 color: widget.theme.backgroundColor ?? Colors.white),
@@ -507,7 +496,7 @@ class _BottomPickerLayout extends SingleChildLayoutDelegate {
       maxHeight += theme.titleHeight;
     }
 
-    return new BoxConstraints(
+    return BoxConstraints(
         minWidth: constraints.maxWidth,
         maxWidth: constraints.maxWidth,
         minHeight: 0.0,
@@ -517,7 +506,7 @@ class _BottomPickerLayout extends SingleChildLayoutDelegate {
   @override
   Offset getPositionForChild(Size size, Size childSize) {
     double height = size.height - childSize.height * progress;
-    return new Offset(0.0, height);
+    return Offset(0.0, height);
   }
 
   @override

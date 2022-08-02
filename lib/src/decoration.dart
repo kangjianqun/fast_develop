@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import '../fast_develop.dart';
 
 class DecoUtil {
@@ -94,21 +93,21 @@ class DecoUtil {
   /// 0 - 3 leftOrTopOrRightOrBottom
   static BoxDecoration unilateral(int leftOrTopOrRightOrBottom,
       {Color? color, num? radius, bool isCircle = false}) {
-    var borderRadius;
-    var _radius = isCircle ? 200 : (radius ?? FConfig.ins.radius);
+    BorderRadius? borderRadius;
+    var r = isCircle ? 200 : (radius ?? FConfig.ins.radius);
     switch (leftOrTopOrRightOrBottom) {
       case 0:
-        borderRadius = SBorderRadius.leftOrRight(radius: _radius);
+        borderRadius = SBorderRadius.leftOrRight(radius: r);
         break;
       case 1:
-        borderRadius = SBorderRadius.topOrButton(radius: _radius);
+        borderRadius = SBorderRadius.topOrButton(radius: r);
         break;
       case 2:
         borderRadius =
-            SBorderRadius.leftOrRight(radius: _radius, isLeft: false);
+            SBorderRadius.leftOrRight(radius: r, isLeft: false);
         break;
       case 3:
-        borderRadius = SBorderRadius.topOrButton(radius: _radius, isTop: false);
+        borderRadius = SBorderRadius.topOrButton(radius: r, isTop: false);
         break;
     }
 
@@ -121,23 +120,23 @@ class DecoUtil {
   /// 0 - 3 [topLeft]-[rightTop]-[rightBottom]-[leftBottom] 单
   static BoxDecoration only(int leftOrTopOrRightOrBottom,
       {Color color = Colors.white, num? radius, BoxBorder? border}) {
-    var _radius = radius ?? FConfig.ins.radius;
+    var r = radius ?? FConfig.ins.radius;
     var topLeft = Radius.zero;
     var topRight = Radius.zero;
     var bottomRight = Radius.zero;
     var bottomLeft = Radius.zero;
     switch (leftOrTopOrRightOrBottom) {
       case 0:
-        topLeft = Radius.circular(_radius.ww!);
+        topLeft = Radius.circular(r.ww!);
         break;
       case 1:
-        topRight = Radius.circular(_radius.ww!);
+        topRight = Radius.circular(r.ww!);
         break;
       case 2:
-        bottomRight = Radius.circular(_radius.ww!);
+        bottomRight = Radius.circular(r.ww!);
         break;
       case 3:
-        bottomLeft = Radius.circular(_radius.ww!);
+        bottomLeft = Radius.circular(r.ww!);
         break;
     }
 
@@ -176,10 +175,10 @@ class DecoUtil {
     BorderSide side = BorderSide(
         color: borderColor ?? CConfig.black, width: 1.0, style: style);
 
-    var left;
-    var top;
-    var right;
-    var bottom;
+    BorderSide left;
+    BorderSide top;
+    BorderSide right;
+    BorderSide bottom;
     if (reverse) {
       left = side;
       top = side;

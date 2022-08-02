@@ -21,7 +21,9 @@ class ThemeVM with ChangeNotifier {
   /// 当前主题颜色
   late MaterialColor _themeColor;
   late ThemeData _themeData;
+
   ThemeData get themeData => _themeData;
+
   ThemeData get darkTheme => _themeData.copyWith(brightness: Brightness.dark);
 
   /// 切换指定色彩
@@ -55,21 +57,20 @@ class ThemeVM with ChangeNotifier {
       {ThemeData? themeData,
       MaterialColor? themeColor,
       bool modifyGlobal = false}) {
-    var _brightness = brightness;
     MaterialColor? accentColor = themeColor;
     var pColor = CConfig.primaryColor;
 
-    var blackWhite = CConfig.getMatching(
-        brightness: _brightness, modifyGlobal: modifyGlobal);
+    var blackWhite =
+        CConfig.getMatching(brightness: brightness, modifyGlobal: modifyGlobal);
     var background = CConfig.getBackground(
-        brightness: _brightness, modifyGlobal: modifyGlobal);
+        brightness: brightness, modifyGlobal: modifyGlobal);
     var scaffoldBackground = CConfig.getScaffoldBackground(
-        brightness: _brightness, modifyGlobal: modifyGlobal);
+        brightness: brightness, modifyGlobal: modifyGlobal);
 
     var one =
-        CConfig.getOne(brightness: _brightness, modifyGlobal: modifyGlobal);
+        CConfig.getOne(brightness: brightness, modifyGlobal: modifyGlobal);
     var two =
-        CConfig.getTwo(brightness: _brightness, modifyGlobal: modifyGlobal);
+        CConfig.getTwo(brightness: brightness, modifyGlobal: modifyGlobal);
     var focus = CConfig.focusColor;
 
     var sIconSize = FConfig.ins.themeSelectedLabelSize;
@@ -79,13 +80,13 @@ class ThemeVM with ChangeNotifier {
 
     var iconColor = one;
 
-    var _themeD = themeData ?? ThemeData();
+    var themeD = themeData ?? ThemeData();
 
-    var _themeData = _themeD.copyWith(
-      brightness: _brightness,
+    themeData = themeD.copyWith(
+      brightness: brightness,
       // 主题颜色属于亮色系还是属于暗色系(eg:dark时,AppBarTitle文字及状态栏文字的颜色为白色,反之为黑色)
-      primaryColorBrightness: _brightness,
-      accentColorBrightness: _brightness,
+      primaryColorBrightness: brightness,
+      accentColorBrightness: brightness,
       primaryColor: pColor,
       accentColor: accentColor,
       backgroundColor: background,
@@ -101,53 +102,52 @@ class ThemeVM with ChangeNotifier {
       tabBarTheme: TabBarTheme(
         unselectedLabelColor: blackWhite,
         labelColor: focus,
-        indicator: BoxDecoration(),
+        indicator: const BoxDecoration(),
       ),
       appBarTheme: AppBarTheme(
         color: background,
-        brightness: _brightness,
+        brightness: brightness,
         textTheme: textTheme(color: one),
       ),
       cupertinoOverrideTheme: CupertinoThemeData(
         primaryColor: pColor,
-        brightness: _brightness,
+        brightness: brightness,
       ),
       primaryTextTheme: textTheme(color: one),
       primaryIconTheme: iconTheme(color: iconColor),
     );
 
-    _themeData = _themeData.copyWith(
-      bottomNavigationBarTheme: _themeData.bottomNavigationBarTheme.copyWith(
+    themeData = themeData.copyWith(
+      bottomNavigationBarTheme: themeData.bottomNavigationBarTheme.copyWith(
         backgroundColor: background,
         selectedLabelStyle: StyleText.normal(size: sLabelSize, color: pColor),
         unselectedLabelStyle: StyleText.normal(size: unSLabelSize, color: two),
         selectedIconTheme: IconThemeData(size: sIconSize.ssp, color: pColor),
         unselectedIconTheme: IconThemeData(size: unSIconSize.ssp, color: two),
       ),
-      appBarTheme: _themeData.appBarTheme.copyWith(elevation: 0),
-      accentIconTheme: _themeData.accentIconTheme.copyWith(color: Colors.white),
-      hintColor: _themeData.hintColor.withAlpha(90),
-      chipTheme: _themeData.chipTheme.copyWith(
+      appBarTheme: themeData.appBarTheme.copyWith(elevation: 0),
+      accentIconTheme: themeData.accentIconTheme.copyWith(color: Colors.white),
+      hintColor: themeData.hintColor.withAlpha(90),
+      chipTheme: themeData.chipTheme.copyWith(
         pressElevation: 0,
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        labelStyle: _themeData.textTheme.caption,
-        backgroundColor: _themeData.chipTheme.backgroundColor?.withOpacity(0.1),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        labelStyle: themeData.textTheme.caption,
+        backgroundColor: themeData.chipTheme.backgroundColor?.withOpacity(0.1),
       ),
     );
-    return _themeData;
+    return themeData;
   }
 
   /// 可以调用后二次修改 或者自己实现
   static TextTheme textTheme({Brightness? brightness, Color? color}) {
-    var _color = color;
     if (brightness != null) {
-      _color = CConfig.getOne(brightness: brightness);
+      color = CConfig.getOne(brightness: brightness);
     }
     return TextTheme(
-      bodyText1: StyleText.one(color: _color),
-      bodyText2: StyleText.two(color: _color),
+      bodyText1: StyleText.one(color: color),
+      bodyText2: StyleText.two(color: color),
       headline6: TextStyle(
-        color: _color,
+        color: color,
         fontSize: FConfig.ins.themeFontSize.toDouble(),
         fontWeight: FontWeight.bold,
       ),
@@ -156,11 +156,10 @@ class ThemeVM with ChangeNotifier {
 
   /// 可以调用后二次修改 或者自己实现
   static IconThemeData iconTheme({Brightness? brightness, Color? color}) {
-    var _color = color;
     if (brightness != null) {
-      _color = CConfig.getOne(brightness: brightness);
+      color = CConfig.getOne(brightness: brightness);
     }
-    return IconThemeData(color: _color);
+    return IconThemeData(color: color);
   }
 
   /// 数据持久化到shared preferences

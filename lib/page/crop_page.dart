@@ -35,10 +35,10 @@ class CropPage extends StatelessWidget with BaseView<CropVM> {
         txt: "裁剪",
       ),
       body: (_) => Crop(
-        child: Image.file(File(filePath)),
         controller: vm.controller,
         // shape: CropShape.oval,
         shape: BoxShape.circle,
+        child: Image.file(File(filePath)),
       ),
     );
   }

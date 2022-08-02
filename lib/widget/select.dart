@@ -25,10 +25,11 @@ class Select<T> extends StatelessWidget {
       builder: (_, v, child) {
         return TouchWidget(
           onTap: (_) {
-            if (onTap == null)
+            if (onTap == null) {
               valueNotifier.value = value;
-            else
+            } else {
               onTap!(value);
+            }
           },
           child: Container(
             padding: Spacing.all(topB: 8, leftR: 16),

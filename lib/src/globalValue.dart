@@ -1,4 +1,5 @@
-import 'convert/data.dart';
+
+import '../fast_develop.dart';
 
 class GlobalValue {
   static final Map<int, dynamic> _data = {};
@@ -12,10 +13,9 @@ class GlobalValue {
   }
 
   static T getValue<T>(key, {bool delete = true}) {
-    var _key = IntUtil.parse(key);
-    T value = _data.containsKey(_key) ? _data[_key] : null;
-
-    if (delete) _data.removeWhere((key, value) => key == _key);
+    key = IntUtil.parse(key);
+    T value = _data.containsKey(key) ? _data[key] : null;
+    if (delete) _data.removeWhere((key, value) => key == key);
     return value;
   }
 }

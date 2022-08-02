@@ -1,4 +1,4 @@
-package com.kjq.orm.example
+package com.kjq.example
 
 import io.flutter.embedding.android.FlutterActivity
 

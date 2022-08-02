@@ -31,9 +31,11 @@ ApiInterceptorOnRequest _onRequest = (options, String baseUrl) async {
 //      LogUtil.printLog("showDialog");
     try {
       DialogSimple.show(options.uri.toString());
-    } catch (e) {}
+    } catch (e) {
+      printLog(e);
+    }
   }
-  LogUtil.printLog(options.uri);
+  printLog(options.uri);
   return options;
 };
 
@@ -80,7 +82,7 @@ class ApiInterceptor extends InterceptorsWrapper {
           jsonData = response.data;
         } catch (e) {
           if (response.data?.runtimeType == String) {
-            LogUtil.printLog("---response---> data: ${response.data}");
+            printLog("---response---> data: ${response.data}");
             int startIndex = (response.data as String).indexOf("{");
             int endIndex = (response.data as String).lastIndexOf("}");
             String data =
@@ -97,9 +99,10 @@ class ApiInterceptor extends InterceptorsWrapper {
       RespData respData = RespData.fromJson(jsonData);
 
       response.data = respData.data;
-      if (extraSaveJson)
+      if (extraSaveJson) {
         response.extra.update(keyJson, (v) => respData.json,
             ifAbsent: () => respData.json);
+      }
       response.extra.update(keyIsMore, (v) => respData.isMore,
           ifAbsent: () => respData.isMore);
       response.extra.update(keyTotalPage, (v) => respData.totalPageNum,
@@ -113,7 +116,7 @@ class ApiInterceptor extends InterceptorsWrapper {
 
       if (!respData.result) {
         response.statusCode = respData.code;
-        LogUtil.printLog('---api-response--->error---->$respData');
+        printLog('---api-response--->error---->$respData');
         if (BoolUtil.parse(response.requestOptions.extra[keyShowError]) &&
             respData.error.en) {
           showToast(respData.error);
@@ -136,8 +139,8 @@ class ApiInterceptor extends InterceptorsWrapper {
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
     DialogSimple.close("", clear: true);
-    LogUtil.printLog(err.toString());
-    LogUtil.printLog('---api-response--->error---->$err');
+    printLog(err.toString());
+    printLog('---api-response--->error---->$err');
     super.onError(err, handler);
   }
 }
@@ -155,7 +158,7 @@ class RespData {
   RespData({this.data});
 
   Map<String, dynamic>? json;
-  dynamic? data;
+  dynamic data;
   int code = 0;
   String? login;
   bool isMore = false;
@@ -188,35 +191,37 @@ class RespData {
   static String keyPageTotal = "page_total";
 
   Map<String, dynamic> getExtend() {
-    var data = Map<String, dynamic>();
+    var data = <String, dynamic>{};
     if (processingExtend != null) data = processingExtend!(json);
     return data;
   }
 
   @override
   String toString() {
-    if (json == null)
+    if (json == null) {
       return "";
-    else
+    } else {
       return json.toString();
+    }
   }
 
-  RespData.fromJson(Map<String, dynamic> json) {
-    this.json = json;
-    code = json[keyCode];
-    data = json[keyData];
-    login = json[keyLogin];
-    hint = json[keyHint];
-    next = json[keyNext];
-    back = json[keyBack];
+  RespData.fromJson(Map<String, dynamic> respJson) {
+    json = respJson;
+    code = respJson[keyCode];
+    data = respJson[keyData];
+    login = respJson[keyLogin];
+    hint = respJson[keyHint];
+    next = respJson[keyNext];
+    back = respJson[keyBack];
     error = data != null && data is Map
         ? valueByType(data[keyError], String)
         : null;
-    isMore = json[keyHasMore] ?? false;
-    totalPageNum = json[keyPageTotal] ?? 1;
+    isMore = respJson[keyHasMore] ?? false;
+    totalPageNum = respJson[keyPageTotal] ?? 1;
 
-    if (data == null || data is String && (data as String).e)
-      data = Map<String, dynamic>();
-    if (responseJson != null) responseJson!(this, json);
+    if (data == null || data is String && (data as String).e) {
+      data = <String, dynamic>{};
+    }
+    if (responseJson != null) responseJson!(this, respJson);
   }
 }

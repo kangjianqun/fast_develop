@@ -259,7 +259,7 @@ String formatDate(DateTime date, List<String> formats, LocaleType locale) {
     }
   }
 
-  final sb = new StringBuffer();
+  final sb = StringBuffer();
 
   for (String format in formats) {
     if (format == _yyyy) {
@@ -350,4 +350,4 @@ String digits(int value, int length) {
 }
 
 int dayInYear(DateTime date) =>
-    date.difference(new DateTime(date.year, 1, 1)).inDays;
+    date.difference(DateTime(date.year, 1, 1)).inDays;

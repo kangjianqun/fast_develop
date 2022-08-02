@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../fast_develop.dart';
 
@@ -39,10 +38,10 @@ class CityPicker {
   static void dataAddAll<T extends BaseItem>(
       List<T> list, DataItemBuild<T> one) {
     if (list[0].hint() == "全部") return;
-    list.forEach((T element) {
+    for (var element in list) {
       element.lists().forEach((e) => e.lists().insert(0, one(2, e.value())));
       element.lists().insert(0, one(1, element.value()));
-    });
+    }
     list.insert(0, one(0, null));
   }
 
@@ -85,6 +84,7 @@ class _CityPickerRoute<T extends BaseItem> extends PopupRoute {
   });
 
   final ThemeData? theme;
+  @override
   final String? barrierLabel;
   final List<T>? data;
   final ChangeData? selectProvince;
@@ -92,7 +92,7 @@ class _CityPickerRoute<T extends BaseItem> extends PopupRoute {
   final ChangeData? selectArea;
 
   @override
-  Duration get transitionDuration => Duration(milliseconds: 2000);
+  Duration get transitionDuration => const Duration(milliseconds: 2000);
 
   @override
   Color get barrierColor => Colors.black54;
@@ -129,7 +129,7 @@ class _CityPickerRoute<T extends BaseItem> extends PopupRoute {
 }
 
 class _CityPickerWidget<T extends BaseItem> extends StatefulWidget {
-  _CityPickerWidget({
+  const _CityPickerWidget({
     Key? key,
     required this.route,
     this.data,
@@ -168,8 +168,9 @@ class _CityPickerState<T extends BaseItem> extends State<_CityPickerWidget> {
 
   setData(int index) {
     if (index == 0) province = widget.data;
-    if (index == 0 || index == 1)
+    if (index == 0 || index == 1) {
       city = widget.data?[provinceIndex].lists() ?? [];
+    }
     if (index == 0 || index >= 1) {
       var areaList = widget.data![provinceIndex].lists();
       area = areaList.e ? [] : (areaList[cityIndex].lists());
@@ -214,8 +215,7 @@ class _CityPickerState<T extends BaseItem> extends State<_CityPickerWidget> {
                     "code": areaList.e ? "" : areaList![areaIndex].value(),
                     "name": areaList.e ? "" : areaList![areaIndex].hint(),
                   };
-                  if (widget.selectProvince != null)
-                    widget.selectProvince!(provinceMap);
+                  widget.selectProvince??(provinceMap);
                   if (widget.selectCity != null) widget.selectCity!(cityMap);
                   if (widget.selectArea != null) widget.selectArea!(areaMap);
                   Navigator.pop(context);
@@ -232,7 +232,7 @@ class _CityPickerState<T extends BaseItem> extends State<_CityPickerWidget> {
         ),
         Row(children: <Widget>[
           _MyCityPicker(
-            key: Key('province'),
+            key: const Key('province'),
             controller: provinceController,
             createWidgetList: () {
               return province!.map((v) {
@@ -257,7 +257,7 @@ class _CityPickerState<T extends BaseItem> extends State<_CityPickerWidget> {
             },
           ),
           _MyCityPicker(
-            key: Key('city'),
+            key: const Key('city'),
             controller: cityController,
             createWidgetList: () {
               return city!.map((v) {
@@ -280,7 +280,7 @@ class _CityPickerState<T extends BaseItem> extends State<_CityPickerWidget> {
             },
           ),
           _MyCityPicker(
-            key: Key('area'),
+            key: const Key('area'),
             controller: areaController,
             createWidgetList: () {
               return area!.map((v) {
@@ -316,7 +316,7 @@ class _CityPickerState<T extends BaseItem> extends State<_CityPickerWidget> {
               child: GestureDetector(
                 child: Material(
                   color: Colors.transparent,
-                  child: Container(
+                  child: SizedBox(
                     width: double.infinity,
                     height: 260.0,
                     child: _bottomView(),
@@ -332,15 +332,14 @@ class _CityPickerState<T extends BaseItem> extends State<_CityPickerWidget> {
 }
 
 class _MyCityPicker extends StatefulWidget {
-  _MyCityPicker({
+  const _MyCityPicker({
+    Key? key,
     this.createWidgetList,
-    this.key,
     this.controller,
     this.changed,
-  });
+  }) : super(key: key);
 
   final CreateWidgetList? createWidgetList;
-  final Key? key;
   final FixedExtentScrollController? controller;
   final ValueChanged<int>? changed;
 
@@ -353,7 +352,7 @@ class _MyCityPickerState extends State<_MyCityPicker> {
   Widget build(BuildContext context) {
     if (widget.createWidgetList!().e) return Spacing.vView();
     return Expanded(
-      child: Container(
+      child: SizedBox(
         height: 220.0,
         child: CupertinoPicker(
           backgroundColor: CConfig.cBackgroundColor,
@@ -363,9 +362,9 @@ class _MyCityPickerState extends State<_MyCityPicker> {
           onSelectedItemChanged: (index) {
             if (widget.changed != null) widget.changed!(index);
           },
-          children: widget.createWidgetList!().length > 0
+          children: widget.createWidgetList!().isNotEmpty
               ? widget.createWidgetList!()
-              : [Center(child: Text(""))],
+              : [const Center(child: Text(""))],
         ),
       ),
     );

@@ -3,7 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BannerImage extends StatelessWidget {
-  BannerImage(this.url, {this.fit: BoxFit.fill});
+  const BannerImage(this.url, {Key? key, this.fit = BoxFit.fill})
+      : super(key: key);
 
   final String url;
   final BoxFit fit;
@@ -13,8 +14,9 @@ class BannerImage extends StatelessWidget {
     return CachedNetworkImage(
       fit: fit,
       imageUrl: url,
-      placeholder: (_, url) => Center(child: CupertinoActivityIndicator()),
-      errorWidget: (context, url, error) => Icon(Icons.error),
+      placeholder: (_, url) =>
+          const Center(child: CupertinoActivityIndicator()),
+      errorWidget: (context, url, error) => const Icon(Icons.error),
     );
   }
 }

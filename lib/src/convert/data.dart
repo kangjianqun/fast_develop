@@ -12,13 +12,15 @@ class ListKV {
 
   factory ListKV.fromJson(Map<String, dynamic> json) {
     var v = ListKV();
-    v..list = KeyValue.list(json);
+    v.list = KeyValue.list(json);
     return v;
   }
 
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = Map<String, dynamic>();
-    list.forEach((element) => json[element.key] = element.value);
+    Map<String, dynamic> json = <String, dynamic>{};
+    for (var element in list) {
+      json[element.key] = element.value;
+    }
     return json;
   }
 }
@@ -26,15 +28,17 @@ class ListKV {
 class KeyValue<T> {
   static List<KeyValue<String>> listStr(json) {
     List<KeyValue<String>> data = [];
-    if (json != null && json is Map)
+    if (json != null && json is Map) {
       json.forEach((key, value) => data.add(KeyValue<String>(key, value)));
+    }
     return data;
   }
 
   static List<KeyValue> list(json) {
     List<KeyValue> data = [];
-    if (json != null && json is Map)
+    if (json != null && json is Map) {
       json.forEach((key, value) => data.add(KeyValue<String>(key, value)));
+    }
     return data;
   }
 
@@ -48,17 +52,17 @@ enum _CompareType { dayu, dengyu, xiaoyu }
 
 bool versionCompare(String local, String cloud) {
   try {
-    List _local = local.split(".");
-    List _cloud = cloud.split(".");
-    if (_local.length != _cloud.length) {
+    List l = local.split(".");
+    List c = cloud.split(".");
+    if (l.length != c.length) {
       return false;
     }
 
     List<_CompareType> resultList = [];
 
-    for (var i = 0; i < _local.length; i++) {
-      int a = IntUtil.parse(_cloud[i]);
-      int b = IntUtil.parse(_local[i]);
+    for (var i = 0; i < l.length; i++) {
+      int a = IntUtil.parse(c[i]);
+      int b = IntUtil.parse(l[i]);
 //      LogUtil.printLog("a: $a --- b: $b");
       if (a > b) {
         resultList.add(_CompareType.dayu);
@@ -104,13 +108,13 @@ bool boolOf(data) => valueByType(data, bool);
 /// 值转换
 /// [dValue] 默认值
 valueByType<T>(
-    value,
-    Type type, {
-      String stack: "",
-      ItemBuild<T>? itemBuild,
-      bool nullable = false,
-      T? dValue,
-    }) {
+  value,
+  Type type, {
+  String stack = "",
+  ItemBuild<T>? itemBuild,
+  bool nullable = false,
+  T? dValue,
+}) {
   if (value == null) {
 //    debugPrint("valueByType  $stack : value is null");
     if (nullable) return null;
@@ -147,9 +151,9 @@ valueByType<T>(
       if (value is List) {
         Map<String, dynamic> newValue = {};
         int index = 0;
-        value.forEach((item) {
+        for (var item in value) {
           newValue.update("$index", (v) => item, ifAbsent: () => item);
-        });
+        }
         return newValue;
       } else {
         return value;
@@ -202,7 +206,7 @@ extension StringUtil on String? {
   ///  判断数据是否为空 依赖值[JudgeData] 依赖方法 [isEmpty]
   static bool isListEmpty(List<JudgeData<String>> lists) {
     var emptyData = lists.firstWhere(
-          (item) => isEmpty(item.value, toast: item.toast),
+      (item) => isEmpty(item.value, toast: item.toast),
       orElse: () => JudgeData<String>(null),
     );
     return emptyData.value != null;
@@ -223,10 +227,11 @@ class DoubleUtil {
   static double parse(dynamic value) {
     double newValue = 0.0;
     if (value is String) {
-      if (value == "0.00")
+      if (value == "0.00") {
         newValue = 0.00;
-      else
+      } else {
         newValue = double.parse(value);
+      }
     } else if (value is int) {
       newValue = value * 1.00;
     }
@@ -324,17 +329,19 @@ extension ListUtil on List? {
       return [];
     } else {
       List<T> list = [];
-      data.forEach((item) {
-        var t;
-        if (T == String) {
+      for (var item in data) {
+        Object t;
+        if (itemBuild != null) {
+          t = itemBuild(item)!;
+        } else if (T == String) {
           t = StringUtil.parse(item);
         } else if (T == int) {
           t = IntUtil.parse(item);
         } else {
-          t = itemBuild != null ? itemBuild(item) : item;
+          t = item;
         }
-        list.add(t);
-      });
+        list.add(t as T);
+      }
       return list;
     }
   }
@@ -361,7 +368,9 @@ extension ListUtil on List? {
     if (ListUtil.isEmpty(list)) {
       return content;
     }
-    list.forEach((item) => content += (item.toString() + splice));
+    for (var item in list) {
+      content += (item.toString() + splice);
+    }
     return content.substring(0, content.length - 1);
   }
 
@@ -385,8 +394,8 @@ extension ListUtil on List? {
     }
 
     var oldList = data.split(splice);
-    oldList.forEach((item) {
-      var t;
+    for (var item in oldList) {
+      Object t;
       if (T == String) {
         t = StringUtil.parse(item);
       } else if (T == int) {
@@ -394,8 +403,8 @@ extension ListUtil on List? {
       } else {
         t = item;
       }
-      list.add(t);
-    });
+      list.add(t as T);
+    }
 
     return list;
   }
@@ -411,6 +420,6 @@ extension MapUtil on Map? {
   }
 
   static bool isNotEmpty(Map? map) {
-    return map != null && map.keys.length > 0;
+    return map != null && map.keys.isNotEmpty;
   }
 }
