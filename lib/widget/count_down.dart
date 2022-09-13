@@ -60,7 +60,7 @@ class CountDownState extends State<CountDown> with TickerProviderStateMixin {
   late Timer? _timer;
   late int _allSeconds;
   bool timeFinish = true;
-  late Color backgroundColor;
+  Color? backgroundColor;
   final ValueNotifier<String> _vNDay = ValueNotifier("");
   final ValueNotifier<String> _vNHour = ValueNotifier("");
   final ValueNotifier<String> _vNMinute = ValueNotifier("");
@@ -128,7 +128,7 @@ class CountDownState extends State<CountDown> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _allSeconds = widget.duration.inSeconds;
-    backgroundColor = widget.backgroundColor!;
+    backgroundColor = widget.backgroundColor;
     _constructTime(_allSeconds);
 
     if (widget.only) {

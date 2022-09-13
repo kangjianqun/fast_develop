@@ -211,18 +211,15 @@ class TitleWidget extends StatelessWidget implements PreferredSizeWidget {
         : _textThemeGenerate!(brightness: brightness!);
     return Consumer<TitleVM>(
       builder: (_, titleVm, __) {
-//        LogUtil.printLog("titleTxtNameChanger: ${titleVm.title}");
+        // printLog("titleTxtNameChanger: ${titleVm.title}");
         List<Widget>? actionChild;
-        if (actions != null) {
+        if (ListUtil.isNotEmpty(actions)) {
           actionChild = [];
           actionChild.addAll(actions!);
           actionChild.add(Spacing.spacingView(width: actionS));
         }
 
         Widget view = AppBar(
-          brightness: brightness,
-          iconTheme: iconTheme,
-          textTheme: textTheme,
           centerTitle: titleIsCenter,
           title: tWidget ?? Text(titleVm.title),
           backgroundColor: backgroundColor,

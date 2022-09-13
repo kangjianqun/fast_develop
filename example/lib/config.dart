@@ -25,8 +25,11 @@ List<SingleChildWidget> uiConsumableProviders = [];
 Future<void> initConfig({BuildContext? context}) async {
   initMVVM<BaseViewModel>([]);
   if (context == null) {
-    CConfig.backgroundColor = Colors.white;
     CConfig.scaffoldBackgroundColor = Colors.grey.shade300;
+    CConfig.cBackgroundColor = Colors.white;
+    CConfig.cTextColorOne = Colors.black;
+    CConfig.cTextColorTwo = Colors.black;
+    CConfig.cTextColorThree = Colors.black;
   } else {
     statusBarTransparent(brightness: Brightness.light);
     FConfig.init(context: context, toast: (text) => showToast(text));

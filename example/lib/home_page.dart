@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:fast_develop/fast_develop.dart';
 import 'package:fast_mvvm/fast_mvvm.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart' hide Checkbox;
 
 Http http = Http("http://34.96.139.218:8925",
     contentType: ContentType.parse('application/x-www-form-urlencoded').value);
@@ -75,7 +75,20 @@ class HomePage extends StatelessWidget with BaseView<HomePageVM> {
             ),
           ),
         ),
-        const EditText.text(name: "输入框"),
+        const SingleLine.normal(name: "倒计时", rightWidget: CountDown()),
+        const CardEx(
+          isChild: true,
+          title: "小标题",
+          shadow: true,
+          child: Text("这是Card的扩展"),
+        ),
+        const CardEx(
+          isChild: false,
+          title: "小标题",
+          shadow: true,
+          child: Text("这是Card的扩展"),
+        ),
+        // const EditText.text(name: "输入框：",hint: "aaaa",),
       ]),
     );
   }

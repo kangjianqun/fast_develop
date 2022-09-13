@@ -83,16 +83,17 @@ class ThemeVM with ChangeNotifier {
     var themeD = themeData ?? ThemeData();
 
     themeData = themeD.copyWith(
-      brightness: brightness,
       // 主题颜色属于亮色系还是属于暗色系(eg:dark时,AppBarTitle文字及状态栏文字的颜色为白色,反之为黑色)
-      primaryColorBrightness: brightness,
-      accentColorBrightness: brightness,
+      brightness: brightness,
       primaryColor: pColor,
-      accentColor: accentColor,
       backgroundColor: background,
       scaffoldBackgroundColor: scaffoldBackground,
       splashColor: pColor.withAlpha(50),
       errorColor: focus,
+      hintColor: themeD.hintColor.withAlpha(90),
+      colorScheme: themeD.colorScheme.copyWith(
+        secondary: accentColor,
+      ),
       toggleableActiveColor: accentColor,
       textSelectionTheme: TextSelectionThemeData(
         cursorColor: accentColor,
@@ -104,37 +105,36 @@ class ThemeVM with ChangeNotifier {
         labelColor: focus,
         indicator: const BoxDecoration(),
       ),
-      appBarTheme: AppBarTheme(
-        color: background,
-        brightness: brightness,
-        textTheme: textTheme(color: one),
+      floatingActionButtonTheme: themeD.floatingActionButtonTheme.copyWith(
+        // foregroundColor: accentColor,
+        foregroundColor: Colors.white,
       ),
+      appBarTheme: themeD.appBarTheme.copyWith(
+          color: background,
+          brightness: brightness,
+          titleTextStyle: TextStyle(color: one),
+          elevation: 0),
       cupertinoOverrideTheme: CupertinoThemeData(
         primaryColor: pColor,
         brightness: brightness,
       ),
       primaryTextTheme: textTheme(color: one),
       primaryIconTheme: iconTheme(color: iconColor),
-    );
-
-    themeData = themeData.copyWith(
-      bottomNavigationBarTheme: themeData.bottomNavigationBarTheme.copyWith(
+      bottomNavigationBarTheme: themeD.bottomNavigationBarTheme.copyWith(
         backgroundColor: background,
         selectedLabelStyle: StyleText.normal(size: sLabelSize, color: pColor),
         unselectedLabelStyle: StyleText.normal(size: unSLabelSize, color: two),
         selectedIconTheme: IconThemeData(size: sIconSize.ssp, color: pColor),
         unselectedIconTheme: IconThemeData(size: unSIconSize.ssp, color: two),
       ),
-      appBarTheme: themeData.appBarTheme.copyWith(elevation: 0),
-      accentIconTheme: themeData.accentIconTheme.copyWith(color: Colors.white),
-      hintColor: themeData.hintColor.withAlpha(90),
-      chipTheme: themeData.chipTheme.copyWith(
+      chipTheme: themeD.chipTheme.copyWith(
         pressElevation: 0,
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        labelStyle: themeData.textTheme.caption,
-        backgroundColor: themeData.chipTheme.backgroundColor?.withOpacity(0.1),
+        labelStyle: themeD.textTheme.caption,
+        backgroundColor: themeD.chipTheme.backgroundColor?.withOpacity(0.1),
       ),
     );
+
     return themeData;
   }
 

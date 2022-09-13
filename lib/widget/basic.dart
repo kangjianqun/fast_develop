@@ -473,7 +473,7 @@ class CardEx extends StatelessWidget {
         margin: margin_,
         color: color,
         shadowColor: shadowColor,
-        elevation: elevation?.toDouble(),
+        elevation: elevation?.ww,
         shape: shape,
         borderOnForeground: borderOnForeground,
         clipBehavior: clipBehavior,
@@ -482,8 +482,8 @@ class CardEx extends StatelessWidget {
       );
     } else {
       return Container(
-        width: width?.toDouble(),
-        height: height?.toDouble(),
+        width: width?.ww,
+        height: height?.hh,
         decoration: DecoUtil.normal(color: color, gradient: gradient),
         margin: margin_,
         child: Padding(padding: padding_, child: childView),

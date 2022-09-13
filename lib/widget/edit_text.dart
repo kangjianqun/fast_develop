@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 
 class InputDecorationUtil {
   /// 正常
-  static InputDecoration normal({String? hintText, TextStyle? hintStyle}) {
+  static InputDecoration normal(
+      {String? hintText, TextStyle? hintStyle, String? prefixText}) {
     return InputDecoration(
       hintText: hintText ?? "",
       hintStyle: hintStyle ?? StyleText.grey(size: FConfig.ins.textTwo),
       disabledBorder: InputBorder.none,
       enabledBorder: InputBorder.none,
       focusedBorder: InputBorder.none,
+      prefix: prefixText != null ? Text(prefixText) : null,
     );
   }
 
@@ -185,10 +187,12 @@ class EditText extends StatefulWidget {
 
 class _EditTextState extends State<EditText> {
   late TextEditingController _controller;
+
   TextEditingController get _effectiveController =>
       widget.controller ?? _controller;
 
   FocusNode? _focusNode;
+
   FocusNode get _effectiveFNode =>
       widget.focusNode ?? (_focusNode ??= FocusNode());
 
@@ -202,7 +206,10 @@ class _EditTextState extends State<EditText> {
   Widget build(BuildContext context) {
     InputDecoration decoration = widget.decoration ??
         InputDecorationUtil.normal(
-            hintText: widget.hint, hintStyle: widget.hintStyle);
+          hintText: widget.hint,
+          hintStyle: widget.hintStyle,
+          prefixText: widget.name,
+        );
 
     var complete = widget.complete == null
         ? null

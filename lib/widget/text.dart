@@ -62,7 +62,7 @@ class TextRich extends StatelessWidget {
     this.children,
     this.textAlign = TextAlign.start,
     required this.color,
-  })   : assert(list == null || children == null),
+  })  : assert(list == null || children == null),
         super(key: key);
 
   final List<RichTextStyle>? list;
@@ -99,8 +99,8 @@ class _RichTextWidget extends StatelessWidget {
 
     var text = children[0].text;
     var style = children[0].textStyle;
-    children.removeAt(0);
-    view = children
+    List<RichTextItem> c = children.getRange(1, children.length).toList();
+    view = c
         .map((item) => TextSpan(
             text: item.text, style: item.textStyle, recognizer: item.onTap))
         .toList();
