@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget with BaseView<HomePageVM> {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  ViewConfig<HomePageVM> initConfig() => ViewConfig.noLoad(vm: HomePageVM());
+  ViewConfig<HomePageVM> initConfig() => ViewConfig.noLoad(HomePageVM());
 
   @override
   Widget vBuild(context, HomePageVM vm, Widget? child, Widget? state) {

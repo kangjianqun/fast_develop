@@ -13,7 +13,7 @@ dependencies:
 
   flutter_lints: ^2.0.0
   # https://pub.flutter-io.cn/packages/fast_mvvm
-  fast_mvvm: ^2.1.3
+  fast_mvvm: ^2.1.4
   # https://pub.flutter-io.cn/packages/fast_router
   fast_router: ^2.0.3
 
